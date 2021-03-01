@@ -66,11 +66,10 @@ Getting data
 Making use of massive databases could pose large challenges.
 
 #### Critical Features:
-Data
-More data
-Focus on user-generated reviews and images
-As many filters as possible (distance, type of activity, type of food, etc.)
-Machine-generated recommendations based on these factors
+- Data, More data
+- Focus on user-generated reviews and images
+- As many filters as possible (distance, type of activity, type of food, etc.)
+- Machine-generated recommendations based on these factors
 
 
 ### Idea 3: Some kind of card or turn-based strategy game.

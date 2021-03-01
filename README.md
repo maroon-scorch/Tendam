@@ -71,14 +71,11 @@ Trip advisor is the only really existing app for something like that in the U.S.
 
 #### Critical Features:
 - Focus on user-generated reviews and images:
-  - 
 - As many filters as possible (distance, type of activity, type of food, etc.):
-  - 
 - Machine-generated recommendations based on these factors:
-  - 
 
 
-### Idea 3: Some kind of card or turn-based strategy game.
+### Idea 3: Card or Turn-Based strategy game.
 Some examples that come to mind to think about (disregarding the far larger scale): Sid Meier’s Civilization games, Hearthstone, Slay the Spire, Gwent
 
 #### Problem:
@@ -89,8 +86,10 @@ Any game, even the most basic, will feature a pretty significant non-programming
 Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own
 
 #### Critical Features:
-Not entirely sure, but likely some turn-based multiplayer strategy environment with a simple interface.
-
+- Multiplayer Strategy Environment:
+- Computer Player Environment (Single Player):
+- 
+- 
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 

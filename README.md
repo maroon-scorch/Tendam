@@ -9,22 +9,20 @@ Team Members: Edward Yan, Heon Lee, Matthew Ji, Ria Rajesh, Ricky (Wenqi) Zhong
 
 ## Team Strengths and Weaknesses: 
 Edward Yan:
-Strength: Broad understanding of popular APIs
-Weakness: Documentation is totally incomprehensible, hates (paying) money
+- Strength: Broad understanding of popular APIs
+- Weakness: Documentation is totally incomprehensible, hates (paying) money
 Heon Lee: 
-Strength: Communication; keeping promises with other students (to finish assigned tasks by an assigned date)
-Weaknesses: Not fully aware of all the tools Java has; graphic design/UI/UX
+- Strength: Communication; keeping promises with other students (to finish assigned tasks by an assigned date)
+- Weaknesses: Not fully aware of all the tools Java has; graphic design/UI/UX
 Matthew Ji:
-Strengths: Cloud-based (AWS) Services (Solutions Architect)
-Weaknesses: Traditional Backend Services (ex. PHP, SQL)
+- Strengths: Cloud-based (AWS) Services (Solutions Architect)
+- Weaknesses: Traditional Backend Services (ex. PHP, SQL)
 Ria Rajesh:
-Strength: starts things prior to the night before they are due
-Weaknesses: bad at testing, no prior experience with object oriented programming
+- Strength: starts things prior to the night before they are due
+- Weaknesses: bad at testing, no prior experience with object oriented programming
 Ricky Zhong:
-Strength: Quick Googler - my queries are fast and I enjoy writing documentation
-Weaknesses: 
-New to such long-term projects
-HTML and anything that has to do with GUI
+- Strength: Quick Googler - my queries are fast and I enjoy writing documentation
+- Weaknesses: New to such long-term projects, HTML and anything that has to do with GUI
 (Does anyone have any artistic skills?)
 
 ## Project Idea(s): Fill this in with three unique ideas! (Due by March 1) 

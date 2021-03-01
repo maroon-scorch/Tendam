@@ -41,10 +41,16 @@ Less focus on dating, if at all
 More interactive and fun
 
 #### Critical features + why they’re included + challenging aspect of each feature
+- User Profile Creation:
+- Capacity to find Similar Matches (Recommendation):
+- In-app Search Algorithm:
+- Security and Privacy of Each User:
+- Minigames:
 Minigames are a large part of it. 
 More engaging, more interesting from a data perspective
 Challenging because each mini-game can take time to design and produce.
 Platform of each mini-game is also ambiguous as well as how they’re going to be written
+- (Nice to have) Video Call Feature:
 
 
 ### Idea 2: A social hangout location recommender

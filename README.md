@@ -23,8 +23,9 @@ Ria Rajesh:
 - Weaknesses: bad at testing, no prior experience with object oriented programming
 Ricky Zhong:
 - Strength: Quick Googler - my queries are fast and I enjoy writing documentation
-- Weaknesses: New to such long-term projects, HTML and anything that has to do with GUI
-(Does anyone have any artistic skills?)
+- Weaknesses:
+  - New to such long-term projects
+  - HTML and anything that has to do with GUI (Does anyone have any artistic skills?)
 
 ## Project Idea(s): Fill this in with three unique ideas! (Due by March 1) 
 

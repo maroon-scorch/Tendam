@@ -5,7 +5,12 @@
 **Team Strengths and Weaknesses:** _Fill this in!_
 
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
-Team Members: Edward Yan, Heon Lee, Matthew Ji, Ria Rajesh, Ricky (Wenqi) Zhong
+## Team Members:
+- Edward Yan
+- Heon Lee
+- Matthew Ji
+- Ria Rajesh
+- Ricky (Wenqi) Zhong
 
 ## Team Strengths and Weaknesses: 
 #### Edward Yan:

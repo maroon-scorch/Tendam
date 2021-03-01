@@ -42,6 +42,7 @@ More interactive and fun
 
 #### Critical features + why they’re included + challenging aspect of each feature
 - User Profile Creation:
+  - The ability to freely customize one's profile and persona is instrumental to the functioning of a Dating App as it is the window from which others can peek, the light that is the key to understanding, grasping, the surface of their inner nature. A user profile provides the customizability that clients would desire. This could be challenging in the sense on how much degree of freedom should be relinquished to the user (and some difficulty in implementing them), perhaps what to add in the user profile or what to include in the potential options for the user. These are all interesting design decisions to ponder about.
 - Capacity to find Similar Matches (Recommendation):
 - In-app Search Algorithm:
 - Security and Privacy of Each User:

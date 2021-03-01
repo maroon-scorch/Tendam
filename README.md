@@ -58,22 +58,24 @@ Apps like Tinder often leave out groups by its use of collaborative filtering to
   - Zoom is getting very popular as the alternative to gathering during Quarantine, so our app should also follow the trend. This is done to bring people together and for matches to meet each other face to face virtually. The challenege is that incorporating video call feature would be extremely difficult.
 
 ### Idea 2: A social hangout location recommender
-Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists. An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.
+Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists (Trip Advisor for Friends). An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.
 
 #### Problem:
 Lots of people try to find places to meet and hangout with friends, but the decision making process in many places simply involves performing a google search or looking up simple terms like “restaurants” in google maps. Apps that are focused on making these recommendations as well as existing with intent to gather thousands of user comments are largely nonexistent in North America. 
 Trip advisor is the only really existing app for something like that in the U.S. and Canada, but it’s for tourists and nobody wants to feel like a foreigner in their own country.
 
 #### Challenges:
-Integrating existing location-based APIs (like Google Maps data) and however that will work
-Getting data
-Making use of massive databases could pose large challenges.
+- Integrating existing location-based APIs (like Google Maps data) and however that will work
+- Getting data
+- Making use of massive databases could pose large challenges.
 
 #### Critical Features:
-- Data, More data
-- Focus on user-generated reviews and images
-- As many filters as possible (distance, type of activity, type of food, etc.)
-- Machine-generated recommendations based on these factors
+- Focus on user-generated reviews and images:
+  - 
+- As many filters as possible (distance, type of activity, type of food, etc.):
+  - 
+- Machine-generated recommendations based on these factors:
+  - 
 
 
 ### Idea 3: Some kind of card or turn-based strategy game.

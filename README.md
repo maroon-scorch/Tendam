@@ -11,7 +11,7 @@ Team Members: Edward Yan, Heon Lee, Matthew Ji, Ria Rajesh, Ricky (Wenqi) Zhong
 Edward Yan:
 - Strength: Broad understanding of popular APIs
 - Weakness: Documentation is totally incomprehensible, hates (paying) money
-<br />
+<br /><br />
 Heon Lee: 
 - Strength: Communication; keeping promises with other students (to finish assigned tasks by an assigned date)
 - Weaknesses: Not fully aware of all the tools Java has; graphic design/UI/UX

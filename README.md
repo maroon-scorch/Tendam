@@ -7,7 +7,7 @@
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
 Team Members: Edward Yan, Heon Lee, Matthew Ji, Ria Rajesh, Ricky (Wenqi) Zhong
 
-Team Strengths and Weaknesses: 
+## Team Strengths and Weaknesses: 
 Edward Yan:
 Strength: Broad understanding of popular APIs
 Weakness: Documentation is totally incomprehensible, hates (paying) money
@@ -27,9 +27,9 @@ New to such long-term projects
 HTML and anything that has to do with GUI
 (Does anyone have any artistic skills?)
 
-Project Idea(s): Fill this in with three unique ideas! (Due by March 1) 
+## Project Idea(s): Fill this in with three unique ideas! (Due by March 1) 
 
-Idea 1: Matching Platform
+### Idea 1: Matching Platform
 
 What problem does this solve?
 Apps like Tinder often leave out groups by its use of collaborative filtering to aggregate opinions; we want to make sure that everyone is equally included (wait, our app might not solve this, i.e. this might not be what our app is targeting to solve and I misunderstood the premise)
@@ -46,7 +46,7 @@ Challenging because each mini-game can take time to design and produce.
 Platform of each mini-game is also ambiguous as well as how they’re going to be written
 
 
-Idea 2: A social hangout location recommender
+### Idea 2: A social hangout location recommender
 Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists. An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.
 
 Problem:
@@ -66,7 +66,7 @@ As many filters as possible (distance, type of activity, type of food, etc.)
 Machine-generated recommendations based on these factors
 
 
-Idea 3: Some kind of card or turn-based strategy game.
+### Idea 3: Some kind of card or turn-based strategy game.
 Some examples that come to mind to think about (disregarding the far larger scale): Sid Meier’s Civilization games, Hearthstone, Slay the Spire, Gwent
 
 Problem: Boredom.

@@ -62,7 +62,7 @@ Integrating existing location-based APIs (like Google Maps data) and however tha
 Getting data
 Making use of massive databases could pose large challenges.
 
-#### Critical features:
+#### Critical Features:
 Data
 More data
 Focus on user-generated reviews and images
@@ -80,7 +80,7 @@ Boredom.
 Any game, even the most basic, will feature a pretty significant non-programming component that relates to game mechanics, game design, asset production, music, and art, which we may or may not be good at.
 Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own
 
-#### Features:
+#### Critical Features:
 Not entirely sure, but likely some turn-based multiplayer strategy environment with a simple interface.
 
 

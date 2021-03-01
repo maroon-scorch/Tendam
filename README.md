@@ -33,26 +33,29 @@
 ### Idea 1: Matching Platform
 
 #### What problem does this solve?
-Apps like Tinder often leave out groups by its use of collaborative filtering to aggregate opinions; we want to make sure that everyone is equally included (wait, our app might not solve this, i.e. this might not be what our app is targeting to solve and I misunderstood the premise)
-Most of these apps are geared towards dating and specifically towards dating for young adults
+Apps like Tinder often leave out groups by its use of collaborative filtering to aggregate opinions; we want to make sure that everyone is equally included (Our app might not solve this, but we will sure try to). Most of these apps are geared towards dating and specifically towards dating for young adults.
 
 #### How does this solve the problem?
-Less focus on dating, if at all
-More interactive and fun
+- Less focus on dating, if at all
+- More interactive and fun
+- Dating to be more inclusive and include minority groups.
 
 #### Critical features + why they’re included + challenging aspect of each feature
 - User Profile Creation:
   - The ability to freely customize one's profile and persona is instrumental to the functioning of a Dating App as it is the window from which others can peek, the light that is the key to understanding, grasping, the surface of their inner nature. A user profile provides the customizability that clients would desire. This could be challenging in the sense on how much degree of freedom should be relinquished to the user (and some difficulty in implementing them), perhaps what to add in the user profile or what to include in the potential options for the user. These are all interesting design decisions to ponder about.
 - Capacity to find Similar Matches (Recommendation):
+  - The capacity to find similar matches include not only geographical locations but also similar interests, likes, favors, hobbies, etc. These matching algorithms would be built based on analyzing the more factors than just pure geographical location (maybe consider the Levenshtein Distance, etc.) to recommend the user. The ability to feed the information to the user is critical in the information age as everything is going so fast, by giving the user all the consumption of data that they would need, they could be met with people without even needing to search themselves. They can consume information and learn with only a single swipe. The challenge of this would definitely be how to break down these abstract concepts such as interests, hobbies, etc. in algorithmics and data perspective to recommend the users.
 - In-app Search Algorithm:
+  - Of course, no recommendation algorithms are perfect. Therefore, we also need to enable search features so that users can search/filter to find users on their own if so desired. This is important because it would enable an extra layer of freedom for the user. Of course, there's also a layer of challenge here as determining what to be displayed in the search afterwards means that the designer would have to make the decision for the user at some level of priority, and this needs to be as objective as possible.
 - Security and Privacy of Each User:
+  - The security and privacy of each user are crtical. One user couldn't just simply switch to another link and obtain access to another user's account. The challeneg of security though is that there's often a tradeoff between security vs privacy as more security often means a tradeoff in privacy. Our program should aim to find the equilibrium between the two.
 - Minigames:
   - Minigames are a large part of it.
   - More engaging, more interesting from a data perspective
   - Challenging because each mini-game can take time to design and produce.
   - Platform of each mini-game is also ambiguous as well as how they’re going to be written
 - (Nice to have) Video Call Feature:
-
+  - 
 
 ### Idea 2: A social hangout location recommender
 Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists. An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.

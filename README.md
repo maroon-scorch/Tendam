@@ -42,7 +42,7 @@ Apps like Tinder often leave out groups by its use of collaborative filtering to
 
 #### Critical features + why they’re included + challenging aspect of each feature
 - User Profile Creation:
-  - The ability to freely customize one's profile and persona is instrumental to the functioning of a Dating App as it is the window from which others can peek, the light that is the key to understanding, grasping, the surface of their inner nature. A user profile provides the customizability that clients would desire. This could be challenging in the sense on how much degree of freedom should be relinquished to the user (and some difficulty in implementing them), perhaps what to add in the user profile or what to include in the potential options for the user. These are all interesting design decisions to ponder about.
+  - The ability to freely customize one's profile and persona is instrumental to the functioning of a Dating App as it is the window from which others can peek, the light that is the key to understanding, grasping, the surface of their inner nature. A user profile provides the customizability that clients would desire. This could be challenging in the sense on how much degree of freedom should be relinquished to the user (and some difficulty in implementing them), perhaps what to add in the user profile or what to include in the potential options for the user. These are all interesting design decisions to ponder about. Of course, with profiles, we should also think about implementing private chatting feature, blocklist, etc.
 - Capacity to find Similar Matches (Recommendation):
   - The capacity to find similar matches include not only geographical locations but also similar interests, likes, favors, hobbies, etc. These matching algorithms would be built based on analyzing the more factors than just pure geographical location (maybe consider the Levenshtein Distance, etc.) to recommend the user. The ability to feed the information to the user is critical in the information age as everything is going so fast, by giving the user all the consumption of data that they would need, they could be met with people without even needing to search themselves. They can consume information and learn with only a single swipe. The challenge of this would definitely be how to break down these abstract concepts such as interests, hobbies, etc. in algorithmics and data perspective to recommend the users.
 - In-app Search Algorithm:
@@ -55,7 +55,7 @@ Apps like Tinder often leave out groups by its use of collaborative filtering to
   - Challenging because each mini-game can take time to design and produce.
   - Platform of each mini-game is also ambiguous as well as how they’re going to be written
 - (Nice to have) Video Call Feature:
-  - 
+  - Zoom is getting very popular as the alternative to gathering during Quarantine, so our app should also follow the trend. This is done to bring people together and for matches to meet each other face to face virtually. The challenege is that incorporating video call feature would be extremely difficult.
 
 ### Idea 2: A social hangout location recommender
 Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists. An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.

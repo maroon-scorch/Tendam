@@ -36,7 +36,7 @@
 ### Idea 1: Matching Platform
 
 #### What problem does this solve?
-Apps like Tinder often leave out groups by its use of collaborative filtering to aggregate opinions; we want to make sure that everyone is equally included (wait, our app might not solve this, i.e. this might not be what our app is targeting to solve and I misunderstood the premise)
+Web Apps like Tinder often leave out groups by its use of collaborative filtering to aggregate opinions; we want to make sure that everyone is equally included (wait, our app might not solve this, i.e. this might not be what our app is targeting to solve and I misunderstood the premise)
 Most of these apps are geared towards dating and specifically towards dating for young adults
 
 #### How does this solve the problem?

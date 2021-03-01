@@ -1,18 +1,14 @@
 # cs0320 Term Project 2021
 
-**Team Members:** _Fill this in!_
-
-**Team Strengths and Weaknesses:** _Fill this in!_
-
 **Project Idea(s):** _Fill this in with three unique ideas! (Due by March 1)_
-## Team Members:
+**Team Members:**
 - Edward Yan
 - Heon Lee
 - Matthew Ji
 - Ria Rajesh
 - Ricky (Wenqi) Zhong
 
-## Team Strengths and Weaknesses: 
+**Team Strengths and Weaknesses:** 
 #### Edward Yan:
 - Strength: Broad understanding of popular APIs
 - Weakness: Documentation is totally incomprehensible, hates (paying) money

@@ -69,7 +69,9 @@ Finally, we can really be indecisive, and having an app that automatically gener
 - Focus on user-generated reviews and images:
 - As many filters as possible (distance, type of activity, type of food, etc.):
 - Machine-generated recommendations based on these factors:
-  - Recommendation is critical to a user expereience nowadays because the incentive for one to search on their own becomes less and less, and naturally there are a lot of metrics in designing the fundamental mechanisms of recommendation. For instance,
+  - Recommendation is critical to a user expereience nowadays because the incentive for one to search on their own becomes less and less, and naturally there are a lot of metrics in designing the fundamental mechanisms of recommendation.
+  - For instance, for the app search to return results, they have to be able to order their results in the general notion that the most relevant results pertaining to the keyword should be displayed first. Who is here to determine how the ordering should be conducted. In addition to ordering, there's also the subject of filtering mentioned above.
+  -  The Recommendation has to filter from a list of all contents associated with this topic to generate whatever is most relevant to this topic. However, the criteria to determine what is most relevant could be very well ambiguous and trying to categorize them objectively could lead to contentions.
 
 #### Challenges:
 Of course with each critical features mentioned above, there also comes with certain challenges here:

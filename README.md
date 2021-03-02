@@ -89,7 +89,7 @@ A turn-based strategy card game inspired by, disregarding the far larger scale: 
 #### Problem:
 In a time during the pandemic where very limited social interactions could exist outside of the boundaries of the virtual world. It's time for a new card game to offer the solace the boredom and void of many's heart.
 #### Critical Features:
-- Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity.
+- Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity - this is important because it ensures the core mechanism of the game is in place.
 - Likely some type of roguelike with levels of increasing difficulty in order for it to have replayability.
 - Unique cards with battle-type mechanics
 - A number that represents accumulated mana, with each card played costing some mana

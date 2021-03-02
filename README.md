@@ -87,7 +87,7 @@ Development platform will certainly be another issue. Is this to be made in Unit
 
 #### Critical Features:
 - Multiplayer Strategy Environment:
-- Computer Player Environment (Single Player):
+- PVP environment (Multiplayer):
 - 
 - 
 

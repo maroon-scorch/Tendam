@@ -67,7 +67,9 @@ Finally, we can really be indecisive, and having an app that automatically gener
 
 #### Critical Features:
 - Focus on user-generated reviews and images:
-- As many filters as possible (distance, type of activity, type of food, etc.):
+  - A functional advisory app should never solely rely on the recommendations of the App itself, but rather it should be built on the mutual support of users and the app. By letting the users generate their own reviews and items, this promotes a healthy ecosystem of self-referential loops to propagate the prosperity of the app. Therefore, this is indeed quite important.
+- As many filters as possible (distance, type of activity, type of food, etc.)
+  - Giving the user as many options as possible is also critical because it gives them a variety of options to help support their interests.
 - Machine-generated recommendations based on these factors:
   - Recommendation is critical to a user expereience nowadays because the incentive for one to search on their own becomes less and less, and naturally there are a lot of metrics in designing the fundamental mechanisms of recommendation.
   - For instance, for the app search to return results, they have to be able to order their results in the general notion that the most relevant results pertaining to the keyword should be displayed first. Who is here to determine how the ordering should be conducted. In addition to ordering, there's also the subject of filtering mentioned above.

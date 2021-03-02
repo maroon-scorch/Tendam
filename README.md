@@ -63,6 +63,7 @@ Think Trip Advisor but focus on domestic casual activities rather than catering 
 #### Problem:
 Lots of people try to find places to meet and hangout with friends, but the decision making process in many places simply involves performing a google search or looking up simple terms like “restaurants” in google maps. Apps that are focused on making these recommendations as well as existing with intent to gather thousands of user comments are largely nonexistent in North America. Moreover, as an international student who has little to no knowledge of interesting places to hang out, an app like this would hugely benefit anyone living in a new place!
 Trip advisor is the only really existing app for something like that in the U.S. and Canada, but it’s for tourists and nobody wants to feel like a foreigner in their own country.
+Finally, we can really be indecisive, and having an app that automatically generates recommendations can really be helpful. An interesting idea could be for friends to "swipe left or right" (like Tinder) for the recommendations, and for the app to make a final recommendation based on that. 
 
 #### Challenges:
 - Integrating existing location-based APIs (like Google Maps data) and however that will work (or using our own pathfinding algorithms to incorporate)

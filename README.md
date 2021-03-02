@@ -94,7 +94,7 @@ In a time during the pandemic where very limited social interactions could exist
 - Unique cards with battle-type mechanics
 - A number that represents accumulated mana, with each card played costing some mana
 - A unique, pretty fully-fledged backstory that users experience through gameplay
-- Numerous playable characters
+- Numerous playable characters - this is to ensure the diversity and inclusion of users of all types. Especially by enabling customization, this can offer the player a lot more variety.
 #### Challenges:
 Any game, even the most basic, will feature a pretty significant non-programming component that relates to game mechanics, game design, asset production, music, and art, which we may or may not be good at.
 Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own

@@ -93,9 +93,12 @@ Development platform will certainly be another issue. Is this to be made in Unit
 
 #### Critical Features:
 - Multiplayer Strategy Environment:
-- PVP environment (Multiplayer):
-- 
-- 
+- Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity.
+- Likely some type of roguelike with levels of increasing difficulty in order for it to have replayability.
+- Unique cards with battle-type mechanics
+- A number that represents accumulated mana, with each card played costing some mana
+- A unique, pretty fully-fledged backstory that users experience through gameplay
+- Numerous playable characters
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 

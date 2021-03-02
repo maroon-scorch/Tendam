@@ -65,16 +65,17 @@ Lots of people try to find places to meet and hangout with friends, but the deci
 Trip advisor is the only really existing app for something like that in the U.S. and Canada, but it’s for tourists and nobody wants to feel like a foreigner in their own country.
 Finally, we can really be indecisive, and having an app that automatically generates recommendations can really be helpful. An interesting idea could be for friends to "swipe left or right" (like Tinder) for the recommendations, and for the app to make a final recommendation based on that. 
 
-#### Challenges:
-- Integrating existing location-based APIs (like Google Maps data) and however that will work (or using our own pathfinding algorithms to incorporate)
-- Creating an algorithm that takes many factors into consideration (physical distance, hobbies, what similar friend groups enjoyed, etc.)
-- Getting data
-- Making use of massive databases could pose large challenges.
-
 #### Critical Features:
 - Focus on user-generated reviews and images:
 - As many filters as possible (distance, type of activity, type of food, etc.):
 - Machine-generated recommendations based on these factors:
+
+#### Challenges:
+Of course with each critical features mentioned above, there also comes with certain challenges here:
+- Integrating existing location-based APIs (like Google Maps data) and however that will work (or using our own pathfinding algorithms to incorporate)
+- Creating an algorithm that takes many factors into consideration (physical distance, hobbies, what similar friend groups enjoyed, etc.)
+- How exactly would we obtain data? How can we make sure the data isn't biased? Should we be concerned about the accessibilities of these data?
+- Making use of massive databases could pose large challenges.
 
 
 ### Idea 3: Card or Turn-Based strategy game.

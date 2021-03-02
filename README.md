@@ -58,14 +58,15 @@ Apps like Tinder often leave out groups by its use of collaborative filtering to
   - Zoom is getting very popular as the alternative to gathering during Quarantine, so our app should also follow the trend. This is done to bring people together and for matches to meet each other face to face virtually. The challenege is that incorporating video call feature would be extremely difficult.
 
 ### Idea 2: A social hangout location recommender
-Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists (Trip Advisor for Friends). An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations.
+Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists (Trip Advisor for Friends). An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations. It would recommend places that are optimal for all members of the friend group to hang out that takes physical distances as well as hobbies/things they want to do into consideration. Different friend groups can write reviews for how their hang out went with the places they went, which would affect what other people get recommended in the future. Friend groups that have similar interests will get recommended similar options.
 
 #### Problem:
-Lots of people try to find places to meet and hangout with friends, but the decision making process in many places simply involves performing a google search or looking up simple terms like “restaurants” in google maps. Apps that are focused on making these recommendations as well as existing with intent to gather thousands of user comments are largely nonexistent in North America. 
+Lots of people try to find places to meet and hangout with friends, but the decision making process in many places simply involves performing a google search or looking up simple terms like “restaurants” in google maps. Apps that are focused on making these recommendations as well as existing with intent to gather thousands of user comments are largely nonexistent in North America. Moreover, as an international student who has little to no knowledge of interesting places to hang out, an app like this would hugely benefit anyone living in a new place!
 Trip advisor is the only really existing app for something like that in the U.S. and Canada, but it’s for tourists and nobody wants to feel like a foreigner in their own country.
 
 #### Challenges:
-- Integrating existing location-based APIs (like Google Maps data) and however that will work
+- Integrating existing location-based APIs (like Google Maps data) and however that will work (or using our own pathfinding algorithms to incorporate)
+- Creating an algorithm that takes many factors into consideration (physical distance, hobbies, what similar friend groups enjoyed, etc.)
 - Getting data
 - Making use of massive databases could pose large challenges.
 

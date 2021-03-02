@@ -84,15 +84,10 @@ Of course with each critical features mentioned above, there also comes with cer
 
 
 ### Idea 3: Card or Turn-Based strategy game.
-Some examples that come to mind to think about (disregarding the far larger scale): Sid Meier’s Civilization games, Hearthstone, Slay the Spire, Gwent
+A turn-based strategy card game inspired by, disregarding the far larger scale: Sid Meier’s Civilization games, Hearthstone, Slay the Spire, Gwent, etc.
 
 #### Problem:
-Boredom.
-
-#### Challenges:
-Any game, even the most basic, will feature a pretty significant non-programming component that relates to game mechanics, game design, asset production, music, and art, which we may or may not be good at.
-Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own
-
+In a time during the pandemic where very limited social interactions could exist outside of the boundaries of the virtual world. It's time for a new card game to offer the solace the boredom and void of many's heart.
 #### Critical Features:
 - Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity.
 - Likely some type of roguelike with levels of increasing difficulty in order for it to have replayability.
@@ -100,6 +95,9 @@ Development platform will certainly be another issue. Is this to be made in Unit
 - A number that represents accumulated mana, with each card played costing some mana
 - A unique, pretty fully-fledged backstory that users experience through gameplay
 - Numerous playable characters
+#### Challenges:
+Any game, even the most basic, will feature a pretty significant non-programming component that relates to game mechanics, game design, asset production, music, and art, which we may or may not be good at.
+Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own
 
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 

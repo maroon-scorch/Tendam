@@ -57,6 +57,8 @@ Apps like Tinder often leave out groups by its use of collaborative filtering to
 - (Nice to have) Video Call Feature:
   - Zoom is getting very popular as the alternative to gathering during Quarantine, so our app should also follow the trend. This is done to bring people together and for matches to meet each other face to face virtually. The challenege is that incorporating video call feature would be extremely difficult.
 
+TA Approval: Approved if your matching algorithm is significantly complex. Also levenschtein edit distance is only for comparing words so I'm not sure that would work for this purpose.
+
 ### Idea 2: A social hangout location recommender
 Think Trip Advisor but focus on domestic casual activities rather than catering towards international tourists (Trip Advisor for Friends). An existing app that is comparable would be something like DianPing, a social media app that in China that aggregates massive amounts of data and user opinion for use in making all kinds of “restaurant”, social hangout, shopping mall, etc. recommendations. It would recommend places that are optimal for all members of the friend group to hang out that takes physical distances as well as hobbies/things they want to do into consideration. Different friend groups can write reviews for how their hang out went with the places they went, which would affect what other people get recommended in the future. Friend groups that have similar interests will get recommended similar options.
 
@@ -82,6 +84,7 @@ Of course with each critical features mentioned above, there also comes with cer
 - How exactly would we obtain data? How can we make sure the data isn't biased? Should we be concerned about the accessibilities of these data?
 - Making use of massive databases could pose large challenges.
 
+TA Approval (dlichen): I don't think there is enough algorithmic complexity and it relies too much on machine learning, so denied unless the algorithmic complexity changes.
 
 ### Idea 3: Card or Turn-Based strategy game.
 A turn-based strategy card game inspired by, disregarding the far larger scale: Sid Meier’s Civilization games, Hearthstone, Slay the Spire, Gwent, etc.
@@ -89,16 +92,19 @@ A turn-based strategy card game inspired by, disregarding the far larger scale: 
 #### Problem:
 In a time during the pandemic where very limited social interactions could exist outside of the boundaries of the virtual world. It's time for a new card game to offer the solace the boredom and void of many's heart.
 #### Critical Features:
-- Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity.
+- Possible PVP environment (Multiplayer), but focus is on single-player environemnt for ease of development and simplicity - this is important because it ensures the core mechanism of the game is in place.
 - Likely some type of roguelike with levels of increasing difficulty in order for it to have replayability.
-- Unique cards with battle-type mechanics
+- Unique cards with battle-type mechanics to increase appeal by variety.
 - A number that represents accumulated mana, with each card played costing some mana
 - A unique, pretty fully-fledged backstory that users experience through gameplay
-- Numerous playable characters
+- Numerous playable characters - this is to ensure the diversity and inclusion of users of all types. Especially by enabling customization, this can offer the player a lot more variety.
 #### Challenges:
 Any game, even the most basic, will feature a pretty significant non-programming component that relates to game mechanics, game design, asset production, music, and art, which we may or may not be good at.
 Development platform will certainly be another issue. Is this to be made in Unity? Unity code is written in C#, which is similar to Java but not the same. Developing on an engine not all of us have experience in may also pose difficulties of its own
 
+TA Approval (dlichen): Maybe if you have an AI player because currently there isn't any algorithmic complexity. 
+
+No need to resubmit.
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 
 ## Meetings

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd xmlns="http://pmd.sourceforge.net/report/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/report/2.0.0 http://pmd.sourceforge.net/report_2_0_0.xsd"
+    version="6.13.0" timestamp="2021-03-26T13:49:58.145">
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/maps/Haversine.java">
+<violation beginline="25" endline="25" begincolumn="36" endcolumn="46" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="Haversine" method="distance" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="26" endline="26" begincolumn="35" endcolumn="45" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="Haversine" method="distance" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/maps/NearestCommand.java">
+<violation beginline="42" endline="42" begincolumn="13" endcolumn="31" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="NearestCommand" method="findNearestTraversableNode" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/maps/RouteCommand.java">
+<violation beginline="99" endline="99" begincolumn="10" endcolumn="37" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="RouteCommand" method="shortestPathIntersection" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="99" endline="99" begincolumn="44" endcolumn="71" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="RouteCommand" method="shortestPathIntersection" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="105" endline="105" begincolumn="10" endcolumn="27" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="RouteCommand" method="shortestPathIntersection" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="105" endline="105" begincolumn="34" endcolumn="51" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.maps" class="RouteCommand" method="shortestPathIntersection" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/maps/WaysCommand.java">
+<violation beginline="3" endline="3" begincolumn="1" endcolumn="44" rule="ImportFromSamePackage" ruleset="Error Prone" package="edu.brown.cs.student.maps" class="WaysCommand" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_errorprone.html#importfromsamepackage" priority="3">
+No need to import a type that lives in the same package
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/Common.java">
+<violation beginline="125" endline="125" begincolumn="31" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="Common" method="calcDistance" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/KDTree.java">
+<violation beginline="340" endline="340" begincolumn="10" endcolumn="23" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="KDTree" method="findKNNRecur" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="443" endline="443" begincolumn="15" endcolumn="31" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="KDTree" method="height" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="443" endline="443" begincolumn="37" endcolumn="47" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="KDTree" method="height" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="443" endline="443" begincolumn="53" endcolumn="63" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="KDTree" method="height" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/Main.java">
+<violation beginline="124" endline="124" begincolumn="40" endcolumn="42" rule="UnusedFormalParameter" ruleset="Best Practices" package="edu.brown.cs.student.stars" class="Main" method="clearStarData" variable="req" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'req'.
+</violation>
+<violation beginline="124" endline="124" begincolumn="54" endcolumn="56" rule="UnusedFormalParameter" ruleset="Best Practices" package="edu.brown.cs.student.stars" class="Main" method="clearStarData" variable="res" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'res'.
+</violation>
+<violation beginline="132" endline="132" begincolumn="53" endcolumn="55" rule="UnusedFormalParameter" ruleset="Best Practices" package="edu.brown.cs.student.stars" class="Main" method="loadStarData" variable="res" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_bestpractices.html#unusedformalparameter" priority="3">
+Avoid unused method parameters such as 'res'.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/NaiveNeighbors.java">
+<violation beginline="104" endline="104" begincolumn="15" endcolumn="30" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="105" endline="105" begincolumn="16" endcolumn="61" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="105" endline="105" begincolumn="68" endcolumn="87" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="114" endline="114" begincolumn="17" endcolumn="17" rule="UnusedLocalVariable" ruleset="Best Practices" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" variable="a" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_bestpractices.html#unusedlocalvariable" priority="3">
+Avoid unused local variables such as 'a'.
+</violation>
+<violation beginline="114" endline="114" begincolumn="22" endcolumn="70" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="126" endline="126" begincolumn="15" endcolumn="35" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+<violation beginline="126" endline="126" begincolumn="42" endcolumn="46" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="NaiveNeighbors" method="getKStars" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+<file name="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/Stars.java">
+<violation beginline="58" endline="58" begincolumn="33" endcolumn="50" rule="UselessParentheses" ruleset="Code Style" package="edu.brown.cs.student.stars" class="Stars" method="loadStarData" externalInfoUrl="https://pmd.github.io/pmd-6.13.0/pmd_rules_java_codestyle.html#uselessparentheses" priority="4">
+Useless parentheses.
+</violation>
+</file>
+</pmd>

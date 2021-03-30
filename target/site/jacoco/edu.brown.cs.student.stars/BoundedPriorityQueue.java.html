@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BoundedPriorityQueue.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.stars</a> &gt; <span class="el_source">BoundedPriorityQueue.java</span></div><h1>BoundedPriorityQueue.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.stars;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.Random;
+
+/**
+ * Class for a bounded priority queue.
+ * @param &lt;T&gt; Any type that implements the comparable interface
+ */
+public class BoundedPriorityQueue&lt;T extends Comparable&lt;T&gt;&gt; {
+  private int bound;
+  private PriorityQueue&lt;T&gt; pq;
+
+  /**
+   * Constructs a bounded priority queue,
+   * which stores items in reversed order of their priority.
+   * @param bound max number of items in the queue
+   */
+<span class="fc" id="L22">  public BoundedPriorityQueue(int bound) {</span>
+<span class="fc" id="L23">    this.bound = bound;</span>
+<span class="fc" id="L24">    this.pq = new PriorityQueue&lt;&gt;(bound, Collections.reverseOrder());</span>
+<span class="fc" id="L25">  }</span>
+
+  /**
+   * Inserts the item into the bounded priority queue.
+   * @param item item to be inserted
+   */
+  public void add(T item) {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">    if (pq.size() &lt; bound) {</span>
+<span class="fc" id="L33">      pq.add(item);</span>
+      // if bound is reached, compare new item with the first item in queue
+    } else {
+<span class="fc" id="L36">      int comp = pq.peek().compareTo(item);</span>
+      // if new item has higher priority, take out the old item before insertion
+<span class="fc bfc" id="L38" title="All 2 branches covered.">      if (comp &gt; 0) {</span>
+<span class="fc" id="L39">        pq.poll();</span>
+<span class="fc" id="L40">        pq.add(item);</span>
+        // if new item has equal priority, randomly decided if we insert it
+<span class="fc bfc" id="L42" title="All 2 branches covered.">      } else if (comp == 0) {</span>
+<span class="fc" id="L43">        Random random = new Random();</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (random.nextBoolean()) {  /// need to test for randomness</span>
+<span class="fc" id="L45">          pq.poll();</span>
+<span class="fc" id="L46">          pq.add(item);</span>
+        }
+      }
+    }
+<span class="fc" id="L50">  }</span>
+
+  /**
+   * Retrieves, but does not remove, the head of this queue,
+   * which is the element with the lowest priority,
+   * or returns null if this queue is empty.
+   * @return the head of the queue
+   */
+  public T peekLowestPriority() {
+<span class="fc" id="L59">    return pq.peek();</span>
+  }
+
+  /**
+   * Returns the number of elements in the queue.
+   * @return number of elements
+   */
+  public int size() {
+<span class="fc" id="L67">    return pq.size();</span>
+  }
+
+  /**
+   * Returns a list containing all of the elements in this queue, preserving priority order.
+   * @return a list of all elements
+   */
+  public List&lt;?&gt; toList() {
+<span class="fc" id="L75">    PriorityQueue&lt;T&gt; pqTemp = new PriorityQueue&lt;&gt;(pq);</span>
+<span class="fc" id="L76">    List&lt;T&gt; list = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    for (int i = 0; i &lt; size(); i++) {</span>
+<span class="fc" id="L78">      list.add(pqTemp.poll());</span>
+    }
+<span class="fc" id="L80">    Collections.reverse(list);</span>
+<span class="fc" id="L81">    return list;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

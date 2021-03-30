@@ -1,0 +1,7 @@
+INPUT
+stars data/stars/star-malformed.csv
+stars data/stars/star-missing-value.csv
+OUTPUT
+ERROR:
+ERROR:
+END

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RouteCommand.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.maps</a> &gt; <span class="el_source">RouteCommand.java</span></div><h1>RouteCommand.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.maps;
+
+import edu.brown.cs.student.stars.*;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+
+/**
+ * Class for the route command.
+ */
+<span class="fc" id="L16">public class RouteCommand implements Command {</span>
+
+  @Override
+  public void execute(String params) throws SQLException, ExecutionException {
+<span class="fc bfc" id="L20" title="All 2 branches covered.">    if (MapCommand.getDatabase() == null) {</span>
+<span class="fc" id="L21">      System.err.println(&quot;ERROR: database not loaded yet&quot;);</span>
+<span class="fc" id="L22">      return;</span>
+    }
+<span class="fc bfc" id="L24" title="All 2 branches covered.">    if (Common.checkRegex(params,</span>
+        &quot;^-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)&quot;
+                + &quot;?( dijkstra)?&quot;)) {
+<span class="fc" id="L27">      String[] p = params.split(&quot; &quot;);</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">      int option = (p.length == 5) ? 1 : 0; // if user enters &quot;dijkstra&quot;, set option to 1</span>
+
+<span class="fc" id="L30">      List&lt;String&gt; paths = shortestPathNodes(</span>
+<span class="fc" id="L31">          Double.parseDouble(p[0]),</span>
+<span class="fc" id="L32">          Double.parseDouble(p[1]),</span>
+<span class="fc" id="L33">          Double.parseDouble(p[2]),</span>
+<span class="fc" id="L34">          Double.parseDouble(p[3]), option);</span>
+<span class="fc bfc" id="L35" title="All 2 branches covered.">      for (String path : paths) {</span>
+<span class="fc" id="L36">        System.out.println(path);</span>
+<span class="fc" id="L37">      }</span>
+
+<span class="fc bfc" id="L39" title="All 2 branches covered.">    } else if (Common.checkRegex(params,</span>
+        &quot;^\&quot;([^\&quot;])*\&quot;\\s\&quot;([^\&quot;])*\&quot;\\s\&quot;([^\&quot;])*\&quot;\\s\&quot;([^\&quot;])*\&quot;( dijkstra)?&quot;)) {
+      // splitting by space, unless in quotes
+<span class="fc" id="L42">      String[] p = params.split(&quot; (?=([^\&quot;]*\&quot;[^\&quot;]*\&quot;)*[^\&quot;]*$)&quot;);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">      int option = (p.length == 5) ? 1 : 0; // if user enters &quot;dijkstra&quot;, set option to 1</span>
+<span class="fc" id="L44">      List&lt;String&gt; paths = shortestPathIntersection(</span>
+<span class="fc" id="L45">          Common.removeQuotes(p[0]),</span>
+<span class="fc" id="L46">          Common.removeQuotes(p[1]),</span>
+<span class="fc" id="L47">          Common.removeQuotes(p[2]),</span>
+<span class="fc" id="L48">          Common.removeQuotes(p[3]), option);</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">      for (String path : paths) {</span>
+<span class="fc" id="L50">        System.out.println(path);</span>
+<span class="fc" id="L51">      }</span>
+
+<span class="fc" id="L53">    } else {</span>
+<span class="fc" id="L54">      System.err.println(&quot;ERROR: Wrong parameters&quot;);</span>
+    }
+<span class="fc" id="L56">  }</span>
+
+  /**
+   * Find the shortest path from the traversable node closest to (lat1, lon1)
+   * to the traversable node closest to (lat2, lon2).
+   *
+   * @param lat1   latitude of the northwest point
+   * @param lon1   longitude of the northwest point
+   * @param lat2   latitude of the southeast point
+   * @param lon2   longitude of the southeast point
+   * @param option if 0, apply A* algorithm, if 1, apply dijkstra algorithm
+   * @return list of string representing the path
+   * @throws SQLException       if any error occurs during the SQL query
+   * @throws ExecutionException if errors occur during caching
+   */
+  public List&lt;String&gt; shortestPathNodes(double lat1, double lon1, double lat2, double lon2,
+                                        int option)
+      throws SQLException, ExecutionException {
+<span class="fc" id="L74">    NearestCommand nearest = new NearestCommand();</span>
+<span class="fc" id="L75">    Node nodeStart = nearest.findNearestTraversableNode(lat1, lon1);</span>
+<span class="fc" id="L76">    Node nodeEnd = nearest.findNearestTraversableNode(lat2, lon2);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">    Map&lt;String, Path&gt; paths = (option == 0)</span>
+<span class="fc" id="L78">        ? MapCommand.getPathfinder().aStar(nodeStart, nodeEnd)</span>
+<span class="fc" id="L79">        : MapCommand.getPathfinder().dijkstra(nodeStart, nodeEnd);</span>
+<span class="fc" id="L80">    return parsePaths(paths, nodeStart.getID(), nodeEnd.getID());</span>
+  }
+
+  /**
+   * Find the shortest path from the intersection of Street 1 and Cross-street 1
+   * to the intersection of Street 2 and Cross-street 2.
+   *
+   * @param street1      street 1
+   * @param crossStreet1 Cross-street 1
+   * @param street2      street 2
+   * @param crossStreet2 Cross-street 2
+   * @param option Option for a* or dijkstra; a* if option is 0, dijkstra if option is 1
+   * @return list of string representing the path
+   * @throws SQLException       if any error occurs during the SQL query
+   * @throws ExecutionException if errors occur during caching
+   */
+  public List&lt;String&gt; shortestPathIntersection(String street1, String crossStreet1,
+                                               String street2, String crossStreet2, int option)
+      throws SQLException, ExecutionException {
+<span class="pc bpc" id="L99" title="2 of 4 branches missed.">    if ((street1.equals(crossStreet1)) || (street2.equals(crossStreet2))) {</span>
+<span class="nc" id="L100">      System.err.println(&quot;ERROR: cannot find intersection between the same street&quot;);</span>
+<span class="nc" id="L101">      return new ArrayList&lt;&gt;();</span>
+    }
+<span class="fc" id="L103">    Node intersect1 = findIntersection(street1, crossStreet1);</span>
+<span class="fc" id="L104">    Node intersect2 = findIntersection(street2, crossStreet2);</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">    if ((intersect1 == null) || (intersect2 == null)) {</span>
+<span class="fc" id="L106">      System.err.println(&quot;ERROR: streets do not exist, are non-traversable, or do not intersect&quot;);</span>
+<span class="fc" id="L107">      return new ArrayList&lt;&gt;();</span>
+    }
+<span class="fc" id="L109">    return shortestPathNodes(intersect1.getCoordinate()[0], intersect1.getCoordinate()[1],</span>
+<span class="fc" id="L110">        intersect2.getCoordinate()[0], intersect2.getCoordinate()[1], option);</span>
+  }
+
+  /**
+   * Finds the intersection between two traversable streets.
+   * Two streets intersect if their start nodes or end nodes overlap.
+   *
+   * @param street      street1
+   * @param crossStreet street2
+   * @return intersection node if it is found
+   * null if there is no intersection, or if any of the streets is non-traversable
+   * @throws SQLException if error occurs during SQL query
+   */
+  public Node findIntersection(String street, String crossStreet) throws SQLException {
+    Node intersect;
+<span class="fc" id="L125">    ResultSet rs = MapCommand.getDatabase().runSQLQuery(</span>
+        &quot;SELECT node.id, node.latitude, node.longitude FROM way JOIN node WHERE &quot;
+            + &quot;(way.type not in (\&quot;unclassified\&quot;, \&quot;\&quot;)) and &quot;
+            + &quot;(way.name = \&quot;&quot; + street + &quot;\&quot;) and &quot;
+            + &quot;((way.start = node.id) or (way.end = node.id)) &quot;
+
+            + &quot;INTERSECT &quot;
+
+            + &quot;SELECT node.id, node.latitude, node.longitude FROM way JOIN node WHERE &quot;
+            + &quot;(way.type not in (\&quot;unclassified\&quot;, \&quot;\&quot;)) and &quot;
+            + &quot;(way.name = \&quot;&quot; + crossStreet + &quot;\&quot;) and &quot;
+            + &quot;((way.start = node.id) or (way.end = node.id));&quot;);
+
+<span class="fc bfc" id="L138" title="All 2 branches covered.">    if (rs.next()) {</span>
+<span class="fc" id="L139">      intersect = new Node(rs.getString(1),</span>
+<span class="fc" id="L140">          rs.getDouble(&quot;latitude&quot;),</span>
+<span class="fc" id="L141">          rs.getDouble(&quot;longitude&quot;));</span>
+<span class="fc" id="L142">      return intersect;</span>
+    } else {
+<span class="fc" id="L144">      return null;</span>
+    }
+
+  }
+
+  /**
+   * Parses the shortest paths into a list of output string.
+   *
+   * @param paths       shortest paths found
+   * @param startNodeID start node
+   * @param endNodeID   end node
+   * @return list of strings, each representing the path from one node to the next
+   */
+  public List&lt;String&gt; parsePaths(Map&lt;String, Path&gt; paths, String startNodeID, String endNodeID) {
+<span class="fc" id="L158">    LinkedList&lt;String&gt; output = new LinkedList&lt;&gt;();</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">    if (paths == null) { // if no path is found</span>
+<span class="fc" id="L160">      output.add(startNodeID + &quot; -/- &quot; + endNodeID);</span>
+    } else {
+<span class="fc" id="L162">      String currentNode = endNodeID;</span>
+<span class="fc bfc" id="L163" title="All 2 branches covered.">      while (!currentNode.equals(startNodeID)) {</span>
+<span class="fc" id="L164">        Path p = paths.get(currentNode);</span>
+<span class="fc" id="L165">        String path = p.toString();</span>
+<span class="fc" id="L166">        output.addFirst(path);</span>
+<span class="fc" id="L167">        currentNode = p.getStart().getID();</span>
+<span class="fc" id="L168">      }</span>
+    }
+<span class="fc" id="L170">    return output;</span>
+  }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

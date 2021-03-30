@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Node.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.maps</a> &gt; <span class="el_source">Node.java</span></div><h1>Node.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.maps;
+
+import edu.brown.cs.student.stars.HasCoordinate;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Class that represents a graph node.
+ */
+public class Node implements Vertex, HasCoordinate, Comparable&lt;Node&gt; {
+
+  private String id;
+  private double[] coordinate;
+  private double distance;
+
+  /**
+   * Constructs a node.
+   * @param id node id
+   * @param latitude node's latitude
+   * @param longitude node's longitude
+   */
+<span class="fc" id="L27">  public Node(String id, double latitude, double longitude) {</span>
+<span class="fc" id="L28">    this.id = id;</span>
+<span class="fc" id="L29">    this.coordinate = new double[]{latitude, longitude};</span>
+<span class="fc" id="L30">    this.distance = -1;</span>
+<span class="fc" id="L31">  }</span>
+
+  @Override
+  public double[] getCoordinate() {
+<span class="fc" id="L35">    return Arrays.copyOf(coordinate, coordinate.length);</span>
+  }
+
+  @Override
+  public double getDistance() {
+<span class="nc" id="L40">    return distance;</span>
+  }
+
+  @Override
+  public void setDistance(double distance) {
+<span class="nc" id="L45">    this.distance = distance;</span>
+<span class="nc" id="L46">  }</span>
+
+  /**
+   * Finds all neighbors of the current node.
+   * @return a list of paths from the current node to its neighbors
+   * @throws SQLException if any errors occur during SQL query
+   */
+  @Override
+  public List&lt;Path&gt; findNeighbors() throws SQLException {
+<span class="fc" id="L55">    List&lt;Path&gt; paths = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L56">    List&lt;String&gt; vals = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L57">    vals.add(this.id);</span>
+<span class="fc" id="L58">    ResultSet rs = MapCommand.getDatabase().runSQLQuery(</span>
+            &quot;SELECT way.id, way.end, node.latitude, node.longitude &quot;
+                + &quot;FROM way JOIN node ON &quot;
+                + &quot;(way.start = \&quot;&quot; + this.id + &quot;\&quot;) and (node.id = way.end);&quot;);
+<span class="fc bfc" id="L62" title="All 2 branches covered.">    while (rs.next()) {</span>
+<span class="fc" id="L63">      String neighborID = rs.getString(&quot;end&quot;);</span>
+<span class="fc" id="L64">      String wayID = rs.getString(&quot;id&quot;);</span>
+<span class="fc" id="L65">      Double neighborLat = rs.getDouble(&quot;latitude&quot;);</span>
+<span class="fc" id="L66">      Double neighborLon = rs.getDouble(&quot;longitude&quot;);</span>
+<span class="fc" id="L67">      Double neighborDist = Haversine.distance(this.coordinate[0],</span>
+<span class="fc" id="L68">              this.coordinate[1], neighborLat, neighborLon);</span>
+<span class="fc" id="L69">      Node neighbor = new Node(neighborID, neighborLat, neighborLon);</span>
+<span class="fc" id="L70">      Path pathToNeighbor = new Path(new Node(this.id, this.coordinate[0], this.coordinate[1]),</span>
+<span class="fc" id="L71">              neighbor, neighborDist, wayID);</span>
+<span class="fc" id="L72">      paths.add(pathToNeighbor);</span>
+<span class="fc" id="L73">    }</span>
+<span class="fc" id="L74">    return paths;</span>
+  }
+
+  @Override
+  public Path edgeToSelf(double weight) {
+<span class="fc" id="L79">    return new Path(this, this, weight, &quot;&quot;);</span>
+  }
+
+  /**
+   * Overrides hashCode.
+   * @return Positive number if greater, 0 if same, negative if less
+   */
+  @Override
+  public int hashCode() {
+<span class="fc" id="L88">    return Objects.hash(getSigFields());</span>
+  }
+
+  /**
+   * Overriding equality for Node object.
+   *
+   * @param secondNode Node to be checked if equal to this Node.
+   * @return True if equal, false if unequal.
+   */
+  @Override
+  public boolean equals(Object secondNode) {
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">    if (this == secondNode) {</span>
+<span class="nc" id="L100">      return true;</span>
+    }
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">    if (!(secondNode instanceof Node)) {</span>
+<span class="nc" id="L103">      return false;</span>
+    }
+<span class="fc" id="L105">    Node second = (Node) secondNode;</span>
+<span class="fc bfc" id="L106" title="All 2 branches covered.">    for (int i = 0; i &lt; this.getSigFields().length; i++) {</span>
+<span class="fc bfc" id="L107" title="All 2 branches covered.">      if (!Objects.equals(this.getSigFields()[i], second.getSigFields()[i])) {</span>
+<span class="fc" id="L108">        return false;</span>
+      }
+    }
+<span class="fc" id="L111">    return true;</span>
+  }
+
+  /**
+   * Gets the significant fields as an array of objects.
+   * @return significant field of node object
+   */
+  private Object[] getSigFields() {
+<span class="fc" id="L119">    Object[] result = {id, distance};</span>
+<span class="fc" id="L120">    return result;</span>
+  }
+
+  /**
+   * Compares two stars according to their distance value.
+   * @param n Another node
+   * @return 0 if distance is equal, 1 if larger, -1 if smaller
+   */
+  @Override
+  public int compareTo(Node n) {
+<span class="nc" id="L130">    return Double.compare(distance, n.getDistance());</span>
+  }
+
+  @Override
+  public String getID() {
+<span class="fc" id="L135">    return id;</span>
+  }
+
+  @Override
+  public String toString() {
+<span class="fc" id="L140">    return id;</span>
+  }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

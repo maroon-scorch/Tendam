@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<pmd-cpd>
+   <duplication lines="51" tokens="266">
+      <file line="11"
+            path="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/NaiveNeighbors.java"/>
+      <file line="10"
+            path="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/Neighbors.java"/>
+      <codefragment><![CDATA[public class NaiveNeighbors implements Command {
+
+  @Override
+  public void execute(String params) {
+
+    if (Common.getAllStars() == null) {
+      System.err.println("ERROR: Star data not loaded yet");
+    } else {
+
+      if (Common.checkRegex(params,
+          "^\\d+\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?")) {
+
+        String[] p = params.split(" ");
+        List<Star> stars = findKNearestNeighbor(
+            Integer.parseInt(p[0]),
+            Double.parseDouble(p[1]),
+            Double.parseDouble(p[2]),
+            Double.parseDouble(p[3]));
+
+        String output = Star.toString(stars);
+        if (!output.equals("")) {
+          System.out.println(Star.toString(stars));
+        }
+
+      } else if (Common.checkRegex(params, "^\\d+\\s\"([^\"])*\"")) {
+
+        String[] p = params.split(" ", 2);
+        List<Star> stars = findKNearestNeighbor(Integer.parseInt(p[0]), Common.removeQuotes(p[1]));
+
+        String output = Star.toString(stars);
+        if (!output.equals("")) {
+          System.out.println(Star.toString(stars));
+        }
+
+      } else {
+        System.err.println("ERROR: Wrong parameters");
+      }
+    }
+  }
+
+  /**
+   * Finds the closest k stars to a given location.
+   *
+   * @param k Number of neighbors to be found
+   * @param x x coordinates of the location
+   * @param y y coordinates of the location
+   * @param z z coordinates of the location
+   * @return A list of k closest stars
+   */
+  public List<Star> findKNearestNeighbor(int k, double x, double y, double z) {
+    double[] currentCoordinate = new double[]{x, y, z};]]></codefragment>
+   </duplication>
+   <duplication lines="51" tokens="266">
+      <file line="11"
+            path="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/NaiveRadius.java"/>
+      <file line="9"
+            path="/Users/heonlee/Desktop/Brown/cs0320/maps-1-2-hlee184-jyu111/src/main/java/edu/brown/cs/student/stars/Radius.java"/>
+      <codefragment><![CDATA[public class NaiveRadius implements Command {
+
+  @Override
+  public void execute(String params) {
+
+    if (Common.getAllStars() == null) {
+      System.err.println("ERROR: Star data not loaded yet");
+    } else {
+
+      if (Common.checkRegex(params,
+          "^\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?")) {
+
+        String[] p = params.split(" ");
+        List<Star> stars = findStarWithinRadius(
+            Double.parseDouble(p[0]),
+            Double.parseDouble(p[1]),
+            Double.parseDouble(p[2]),
+            Double.parseDouble(p[3]));
+
+        String output = Star.toString(stars);
+        if (!output.equals("")) {
+          System.out.println(Star.toString(stars));
+        }
+
+      } else if (Common.checkRegex(params, "^\\d+(?:\\.\\d+)?\\s\"([^\"])*\"")) {
+
+        String[] p = params.split(" ", 2);
+        List<Star> stars = findStarWithinRadius(Integer.parseInt(p[0]), Common.removeQuotes(p[1]));
+
+        String output = Star.toString(stars);
+        if (!output.equals("")) {
+          System.out.println(Star.toString(stars));
+        }
+
+      } else {
+        System.err.println("ERROR: Wrong parameters");
+      }
+    }
+  }
+
+  /**
+   * Finds all stars within distance r from a given location.
+   *
+   * @param r a given radius
+   * @param x x coordinates of the location
+   * @param y y coordinates of the location
+   * @param z z coordinates of the location
+   * @return all stars within the given distance
+   */
+  public List<Star> findStarWithinRadius(double r, double x, double y, double z) {
+    double[] currentCoordinate = new double[]{x, y, z};]]></codefragment>
+   </duplication>
+</pmd-cpd>

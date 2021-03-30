@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Stars.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.stars</a> &gt; <span class="el_source">Stars.java</span></div><h1>Stars.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.stars;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+
+/**
+ * Class for the stars command.
+ */
+
+<span class="fc" id="L16">public class Stars implements Command {</span>
+
+<span class="fc" id="L18">  private final List&lt;String&gt; EXPECTED_HEADERS = new ArrayList&lt;&gt;(</span>
+<span class="fc" id="L19">      Arrays.asList(&quot;StarID&quot;, &quot;ProperName&quot;, &quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;));</span>
+<span class="fc" id="L20">  private final List&lt;String&gt; EXPECTED_DATA_FORMAT = new ArrayList&lt;&gt;(</span>
+<span class="fc" id="L21">      Arrays.asList(&quot;^\\d+&quot;, &quot;(?:.*)?&quot;, &quot;-?\\d+(?:\\.\\d+)?&quot;,</span>
+          &quot;-?\\d+(?:\\.\\d+)?&quot;, &quot;-?\\d+(?:\\.\\d+)?&quot;));
+
+
+  @Override
+  public void execute(String params) {
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">    if (Common.checkRegex(params, &quot;[^\\s]+&quot;)) {</span>
+<span class="fc" id="L28">      String str = loadStarData(params);</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">      if (str.substring(0, 5).equals(&quot;ERROR&quot;)) {</span>
+<span class="fc" id="L30">        System.err.println(str);</span>
+      } else {
+<span class="fc" id="L32">        System.out.println(str);</span>
+      }
+<span class="fc" id="L34">    } else {</span>
+<span class="nc" id="L35">      System.err.println(&quot;ERROR: Wrong parameters&quot;);</span>
+    }
+<span class="fc" id="L37">  }</span>
+
+  /**
+   * Loads star data from filepath, stores it in Common.allStars.
+   * Reports an error if file is not found, file contains malformed data, or if file is empty
+   *
+   * @param filePath Path to the file containing star data
+   * @return a String confirming the number of stars read
+   *         or a String indicating error
+   */
+  public String loadStarData(String filePath) {
+    try {
+<span class="fc" id="L49">      CSVParser parser = new CSVParser(new FileReader(filePath, StandardCharsets.UTF_8));</span>
+<span class="fc" id="L50">      List&lt;LinkedHashMap&lt;String, String&gt;&gt; starData = parser.parseAll();</span>
+      //if (starData != null) {
+<span class="fc" id="L52">      boolean correctFormat =</span>
+<span class="fc" id="L53">          CSVParser.checkFormat(starData, EXPECTED_HEADERS, EXPECTED_DATA_FORMAT);</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">      if (correctFormat) {</span>
+<span class="fc" id="L55">        List&lt;Star&gt; allStars = new ArrayList&lt;&gt;();</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        for (HashMap&lt;String, String&gt; star : starData) {</span>
+<span class="fc" id="L57">          Star s = new Star(</span>
+<span class="fc" id="L58">              Integer.parseInt((star.get(&quot;StarID&quot;))),</span>
+<span class="fc" id="L59">              star.get(&quot;ProperName&quot;),</span>
+<span class="fc" id="L60">              Double.parseDouble(star.get(&quot;X&quot;)),</span>
+<span class="fc" id="L61">              Double.parseDouble(star.get(&quot;Y&quot;)),</span>
+<span class="fc" id="L62">              Double.parseDouble(star.get(&quot;Z&quot;)));</span>
+<span class="fc" id="L63">          allStars.add(s);</span>
+<span class="fc" id="L64">        }</span>
+<span class="fc" id="L65">        Common.setAllStars(allStars);</span>
+<span class="fc" id="L66">        int numStars = Common.getAllStars().size();</span>
+<span class="fc" id="L67">        return &quot;Read &quot; + numStars + &quot; stars from &quot; + filePath;</span>
+      } else {
+<span class="fc" id="L69">        return &quot;ERROR: CSV file contains malformed data&quot;;</span>
+      }
+//      } else {
+//        return &quot;ERROR: Empty data file&quot;;
+//      }
+<span class="nc" id="L74">    } catch (IOException ioe) {</span>
+<span class="nc" id="L75">      return &quot;ERROR: &quot; + ioe.getMessage();</span>
+    }
+  }
+}
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

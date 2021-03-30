@@ -1,0 +1,11 @@
+INPUT
+map data/maps/smallMaps.sqlite3
+nearest 41 -71
+map data/maps/emptyMaps.sqlite3
+nearest 41 -71
+ways 100 0 0 100
+OUTPUT
+map set to data/maps/smallMaps.sqlite3
+/n/0
+map set to data/maps/emptyMaps.sqlite3
+END

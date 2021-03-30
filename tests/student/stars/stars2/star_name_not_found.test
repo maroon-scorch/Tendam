@@ -1,0 +1,9 @@
+INPUT
+stars data/stars/ten-star.csv
+radius 10 "This star does not exist"
+neighbor 10 "This star does not exist"
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+ERROR:
+ERROR:
+END

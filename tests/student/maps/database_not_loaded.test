@@ -1,0 +1,7 @@
+INPUT
+route "United States of America" "Round Hill Road" "Golf Club Road" "Round Hill Road"
+map data/maps
+route "United States of America" "Round Hill Road" "Golf Club Road" "Round Hill Road"
+OUTPUT
+ERROR:
+END

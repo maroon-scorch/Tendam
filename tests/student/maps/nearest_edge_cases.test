@@ -1,0 +1,13 @@
+INPUT
+map data/maps/noTraversablePathMaps.sqlite3
+nearest 0 0
+map data/maps/oneNodeNoWay.sqlite3
+nearest 0 0
+map data/maps/oneTraversableNode.sqlite3
+nearest 10000 -100000
+OUTPUT
+map set to data/maps/noTraversablePathMaps.sqlite3
+map set to data/maps/oneNodeNoWay.sqlite3
+map set to data/maps/oneTraversableNode.sqlite3
+/n/0
+END

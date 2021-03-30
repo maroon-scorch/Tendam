@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Star.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.stars</a> &gt; <span class="el_source">Star.java</span></div><h1>Star.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.stars;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
+/**
+ * Class that represents a star.
+ */
+//public class Star&lt;Star extends HasCoordinate&lt;Star&gt;&gt; implements HasCoordinate&lt;Star&gt; {
+public class Star implements HasCoordinate, Comparable&lt;Star&gt; {
+  private int starID;
+  private String name;
+  private double[] coordinate;
+  private double distance;
+
+  /**
+   * Construtor to set up a Star.
+   *
+   * @param starID star's unique ID
+   * @param name   star's name
+   * @param x      x coordinate of star's location
+   * @param y      y coordinate of star's location
+   * @param z      z coordinate of star's location
+   */
+<span class="fc" id="L26">  public Star(int starID, String name, double x, double y, double z) {</span>
+<span class="fc" id="L27">    this.starID = starID;</span>
+<span class="fc" id="L28">    this.name = name;</span>
+<span class="fc" id="L29">    this.coordinate = new double[]{x, y, z};</span>
+<span class="fc" id="L30">  }</span>
+
+  /**
+   * Accesses a star's StarID.
+   * @return StarID
+   */
+  public int getID() {
+<span class="fc" id="L37">    return starID;</span>
+  }
+
+  /**
+   * Accesses a star's name.
+   * @return Star name
+   */
+  public String getName() {
+<span class="fc" id="L45">    return name;</span>
+  }
+
+  /**
+   * Accesses a star's coordinate.
+   * @return coordinate
+   */
+  @Override
+  public double[] getCoordinate() {
+<span class="fc" id="L54">    return Arrays.copyOf(coordinate, coordinate.length);</span>
+  }
+
+  /**
+   * Accesses a star's distance from a point.
+   * @return distance
+   */
+  public double getDistance() {
+<span class="fc" id="L62">    return distance;</span>
+  }
+
+  /**
+   * Mutates a star's distance.
+   * @param d the star's distance from another point
+   */
+  @Override
+  public void setDistance(double d) {
+<span class="fc" id="L71">    distance = d;</span>
+<span class="fc" id="L72">  }</span>
+
+  /**
+   * Overrides hashCode.
+   * @return Positive number if greater, 0 if same, negative if less
+   */
+  @Override
+  public int hashCode() {
+<span class="nc" id="L80">    return Objects.hash(getSigFields());</span>
+  }
+
+  /**
+   * Overriding equality for Star object.
+   *
+   * @param secondStar Star to be checked if equal to this Star.
+   * @return True if equal, false if unequal.
+   */
+  @Override
+  public boolean equals(Object secondStar) {
+<span class="fc bfc" id="L91" title="All 2 branches covered.">    if (this == secondStar) {</span>
+<span class="fc" id="L92">      return true;</span>
+    }
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">    if (!(secondStar instanceof Star)) {</span>
+<span class="nc" id="L95">      return false;</span>
+    }
+<span class="fc" id="L97">    Star second = (Star) secondStar;</span>
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">    for (int i = 0; i &lt; this.getSigFields().length; ++i) {</span>
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">      if (!Objects.equals(this.getSigFields()[i], second.getSigFields()[i])) {</span>
+<span class="fc" id="L100">        return false;</span>
+      }
+    }
+<span class="nc" id="L103">    return true;</span>
+  }
+
+  /**
+   * Gets the significant fields as an array of objects.
+   * @return significant field of star object
+   */
+  private Object[] getSigFields() {
+<span class="fc" id="L111">    Object[] result = {starID, name, coordinate, distance};</span>
+<span class="fc" id="L112">    return result;</span>
+  }
+
+  /**
+   * Compares two stars according to their distance value.
+   * @param s Another star
+   * @return 0 if distance is equal, 1 if larger, -1 if smaller
+   */
+  @Override
+  public int compareTo(Star s) {
+<span class="fc" id="L122">    return Double.compare(distance, s.getDistance());</span>
+  }
+
+  /**
+   * Returns a star's starID as a String.
+   * @return String containing StarID
+   */
+  @Override
+  public String toString() {
+<span class="fc" id="L131">    return Integer.toString(starID);</span>
+  }
+
+  /**
+   * Given a list of stars, returns their StarID separated into lines.
+   * @param stars a list of stars
+   * @return String containing all StarID separated into lines
+   */
+  public static String toString(List stars) {
+<span class="fc" id="L140">    String output = &quot;&quot;;</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">    for (int i = 0; i &lt; stars.size(); i++) {</span>
+<span class="fc bfc" id="L142" title="All 2 branches covered.">      output += stars.get(i).toString() + ((i == stars.size() - 1) ? &quot;&quot; : &quot;\n&quot;);</span>
+    }
+<span class="fc" id="L144">    return output;</span>
+  }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

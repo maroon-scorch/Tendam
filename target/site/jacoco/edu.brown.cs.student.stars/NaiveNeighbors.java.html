@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>NaiveNeighbors.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">stars</a> &gt; <a href="index.source.html" class="el_package">edu.brown.cs.student.stars</a> &gt; <span class="el_source">NaiveNeighbors.java</span></div><h1>NaiveNeighbors.java</h1><pre class="source lang-java linenums">package edu.brown.cs.student.stars;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Class for the naive_neighbors command.
+ */
+
+<span class="fc" id="L11">public class NaiveNeighbors implements Command {</span>
+
+  @Override
+  public void execute(String params) {
+
+<span class="fc bfc" id="L16" title="All 2 branches covered.">    if (Common.getAllStars() == null) {</span>
+<span class="fc" id="L17">      System.err.println(&quot;ERROR: Star data not loaded yet&quot;);</span>
+    } else {
+
+<span class="fc bfc" id="L20" title="All 2 branches covered.">      if (Common.checkRegex(params,</span>
+          &quot;^\\d+\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?\\s-?\\d+(?:\\.\\d+)?&quot;)) {
+
+<span class="fc" id="L23">        String[] p = params.split(&quot; &quot;);</span>
+<span class="fc" id="L24">        List&lt;Star&gt; stars = findKNearestNeighbor(</span>
+<span class="fc" id="L25">            Integer.parseInt(p[0]),</span>
+<span class="fc" id="L26">            Double.parseDouble(p[1]),</span>
+<span class="fc" id="L27">            Double.parseDouble(p[2]),</span>
+<span class="fc" id="L28">            Double.parseDouble(p[3]));</span>
+
+<span class="fc" id="L30">        String output = Star.toString(stars);</span>
+<span class="pc bpc" id="L31" title="1 of 2 branches missed.">        if (!output.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L32">          System.out.println(Star.toString(stars));</span>
+        }
+
+<span class="fc bfc" id="L35" title="All 2 branches covered.">      } else if (Common.checkRegex(params, &quot;^\\d+\\s\&quot;([^\&quot;])*\&quot;&quot;)) {</span>
+
+<span class="fc" id="L37">        String[] p = params.split(&quot; &quot;, 2);</span>
+<span class="fc" id="L38">        List&lt;Star&gt; stars = findKNearestNeighbor(Integer.parseInt(p[0]), Common.removeQuotes(p[1]));</span>
+
+<span class="fc" id="L40">        String output = Star.toString(stars);</span>
+<span class="pc bpc" id="L41" title="1 of 2 branches missed.">        if (!output.equals(&quot;&quot;)) {</span>
+<span class="fc" id="L42">          System.out.println(Star.toString(stars));</span>
+        }
+
+<span class="fc" id="L45">      } else {</span>
+<span class="fc" id="L46">        System.err.println(&quot;ERROR: Wrong parameters&quot;);</span>
+      }
+    }
+<span class="fc" id="L49">  }</span>
+
+  /**
+   * Finds the closest k stars to a given location.
+   *
+   * @param k Number of neighbors to be found
+   * @param x x coordinates of the location
+   * @param y y coordinates of the location
+   * @param z z coordinates of the location
+   * @return A list of k closest stars
+   */
+  public List&lt;Star&gt; findKNearestNeighbor(int k, double x, double y, double z) {
+<span class="fc" id="L61">    double[] currentCoordinate = new double[]{x, y, z};</span>
+<span class="fc" id="L62">    Common.setStarDistanceFrom(currentCoordinate, Common.getAllStars());</span>
+<span class="fc" id="L63">    Collections.sort(Common.getAllStars());</span>
+<span class="fc" id="L64">    return getKStars(k, Common.getAllStars());</span>
+  }
+
+  /**
+   * Finds the closest k stars to a given star.
+   *
+   * @param k    Number of neighbors to be found
+   * @param name Name of a star
+   * @return A list of k closest stars
+   */
+  public List&lt;Star&gt; findKNearestNeighbor(int k, String name) {
+<span class="fc" id="L75">    Star currentStar = Common.findStarByName(name);</span>
+<span class="fc" id="L76">    List&lt;Star&gt; starsCopy = new ArrayList&lt;&gt;();</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">    if (currentStar != null) {</span>
+<span class="fc" id="L78">      starsCopy = Common.copyStarListExcept(name);</span>
+<span class="fc" id="L79">      Common.setStarDistanceFrom(currentStar.getCoordinate(), starsCopy);</span>
+<span class="fc" id="L80">      Collections.sort(starsCopy);</span>
+    }
+<span class="fc" id="L82">    return getKStars(k, starsCopy);</span>
+  }
+
+  /**
+   * Extracts the first k stars from a list of stars sorted according to distance.
+   * Randomly choose one to be returned if there is a tie in distance.
+   *
+   * @param k     Number of stars to be returned
+   * @param stars A list of stars that have been sorted in ascending order of distance
+   * @return First k stars
+   */
+  public List&lt;Star&gt; getKStars(int k, List&lt;Star&gt; stars) {
+<span class="fc" id="L94">    List&lt;Star&gt; output = new ArrayList&lt;&gt;();</span>
+
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">    if (stars.size() != 0) {</span>
+<span class="fc" id="L97">      List&lt;Star&gt; neighbors = new ArrayList&lt;&gt;();</span>
+
+<span class="fc" id="L99">      int i = 0;</span>
+      Star tempStar;
+<span class="fc" id="L101">      double maxDistanceSoFar = 0;</span>
+
+      // take out the ones that potentially need to be printed
+<span class="fc bfc" id="L104" title="All 2 branches covered.">      while ((i &lt; stars.size())</span>
+<span class="fc bfc" id="L105" title="All 4 branches covered.">          &amp;&amp; ((stars.get(i).getDistance() &lt;= maxDistanceSoFar) || (neighbors.size() &lt; k))) {</span>
+<span class="fc" id="L106">        tempStar = stars.get(i);</span>
+<span class="fc" id="L107">        neighbors.add(tempStar);</span>
+<span class="fc" id="L108">        maxDistanceSoFar = tempStar.getDistance();</span>
+<span class="fc" id="L109">        i++;</span>
+      }
+
+      // take out the untied stars first
+<span class="pc bpc" id="L113" title="1 of 2 branches missed.">      while (neighbors.size() != 0) {</span>
+<span class="fc bfc" id="L114" title="All 2 branches covered.">        boolean a = (neighbors.get(0).getDistance() &lt; maxDistanceSoFar);</span>
+<span class="fc bfc" id="L115" title="All 2 branches covered.">        if (neighbors.get(0).getDistance() &lt; maxDistanceSoFar) {</span>
+<span class="fc" id="L116">          output.add(neighbors.get(0));</span>
+<span class="fc" id="L117">          neighbors.remove(neighbors.get(0));</span>
+<span class="fc" id="L118">          k--;</span>
+        } else {
+          break;
+        }
+<span class="fc" id="L122">      }</span>
+
+      // for the tied ones, shuffle before taking out
+<span class="fc" id="L125">      i = 0;</span>
+<span class="fc bfc" id="L126" title="All 4 branches covered.">      while ((neighbors.size() != 0) &amp;&amp; (i &lt; k)) {</span>
+<span class="fc" id="L127">        Collections.shuffle(neighbors);</span>
+<span class="fc" id="L128">        output.add(neighbors.get(0));</span>
+<span class="fc" id="L129">        neighbors.remove(neighbors.get(0));</span>
+<span class="fc" id="L130">        i++;</span>
+      }
+    }
+
+<span class="fc" id="L134">    return output;</span>
+
+  }
+
+}
+
+
+
+
+
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -1,0 +1,7 @@
+INPUT
+map data/maps/maps.sqlite3
+route "United States of America" "Round Hill Road" "Golf Club Road" "Round Hill Road"
+OUTPUT
+map set to data/maps/maps.sqlite3
+ERROR:
+END

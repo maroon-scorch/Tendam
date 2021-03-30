@@ -1,0 +1,19 @@
+INPUT
+stars data/stars/ten-star.csv
+radius 2.8 0.2 0.1 1.04
+naive_radius 2.8 0.2 0.1 1.04
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+0
+87666
+70667
+71457
+71454
+118721
+0
+87666
+70667
+71457
+71454
+118721
+END

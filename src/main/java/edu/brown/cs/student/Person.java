@@ -5,8 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Person implements hasRanking<Person> {
-  String id;
-  List<String> preferences;
+  private final String id;
+  private List<String> preferences;
+
   public Person(String id, List<String> preferences) {
     this.id = id;
     this.preferences = preferences;
@@ -14,6 +15,14 @@ public class Person implements hasRanking<Person> {
 
   public void setPreferences(List<String> prefs) {
     this.preferences = prefs;
+  }
+
+  public List<String> getPreferences() {
+    return preferences;
+  }
+
+  public String getId() {
+    return id;
   }
 
   @Override
@@ -27,8 +36,8 @@ public class Person implements hasRanking<Person> {
   }
 
   @Override
-  public int getRanking(String id) {
-    return preferences.indexOf(id);
+  public int getRanking(String userID) {
+    return preferences.indexOf(userID);
   }
 
   private Object[] getSigFields() {

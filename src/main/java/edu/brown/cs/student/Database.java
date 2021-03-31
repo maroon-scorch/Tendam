@@ -17,28 +17,63 @@ public class Database {
     this.filepath = filepath;
     String urlToDB = "jdbc:sqlite:" + filepath;
     conn = DriverManager.getConnection(urlToDB);
-    // these two lines tell the database to enforce foreign keys during operations,
-    // and should be present
     Statement stat = conn.createStatement();
     stat.close();
   }
 
-  public void insertUser(Person user) throws SQLException {
+  //inserts a new user into the user table
+  public void insertUser(String id, String userName) throws SQLException {
     //todo i think that this shouldn't be the person class because it doesn't
     // include all the fields
     //that would need to be stored in the database
     //perhaps we need to create a user class instead?
-//    PreparedStatement prep;
-//    prep = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'users' ("
-//            + "id INTEGER, "
-//            + "name TEXT, "
-//            + "ts DOUBLE, "
-//            + "lat DOUBLE, "
-//            + "lon DOUBLE);");
-//    prep.executeUpdate();
+    PreparedStatement prepTable;
+    prepTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'users' ("
+            + "id TEXT, "
+            + "username TEXT);");
+    prepTable.executeUpdate();
+    PreparedStatement prepUser;
+    prepUser = conn.prepareStatement("INSERT INTO users VALUES (?, ?);");
+    prepUser.setString(1, id);
+    prepUser.setString(2, userName);
+    prepUser.addBatch();
+    prepUser.executeBatch();
   }
 
-  public void insertNewSurvey(String surveyName) {
+  //inserts a new table into the database when a new survey is created
+  public void insertNewSurvey(String surveyName) throws SQLException {
     //todo this should add a new column to the table
+    PreparedStatement prep;
+    prep = conn.prepareStatement("ALTER TABLE users ADD (?) DOUBLE );");
+    prep.setString(1, surveyName);
+    prep.executeUpdate();
+  }
+
+  //updates the field for a user in the table when they complete a survey
+  public void updateSurveyData(String userId, String surveyName, Double surveyScore) throws SQLException {
+    PreparedStatement prep;
+    prep = conn.prepareStatement("UPDATE users "
+    + "SET ? = ?  WHERE id = ?);");
+    prep.setString(1, surveyName);
+    prep.setDouble(2, surveyScore);
+    prep.setString(3, userId);
+    prep.executeUpdate();
+  }
+
+  //adds friend relations to a new table
+  /* if A is friends with B, need to call addFriends(a.id, b.id) and
+  addFriends(b.id, a.id)
+   */
+  public void addFriends(String userId, String friendId) throws SQLException {
+    PreparedStatement prepTable;
+    prepTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'friends' "
+            + " user TEXT, friend TEXT);");
+    prepTable.executeUpdate();
+    PreparedStatement prep;
+    prep = conn.prepareStatement("INSERT INTO friends VALUES (?, ?;)");
+    prep.setString(1, userId);
+    prep.setString(2, friendId);
+    prep.addBatch();
+    prep.executeBatch();
   }
 }

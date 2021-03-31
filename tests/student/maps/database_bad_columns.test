@@ -1,0 +1,5 @@
+INPUT
+map data/maps/badColumnsMaps.sqlite3
+OUTPUT
+ERROR:
+END

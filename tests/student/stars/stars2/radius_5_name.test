@@ -1,0 +1,11 @@
+INPUT
+stars data/stars/ten-star.csv
+radius 5 "Rigel Kentaurus A"
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+71454
+70667
+0
+87666
+118721
+END

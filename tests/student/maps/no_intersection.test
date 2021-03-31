@@ -1,0 +1,7 @@
+INPUT
+map data/maps/smallMaps.sqlite3
+route "Radish Spirit Blvd" "Sootball Ln" "Sootball Ln" "Yubaba St"
+OUTPUT
+map set to data/maps/smallMaps.sqlite3
+ERROR:
+END

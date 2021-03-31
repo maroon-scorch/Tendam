@@ -1,0 +1,13 @@
+INPUT
+stars data/stars/ten-star.csv
+neighbor -1 0 0 0
+radius -1 0 0 0
+radius 2 Sol
+neighbors 2 Sol
+OUTPUT
+Read 10 stars from data/stars/ten-star.csv
+ERROR:
+ERROR:
+ERROR:
+ERROR:
+END

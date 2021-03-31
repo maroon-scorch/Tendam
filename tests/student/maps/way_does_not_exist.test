@@ -1,0 +1,11 @@
+INPUT
+map data/maps/smallMaps.sqlite3
+route "new way" "" "" "x"
+map data/maps/maps.sqlite3
+route "hi" "" "" ""
+OUTPUT
+map set to data/maps/smallMaps.sqlite3
+ERROR:
+map set to data/maps/maps.sqlite3
+ERROR:
+END

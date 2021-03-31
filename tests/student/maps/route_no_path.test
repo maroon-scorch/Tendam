@@ -1,0 +1,7 @@
+INPUT
+map data/maps/disconnectedMaps.sqlite3
+route 0 0 3 3
+OUTPUT
+map set to data/maps/disconnectedMaps.sqlite3
+/n/1 -/- /n/4
+END

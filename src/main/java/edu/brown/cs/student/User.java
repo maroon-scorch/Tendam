@@ -12,15 +12,19 @@ public class User implements Dimensionable {
   //id is shared between a user and a person
   private final String id;
   //not sure if the id is the same as the username
-  private final String userName;
+  private  String userName;
   private Map<String, Double> surveys;
   private List<String> friends;
+  private  String password;
+  private String email;
 
-  public User(String id, String userName) {
+  public User(String id, String userName, String password, String email, List<String> friends) {
     this.id = id;
     this.userName = userName;
-    surveys = new HashMap<>();
-    friends = new LinkedList<>();
+    this.surveys = new HashMap<>();
+    this.friends = friends;
+    this.password = password;
+    this.email = email;
   }
 
   public String getId() {

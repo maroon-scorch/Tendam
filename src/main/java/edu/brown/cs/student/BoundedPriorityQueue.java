@@ -71,7 +71,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
    * Returns a list containing all of the elements in this queue, preserving priority order.
    * @return a list of all elements
    */
-  public List<?> toList() {
+  public List<T> toList() {
     PriorityQueue<T> pqTemp = new PriorityQueue<>(pq);
     List<T> list = new ArrayList<>();
     for (int i = 0; i < size(); i++) {

@@ -27,15 +27,11 @@ public class Database {
     Statement stat = conn.createStatement();
 //    stat.executeUpdate("PRAGMA foreign_keys=ON;");
     // TODO: i'm pretty sure the database isn't supposed to be closed? Otherwise your connection dies.
-    stat.close();
+    //stat.close();
   }
 
   //inserts a new user into the user table
   public void insertUser(String id, String userName, String password, String email) throws SQLException {
-    //todo i think that this shouldn't be the person class because it doesn't
-    // include all the fields
-    //that would need to be stored in the database
-    //perhaps we need to create a user class instead?
     try (PreparedStatement prepTable = conn.prepareStatement(
             "CREATE TABLE IF NOT EXISTS 'users' ("
             + "id TEXT, "
@@ -72,11 +68,11 @@ public class Database {
    * @param surveyScore the score they got on the survey
    * @throws SQLException if the SQl command goes awry
    */
-  public void updateSurveyData(String userId, String surveyName, Double surveyScore) throws SQLException {
+  public void updateSurveyData(String userId, String surveyName, Source surveyScore) throws SQLException {
     try (PreparedStatement prep = conn.prepareStatement("UPDATE users "
     + "SET ? = ?  WHERE id = ?;")) {
       prep.setString(1, surveyName);
-      prep.setDouble(2, surveyScore);
+      prep.setObject(2, surveyScore);
       prep.setString(3, userId);
       prep.executeUpdate();
     }
@@ -135,8 +131,9 @@ public class Database {
         String email = rs.getString(4);
         int k = 5;
         while (k <= c) {
-          // TODO: Fix
-          surveys.put(rd.getColumnName(k), rs.getDouble(k));
+          // TODO: is this bad style?
+          Source surveyData = (Source) rs.getObject(k);
+          surveys.put(rd.getColumnName(k), surveyData);
           k++;
         }
         List<Integer> friends = findFriends(id);

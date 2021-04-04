@@ -16,6 +16,7 @@ public class Database {
   private static Connection conn = null;
   private final String filepath;
 
+
   public Database(String filepath) throws FileNotFoundException, SQLException {
     File file = new File(filepath);
     if (!file.exists() || !file.isFile()) {
@@ -30,11 +31,19 @@ public class Database {
     //stat.close();
   }
 
+  /**
+   *
+   * @param id user's unique ID used to identify them
+   * @param userName username inputted by user
+   * @param password password inputted by user
+   * @param email email inputted by user
+   * @throws SQLException if data cannot be parsed
+   */
   //inserts a new user into the user table
   public void insertUser(String id, String userName, String password, String email) throws SQLException {
     try (PreparedStatement prepTable = conn.prepareStatement(
             "CREATE TABLE IF NOT EXISTS 'users' ("
-            + "id TEXT, "
+            + "id INTEGER, "
             + "username TEXT, "
             + "password TEXT, "
             + "email TEXT);")) {
@@ -51,8 +60,14 @@ public class Database {
   }
 
   //inserts a new table into the database when a new survey is created
+
+  /**
+   *
+   * @param surveyName adds a new column with this name
+   * @throws SQLException if sql command cannot be executed
+   */
   public void insertNewSurvey(String surveyName) throws SQLException {
-    try (PreparedStatement prep = conn.prepareStatement("ALTER TABLE users ADD (?) DOUBLE;")) {
+    try (PreparedStatement prep = conn.prepareStatement("ALTER TABLE users ADD (?) OBJECT;")) {
       prep.setString(1, surveyName);
       prep.executeUpdate();
     }
@@ -82,6 +97,13 @@ public class Database {
   /* if A is friends with B, need to call addFriends(a.id, b.id) and
   addFriends(b.id, a.id)
    */
+
+  /**
+   *
+   * @param userId ID of the user
+   * @param friendId ID of the user's friend
+   * @throws SQLException if sql command cannot be executed
+   */
   public void addFriends(Integer userId, Integer friendId) throws SQLException {
     try (PreparedStatement prepTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'friends' "
             + " user TEXT, friend TEXT;")) {
@@ -95,6 +117,12 @@ public class Database {
     }
   }
 
+  /**
+   *
+   * @param userId ID of the user
+   * @return list of users friends
+   * @throws SQLException if sql command cannot be executed
+   */
   public List<Integer> findFriends(Integer userId) throws SQLException {
     try (PreparedStatement prep = conn.prepareStatement(
             "SELECT friends.friend FROM friends WHERE friends.user = ?;")) {
@@ -108,6 +136,11 @@ public class Database {
     }
   }
 
+  /**
+   *
+   * @return list of users
+   * @throws SQLException if sql command cannot be executed
+   */
   public List<User> getAllUsers() throws SQLException {
     try (PreparedStatement prep = conn.prepareStatement("SELECT * FROM users;")) {
       ResultSet rs = prep.executeQuery();
@@ -131,7 +164,6 @@ public class Database {
         String email = rs.getString(4);
         int k = 5;
         while (k <= c) {
-          // TODO: is this bad style?
           Source surveyData = (Source) rs.getObject(k);
           surveys.put(rd.getColumnName(k), surveyData);
           k++;

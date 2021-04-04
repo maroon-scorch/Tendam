@@ -1,16 +1,13 @@
 package edu.brown.cs.student.users;
 
 import edu.brown.cs.student.datasources.Source;
-import edu.brown.cs.student.miscenllaneous.CustomException;
-import edu.brown.cs.student.tree.Neighbor;
-import edu.brown.cs.student.tree.ValuePoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class User implements ValuePoint {
+public class User {
   //id is shared between a user and a person
   private final Integer id;
   //not sure if the id is the same as the username
@@ -22,11 +19,12 @@ public class User implements ValuePoint {
 
   /**
    * Public constructor for users
-   * @param id unique id
+   *
+   * @param id       unique id
    * @param userName username, does not have to be unique
    * @param password string password
-   * @param email string email
-   * @param friends list of friend IDs
+   * @param email    string email
+   * @param friends  list of friend IDs
    */
   public User(Integer id, Integer userName, String password, String email, List<Integer> friends) {
     this.id = id;
@@ -78,26 +76,6 @@ public class User implements ValuePoint {
       }
     }
     return totalDistance;
-  }
-
-  @Override
-  public Neighbor createNeighbor(double currentDistance) {
-    return null;
-  }
-
-  @Override
-  public float[] rootToArray() {
-    return new float[0];
-  }
-
-  @Override
-  public ValuePoint findWithNodeName(List<ValuePoint> inputData, String inputName) throws CustomException.ValuePointNotFoundException {
-    return null;
-  }
-
-  @Override
-  public int whereIndex(List<Neighbor> finalList) {
-    return 0;
   }
 
   /**

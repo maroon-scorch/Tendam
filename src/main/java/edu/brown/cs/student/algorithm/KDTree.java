@@ -1,4 +1,6 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
+
+import edu.brown.cs.student.SortByDimension;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -8,7 +10,7 @@ import java.util.PriorityQueue;
 
 /**
  * Class that represents a KDTree.
- * @param <T> Any object that implements the HasCoordinate interface
+ * @param <T> Any object that implements the HasvaluePoint interface
  */
 public class KDTree<T extends HasCoordinate> {
   private KDNode root;
@@ -160,7 +162,7 @@ public class KDTree<T extends HasCoordinate> {
   }
 
   /**
-   * Constructs a KDTree that contains coordinates in the specified dimension.
+   * Constructs a KDTree that contains valuePoints in the specified dimension.
    * @param totalDimension dimension of KDTree
    */
   public KDTree(int totalDimension) {
@@ -261,7 +263,7 @@ public class KDTree<T extends HasCoordinate> {
       currentNode = newNode;
       currentNode.setDimension(currentDepth % totalDimension);
     } else {
-      /* Recursively compares the coordinate of the newNode with the currentNode,
+      /* Recursively compares the valuePoint of the newNode with the currentNode,
        * inserts the newNode into the correct subtree */
       int cd = currentDepth % totalDimension; //current dimension of comparison
       if (newNode.getValue().getCoordinate()[cd] < currentNode.getValue().getCoordinate()[cd]) {
@@ -287,9 +289,9 @@ public class KDTree<T extends HasCoordinate> {
   private BoundedPriorityQueue<KDNode> bpq;
 
   /**
-   * Finds k nearest neighbors in the tree from coordinates.
+   * Finds k nearest neighbors in the tree from valuePoints.
    * @param k           number of neighbors to be found
-   * @param coordinates coordinate around which to look for
+   * @param valuePoints valuePoint around which to look for
    * @return a list of k nearest neighbors
    */
   public List<T> findKNN(int k, double[] coordinates) {
@@ -305,10 +307,10 @@ public class KDTree<T extends HasCoordinate> {
 
   /**
    * Calculates the distance between the two points
-   * @param coordinates1 a point in k-dimensional space
-   * @param coordinates2 another point in k-dimensional space
+   * @param valuePoints1 a point in k-dimensional space
+   * @param valuePoints2 another point in k-dimensional space
    * @return distance between two points
-   * @throws IllegalArgumentException if two coordinates are not in the same dimension
+   * @throws IllegalArgumentException if two valuePoints are not in the same dimension
    */
   private static double calcDistance(double[] coordinates1, double[] coordinates2)
       throws IllegalArgumentException {
@@ -328,7 +330,7 @@ public class KDTree<T extends HasCoordinate> {
    * Recursive helper function for finding KNN.
    * @param k           number of neighbors to be found
    * @param currentNode current node being looked at during recursion
-   * @param coordinates coordinate around which to look for
+   * @param valuePoints valuePoint around which to look for
    */
   private void findKNNRecur(int k, KDNode currentNode, double[] coordinates) {
     if (currentNode == null || currentNode.getValue() == null) {
@@ -338,7 +340,7 @@ public class KDTree<T extends HasCoordinate> {
     currentNode.distance = dist;
     bpq.add(currentNode);
 
-    /* Recursively compares the new coordinate with the currentNode,
+    /* Recursively compares the new valuePoint with the currentNode,
      * looks into the correct subtree for close neighbors
      */
     int cd = currentNode.getDimension();
@@ -372,7 +374,7 @@ public class KDTree<T extends HasCoordinate> {
 
   /** Finds all elements that are within a fixed radius from a point.
    * @param r radius
-   * @param coordinate the center coordinate to search from
+   * @param valuePoint the center valuePoint to search from
    * @return list of elements within the radius
    */
   public List<T> findWithinRadius(double r, double[] coordinate) {
@@ -390,7 +392,7 @@ public class KDTree<T extends HasCoordinate> {
    * Recursive helper function for finding elements within a radius.
    * @param r radius
    * @param currentNode urrentNode current node being looked at during recursion
-   * @param coordinates coordinate around which to look for
+   * @param valuePoints valuePoint around which to look for
    */
   private void findWithinRadiusRecur(double r, KDNode currentNode, double[] coordinates) {
     if (currentNode == null) {

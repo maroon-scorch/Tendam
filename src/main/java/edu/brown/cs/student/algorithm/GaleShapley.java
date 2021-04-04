@@ -1,15 +1,14 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
 
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
 public class GaleShapley {
-  public static <T extends hasRanking<T>> Map<T, T> galeShapleyAlgo(
+  public static <T extends HasRanking<T>> Map<T, T> galeShapleyAlgo(
           List<T> listOne, List<T> listTwo) {
     Queue<T> freeOne = new ArrayDeque<>(listOne);
     Map<T, T> pairings = new HashMap<>();
@@ -19,7 +18,7 @@ public class GaleShapley {
       // TODO: Make sure to remove one from freeOne and sometimes add back onePrime to freeOne
       T one = freeOne.poll();
       boolean notMatched = true;
-      for (String twoId : one.getRankings()) {
+      for (Integer twoId : one.getRankings()) {
         if (!notMatched) {
           break;
         }

@@ -1,48 +1,48 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Person implements hasRanking<Person> {
-  private final String id;
-  private List<String> preferences;
+public class Person implements HasRanking<Person> {
+  private final Integer id;
+  private List<Integer> preferences;
 
-  public Person(String id, List<String> preferences) {
+  public Person(Integer id, List<Integer> preferences) {
     this.id = id;
     this.preferences = preferences;
   }
 
-  public void setPreferences(List<String> prefs) {
+  public void setPreferences(List<Integer> prefs) {
     this.preferences = prefs;
   }
 
-  public List<String> getPreferences() {
+  public List<Integer> getPreferences() {
     return preferences;
   }
 
-  public String getId() {
+  // TODO: is this necessary when the overrided getID exists?
+  public Integer getId() {
     return id;
   }
 
   @Override
-  public String getID() {
+  public Integer getID() {
     return id;
   }
 
   @Override
-  public List<String> getRankings() {
-    return new ArrayList<>(preferences);
+  public List<Integer> getRankings() {
+    return new ArrayList<Integer>(preferences);
   }
 
   @Override
-  public int getRanking(String userID) {
+  public int getRanking(Integer userID) {
     return preferences.indexOf(userID);
   }
 
   private Object[] getSigFields() {
-    Object[] result = {id, preferences};
-    return result;
+    return new Object[]{id, preferences};
   }
 
   @Override
@@ -68,8 +68,8 @@ public class Person implements hasRanking<Person> {
     return id.hashCode();
   }
 
-  @Override
-  public String toString() {
-    return id;
-  }
+//  @Override
+//  public String toString() {
+//    return id;
+//  }
 }

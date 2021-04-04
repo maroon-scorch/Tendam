@@ -1,5 +1,8 @@
 package edu.brown.cs.student;
 
+import edu.brown.cs.student.datasources.Source;
+import edu.brown.cs.student.users.User;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.*;
@@ -71,26 +74,26 @@ public class Database {
   /* if A is friends with B, need to call addFriends(a.id, b.id) and
   addFriends(b.id, a.id)
    */
-  public void addFriends(String userId, String friendId) throws SQLException {
+  public void addFriends(Integer userId, Integer friendId) throws SQLException {
     PreparedStatement prepTable;
     prepTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'friends' "
             + " user TEXT, friend TEXT;");
     prepTable.executeUpdate();
     PreparedStatement prep;
     prep = conn.prepareStatement("INSERT INTO friends VALUES (?, ?);");
-    prep.setString(1, userId);
-    prep.setString(2, friendId);
+    prep.setInt(1, userId);
+    prep.setInt(2, friendId);
     prep.addBatch();
     prep.executeBatch();
   }
 
-  public List<String> findFriends(String userId) throws SQLException {
+  public List<Integer> findFriends(Integer userId) throws SQLException {
     PreparedStatement prep;
     prep = conn.prepareStatement("SELECT friends.friend FROM friends WHERE friends.user = ?;");
-    List<String> friends = new LinkedList<>();
+    List<Integer> friends = new LinkedList<>();
     ResultSet rs = prep.executeQuery();
     while (rs.next()) {
-      friends.add(rs.getString(1));
+      friends.add(rs.getInt(1));
     }
     return friends;
   }
@@ -103,7 +106,7 @@ public class Database {
     int c = rd.getColumnCount();
     //starts at 5 because first 4 columns include other user info
     int i = 5;
-    Map<String, Double> surveys= new HashMap<>();
+    Map<String, Source> surveys = new HashMap<>();
     while (i <= c) {
       surveys.put(rd.getColumnName(i), null);
       i++;
@@ -112,8 +115,8 @@ public class Database {
     List<User> users = new LinkedList<>();
 
     while (rs.next()) {
-      String id = rs.getString(1);
-      String username = rs.getString(2);
+      Integer id = rs.getInt(1);
+      Integer username = rs.getInt(2);
       String password = rs.getString(3);
       String email = rs.getString(4);
       int k = 5;
@@ -121,7 +124,7 @@ public class Database {
         surveys.put(rd.getColumnName(k), rs.getDouble(k));
         k++;
       }
-      List<String> friends = findFriends(id);
+      List<Integer> friends = findFriends(id);
       User user = new User(id, username, password, email, friends);
       users.add(user);
     }

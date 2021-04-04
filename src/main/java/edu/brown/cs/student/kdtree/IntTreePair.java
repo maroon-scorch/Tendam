@@ -1,4 +1,4 @@
-package edu.brown.cs.student.KdTree;
+package edu.brown.cs.student.kdtree;
 
 
 import java.util.List;

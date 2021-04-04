@@ -1,4 +1,4 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.main;
 
 /**
  * Interface for all commands.

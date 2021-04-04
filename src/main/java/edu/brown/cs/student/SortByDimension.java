@@ -1,11 +1,13 @@
 package edu.brown.cs.student;
 
+import edu.brown.cs.student.algorithm.HasCoordinate;
+
 import java.io.Serializable;
 import java.util.Comparator;
 
 /**
  * Class that can be sorted by dimension.
- * @param <T> Object type that extends CoordinateGettable and implements comparator and serializable
+ * @param <T> Object type that extends valuePointGettable and implements comparator and serializable
  */
 public class SortByDimension<T extends HasCoordinate> implements Comparator<T>, Serializable {
   private int dimension;

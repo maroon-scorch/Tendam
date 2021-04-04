@@ -1,4 +1,4 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
 
 import java.util.ArrayList;
 import java.util.Collections;

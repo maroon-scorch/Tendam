@@ -1,0 +1,11 @@
+.profile-container {
+    margin-top: 15vh;
+}
+
+.profile {
+    border: 2px solid white;
+    background: rgba(5, 169, 240, 0.75);
+    padding: 4rem;
+    filter: drop-shadow(5px 5px 5px #000000);
+    text-align: center;
+}

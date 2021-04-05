@@ -3,6 +3,8 @@ import { Button, Typography, TextField } from '@material-ui/core';
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
 
+import './Profile.css';
+
 function Profile() {
     const { currentUser } = useAuth();
     const { getEntry, userDatabase } = useDatabase();
@@ -56,20 +58,22 @@ function Profile() {
     }
 
     return (
-        <div>
+        <div className="profile-container">
+            <div className="profile">
             Profile Page:
-            <Typography variant="h5">Bio: <TextField id="standard-basic" label="Bio"
+            <Typography variant="h5">Bio: <TextField label="Bio"
             name="bio" value={profileInfo.bio} disabled={!isEditing} onChange={handleChange}/></Typography>
-
-            <Typography variant="h5">Name: <TextField id="standard-basic" label="Name"
+            <br />
+            <Typography variant="h5">Name: <TextField label="Name"
             name="name" value={profileInfo.name} disabled={!isEditing} onChange={handleChange}/></Typography>
-
-            <Typography variant="h5">Age: <TextField id="standard-basic" label="Age"
+            <br />
+            <Typography variant="h5">Age: <TextField label="Age"
             name="age" value={profileInfo.age} disabled={!isEditing} onChange={handleChange}/></Typography>
-
+            <br />
             <Typography variant="h5">Matches: {profileInfo.matches.length}</Typography>
             <Button variant="contained" color="primary" disabled={isEditing} onClick={handleEdit}>EDIT</Button> 
             <Button variant="contained" color="secondary" disabled={!isEditing} onClick={handleSave}>SAVE</Button> 
+            </div>
         </div>
     )
 }

@@ -65,12 +65,15 @@ public class Matcher {
       prePreferences.sort(new PairScoreCompare());
 
       for (PairScore ps : prePreferences) {
-        preferences.add(ps.getMainID());
+        preferences.add(ps.getOptionID());
       }
 
       Person human = new Person(datum.getId(), preferences);
       people.add(human);
     }
+
+    // TODO: remove self
+
     return people;
   }
 

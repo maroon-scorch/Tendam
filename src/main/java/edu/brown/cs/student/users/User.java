@@ -11,7 +11,7 @@ public class User {
   //id is shared between a user and a person
   private final Integer id;
   //not sure if the id is the same as the username
-  private Integer userName;
+  private String userName;
   private Map<String, Source> userData;
   private List<Integer> friends;
   private String password;
@@ -26,7 +26,7 @@ public class User {
    * @param email    string email
    * @param friends  list of friend IDs
    */
-  public User(Integer id, Integer userName, String password, String email, List<Integer> friends) {
+  public User(Integer id, String userName, String password, String email, List<Integer> friends) {
     this.id = id;
     this.userName = userName;
     this.userData = new HashMap<>();
@@ -49,7 +49,7 @@ public class User {
     return id;
   }
 
-  public Integer getName() {
+  public String getName() {
     return userName;
   }
 
@@ -83,7 +83,7 @@ public class User {
    *
    * @param newName a string username
    */
-  public void updateName(Integer newName) {
+  public void updateName(String newName) {
     this.userName = newName;
   }
 

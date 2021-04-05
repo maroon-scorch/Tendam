@@ -68,7 +68,7 @@ public class Matcher {
         preferences.add(ps.getMainID());
       }
 
-      Person human = new Person(datum.getName(), preferences);
+      Person human = new Person(datum.getId(), preferences);
       people.add(human);
     }
     return people;

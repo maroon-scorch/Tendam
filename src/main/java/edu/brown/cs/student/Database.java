@@ -159,7 +159,7 @@ public class Database {
 
       while (rs.next()) {
         Integer id = rs.getInt(1);
-        Integer username = rs.getInt(2);
+        String username = rs.getString(2);
         String password = rs.getString(3);
         String email = rs.getString(4);
         int k = 5;

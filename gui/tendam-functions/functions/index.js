@@ -18,4 +18,7 @@ exports.initializeUserInDatabase = functions.auth.user().onCreate(async (user) =
   const userID = user.uid;
   let newUserRef = admin.firestore().collection('users').doc(userID);
   newUserRef.set({name: '', age: '', bio: '', matches: []});
+
+  let newGameRef = admin.firestore().collection('games').doc(userID);
+  newGameRef.set({'blackjack-score': -1, 'blackjack-games-played': 0});
 });

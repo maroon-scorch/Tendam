@@ -7,7 +7,7 @@ import './Profile.css';
 
 function Profile() {
     const { currentUser } = useAuth();
-    const { getEntry, userDatabase } = useDatabase();
+    const { getEntry, userDatabase, setEntry } = useDatabase();
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", matches: []});
@@ -38,13 +38,13 @@ function Profile() {
     function handleSave(e){
         e.preventDefault();
         setIsEditing(false);
+        // setEntry('1', '2');
         let data = profileInfo;
-        let userRef = userDatabase.doc(currentUser.uid);
-        userRef.set(data).then(() => {
-            console.log("Document successfully written!");
+        setEntry(currentUser.uid, data).then(() => {
+                console.log("Document successfully written!");
         })
-        .catch((error) => {
-            console.error("Error writing document: ", error);
+            .catch((error) => {
+                console.error("Error writing document: ", error);
         });
     }
 

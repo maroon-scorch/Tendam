@@ -26,13 +26,15 @@ export function DatabaseProvider({ children }) {
     }
 
     function setEntry(id, data) {
-        // let userRef = userDatabase.doc(id);
-       // return userRef.set(data);
+        // console.log(id);
+        let userRef = userDatabase.doc(id);
+        return userRef.set(data);
     }
 
     const databaseInfo = {
         addEntry,
         userDatabase,
+        setEntry,
         getEntry
     };
 

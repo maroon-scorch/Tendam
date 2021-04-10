@@ -30,22 +30,6 @@ function Dashboard() {
     //     infiniteLoop: true
     // };
 
-    const Next = ({ onClick }) => {
-        return (
-          <div className="dashboard-next" onClick={onClick}>
-            →
-          </div>
-        );
-    };
-    
-    const Prev = ({ onClick }) => {
-        return (
-          <div className="dashboard-prev" onClick={onClick}>
-            ←
-          </div>
-        );
-    };
-
     function handleChange(current) {
         console.log(current);
         setIndex(current);

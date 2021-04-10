@@ -3,6 +3,7 @@ import './App.css';
 
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import PrivateRoute from '../service/PrivateRoute.js';
+import PublicRoute from '../service/PublicRoute.js';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
@@ -71,7 +72,7 @@ function App() {
           <Header />
           <Switch>
             <Route path='/' exact component={Home}></Route>
-            <Route path='/signup' exact component={Signup}></Route>
+            <PublicRoute path='/signup' exact component={Signup}></PublicRoute>
             <Route path='/login' exact component={Login}></Route>
             <Route path='/forgot-password' exact component={ForgotPassword}></Route>
             <Route path="/terms-of-service" exact component={TermsOfService}></Route>

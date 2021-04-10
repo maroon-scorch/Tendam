@@ -1,5 +1,7 @@
 .profile-container {
     margin-top: 15vh;
+    display: flex;
+    justify-content: center;
 }
 
 .profile {
@@ -8,4 +10,24 @@
     padding: 4rem;
     filter: drop-shadow(5px 5px 5px #000000);
     text-align: center;
+
+    width: 50%;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    border: 5px solid #aaa;
+    width: 15rem;
+    height: 15rem;
+    /* filter: drop-shadow(5px 5px 5px #000000); */
+
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: -4.0rem;
+    margin-right: -4.0rem;
+}
+
+.profile-picture:hover {
+    opacity: 0.75;
 }

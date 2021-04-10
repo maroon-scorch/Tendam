@@ -8,6 +8,10 @@ export function useDatabase() {
     return useContext(DatabaseContext);
 };
 
+// Usage of Database Functions:
+// call the function then couple it with then and catch because they are
+// asynchronous
+
 export function DatabaseProvider({ children }) {
     const userDatabase = app.firestore().collection("/users");
 
@@ -26,14 +30,12 @@ export function DatabaseProvider({ children }) {
     }
 
     function setEntry(id, data) {
-        // console.log(id);
         let userRef = userDatabase.doc(id);
         return userRef.set(data);
     }
 
     const databaseInfo = {
         addEntry,
-        userDatabase,
         setEntry,
         getEntry
     };

@@ -7,7 +7,7 @@ import './Profile.css';
 
 function Profile() {
     const { currentUser } = useAuth();
-    const { getEntry, userDatabase, setEntry } = useDatabase();
+    const { getEntry, setEntry } = useDatabase();
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", matches: []});

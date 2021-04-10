@@ -1,26 +1,28 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
 
 
-import java.util.ArrayList;
+import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 public class GaleShapley {
-  public static <T extends hasRanking<T>> Map<T, T> galeShapleyAlgo(
+  public static <T extends HasRanking<T>> Map<T, T> galeShapleyAlgo(
           List<T> listOne, List<T> listTwo) {
-    List<T> freeOne = new ArrayList<>(listOne);
+    Queue<T> freeOne = new ArrayDeque<>(listOne);
     Map<T, T> pairings = new HashMap<>();
     Map<T, T> reversePairings = new HashMap<>();
     // boolean isError = false;
     while (!freeOne.isEmpty()) {
       // TODO: Make sure to remove one from freeOne and sometimes add back onePrime to freeOne
-      T one = freeOne.get(0);
+      T one = freeOne.poll();
       boolean notMatched = true;
-      int i = 0;
-      while (notMatched) {
+      for (Integer twoId : one.getRankings()) {
+        if (!notMatched) {
+          break;
+        }
         //two is one’s highest ranked such person in listTwo to whom they have not yet proposed
-        String twoId = one.getRankings().get(i);
         T two = null;
 
         for (T obj : listTwo) {
@@ -32,13 +34,10 @@ public class GaleShapley {
 
         if (two == null) {
           throw new RuntimeException("ERROR: Could not find matching");
-//          notMatched = true;
-//          isError = true;
         } else {
           if (reversePairings.get(two) == null) {
             pairings.put(one, two);
             reversePairings.put(two, one);
-            freeOne.remove(one);
             notMatched = false;
           } else {
             T onePrime = reversePairings.get(two);
@@ -48,13 +47,9 @@ public class GaleShapley {
               pairings.put(one, two);
               reversePairings.put(two, one);
               pairings.put(onePrime, null);
-              freeOne.remove(one);
-              freeOne.add(onePrime);
+              freeOne.offer(onePrime);
               notMatched = false;
               // onePrime becomes free
-            } else {
-              // (onePrime, two) remain engaged  (do nothing)
-              i++;
             }
           }
         }

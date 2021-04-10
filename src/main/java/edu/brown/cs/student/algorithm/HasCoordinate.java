@@ -1,8 +1,8 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.algorithm;
 
 
 /**
- * Interface for any Object that has a coordinate.
+ * Interface for any Object that has a valuePoint.
  */
 public interface HasCoordinate {
 

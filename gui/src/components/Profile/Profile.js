@@ -14,7 +14,7 @@ import "aos/dist/aos.css";
 
 function Profile() {
     const { currentUser } = useAuth();
-    const { getEntry, setEntry, uploadStorage, getFile } = useDatabase();
+    const { getEntry, setEntry, uploadStorage, getFile, getEntryData } = useDatabase();
     const { close, open, setContent } = useModal();
     
     const [profileInfo, setProfileInfo] = useState({
@@ -102,7 +102,7 @@ function Profile() {
         let matches = profileInfo['matches'];
         let matchItems = [];
         
-        let userData = await getEntry('uwuJFRo9GcO5D8YGWz6E3FjbXNj1');
+        let userData = await getEntryData('uwuJFRo9GcO5D8YGWz6E3FjbXNj1');
         console.log(userData);
 
         // matches.forEach((id) => {

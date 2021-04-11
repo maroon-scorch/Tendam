@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-// import AwesomeButtonStyles from "react-awesome-button/src/styles/styles.scss";
-// import "react-awesome-button/dist/styles.css";
-// import TextBox from "./TextBox";
 import GameMessage from "./GameMessage";
 import './BlackJack.css';
 import Hand from "./Hand.js";
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
-import { Button } from '@material-ui/core';
 
 let cardsOfDealer = [];
 let cardValuesOfDealer = [];
@@ -17,10 +13,6 @@ let dealerHand = [-1, -1];
 function BlackJack() {
     const { currentUser } = useAuth();
     const { getGameData, setGameData } = useDatabase();
-
-    // const [profileInfo, setProfileInfo] = useState({
-    //     bio: "", name: "", age: "", matches: []});
-    // let dealerHand = [-1, -1];
 
     // Sum of all values in a deck of card 4(1 + 2 + ... + 13).
     const sumOfValues = 364;
@@ -37,7 +29,8 @@ function BlackJack() {
     let [playerHand, setPlayerHand] = useState([-1, -1]);
     // let [dealerHand, setDealerHand] = useState([-1, -1]);
 
-    const [riskPropensityScore, setRiskPropensityScore] = useState(0);
+    const [highestRiskScore, setHighestRiskScore] = useState(-1);
+    // const [numGamesPlayed, setNumGamesPlayed] = useState(0);
 
     useEffect(() => {
         if (deck.length === 52) {
@@ -49,23 +42,24 @@ function BlackJack() {
         setDeck(Array.from(Array(52).keys()));
         setWhoWon("");
         setGameEnded(false);
-        let currentScore = await getGameData(currentUser.uid, "blackjack-score");
-        setRiskPropensityScore(currentScore);
+        // let currentScore = await getGameData(currentUser.uid, "blackjack-score");
+        setHighestRiskScore(0);
+        let currentNumGamesPlayed = await getGameData(currentUser.uid, "blackjack-games-played");
+        setGameData(currentUser.uid, "blackjack-games-played", currentNumGamesPlayed + 1);
+        // setNumGamesPlayed(currentNumGamesPlayed + 1);
     }
 
     function setUpBoard() {
         let dealerCardsAndValues = setUpCards(2);
         let playerCardsAndValues = setUpCards(2);
-        // setCardsOfDealer(dealerCardsAndValues[0]);
+
         cardsOfDealer = dealerCardsAndValues[0];
-        setCardsOfPlayer(playerCardsAndValues[0]);
         cardValuesOfDealer = dealerCardsAndValues[1];
-        // setCardValuesOfDealer(dealerCardsAndValues[1]);
-        setCardValuesOfPlayer(playerCardsAndValues[1]);
         realDealerHand = dealerCardsAndValues[2];
         dealerHand = [dealerCardsAndValues[2][0], -1];
-        // dealerHand = dealerHand.push(dealerCardsAndValues[2][0]);
-        // dealerHand = dealerHand.push(-1);
+
+        setCardsOfPlayer(playerCardsAndValues[0]);
+        setCardValuesOfPlayer(playerCardsAndValues[1]);
         setPlayerHand(playerCardsAndValues[2]);
     }
 
@@ -84,7 +78,6 @@ function BlackJack() {
             cardsValuesOfPerson.push(chosenCardKey % 13 + 1);
             cardsOfPerson.push(chosenCard);
             chosenKeys.push(parseInt(chosenCardKey));
-            // chosenKeys.push(parseInt(chosenCardKey) + 1);
         }
         cardsToAdd.push(cardsOfPerson);
         cardsToAdd.push(cardsValuesOfPerson);
@@ -132,34 +125,6 @@ function BlackJack() {
         return card;
     }
 
-    /**
-     * Makes an axios request for player's risk propensity score.
-     */
-    // const requestRiskPropensityScore = () => {
-    //     const toSend = {
-    //         playerID: playerID
-    //     };
-
-    //     let config = {
-    //         headers: {
-    //             "Content-Type": "application/json",
-    //             'Access-Control-Allow-Origin': '*',
-    //         }
-    //     };
-
-    //     axios.post(
-    //         'http://localhost:4567/ways',
-    //         toSend,
-    //         config
-    //     ).then(response => {
-    //         setRiskPropensityScore(response.data);
-    //     })
-
-    //         .catch(function (error) {
-    //             console.log(error);
-    //         });
-    // }
-
     useEffect(() => {
         checkBust();
     }, [cardValuesOfPlayer])
@@ -168,6 +133,7 @@ function BlackJack() {
         const player = calculateScore(cardValuesOfPlayer);
         if (player > 21) {
             // update database for user's risk propensity score with final risk propensity score
+            setAverageRiskPropensityScore(null);
             setGameEnded(true);
             setWhoWon("You Lose :(");
         }
@@ -185,7 +151,6 @@ function BlackJack() {
                 for (let j = 0; j < possibleScores.length; j++) {
                     tentativeScores.push(possibleScores[j] + 1);
                     tentativeScores.push(possibleScores[j] + 11);
-                    // possibleScores[j] = possibleScores[j] + 10;
                 }
                 possibleScores = tentativeScores;
             } else {
@@ -219,50 +184,56 @@ function BlackJack() {
             setCardValuesOfPlayer(cardValuesOfPlayer.concat(playerCardsAndValues[1]));
             console.log(playerCardsAndValues[0][0])
             setPlayerHand(playerHand.concat(playerCardsAndValues[2]));
-            // playerHand.push(playerCardsAndValues[2][0]);
-            console.log(playerHand);
         }
-        // update riskpropensityScore here
-        if (riskPropensityScore === -1) {
-
-        } 
-        // setRiskPropensityScore(calculateRisk());
+        setHighestRiskScore(calculateRiskScore());
     }
 
-    function calculateRisk() {
+    // Calculates probability that a new card will make the hand go over 21.
+    function calculateRiskScore() {
         let remainingSum = sumOfValues;
         const maxBeforeBust = 21 - calculateScore(cardValuesOfPlayer);
         let count = 0;
         for (let i = 0; i < deck.length; i++) {
-            if (deck[i] <= maxBeforeBust) {
+            let cardValue = deck[i] % 13 + 1;
+            if (cardValue === 11 || cardValue === 12 || cardValue === 13) {
+                cardValue = 10;
+            }
+            if (cardValue > maxBeforeBust) {
                 count++;
             }
         }
-        return count / deck.length;
+        return 100 * count / deck.length;
     }
 
-    // useEffect(() => {
-    //     if (dealerScore < 17) {
-    //         let dealerCardsAndValues = setUpCards(1);
-    //         setCardsOfDealer(cardsOfDealer.concat(dealerCardsAndValues[0]));
-    //         let newCards = cardValuesOfDealer.concat(dealerCardsAndValues[1])
-    //         setCardValuesOfDealer(newCards);
-    //         setDealerScore(calculateScore(newCards));
-    //     } else {
-    //         checkGameResults();
-    //     }
-    // }, [dealerScore])
-
-    // useEffect(() => {
-    //     if (playerStand) {
-    //         let dealerScore = calculateScore(cardValuesOfDealer);
-    //     }
-    // }, [playerStand])
+    async function setAverageRiskPropensityScore(riskScore) {
+        let currentScore = await getGameData(currentUser.uid, "blackjack-score");
+        let currentNumGamesPlayed = await getGameData(currentUser.uid, "blackjack-games-played");
+        if (riskScore) {
+            if (currentNumGamesPlayed !== 0) {
+                if (currentScore === -1) {
+                    setGameData(currentUser.uid, "blackjack-score", riskScore);
+                } else {
+                    let newScore = (currentScore * (currentNumGamesPlayed - 1) + riskScore) / (currentNumGamesPlayed);
+                    setGameData(currentUser.uid, "blackjack-score", newScore);
+                }
+            }
+        } else {
+            if (currentNumGamesPlayed !== 0) {
+                if (currentScore === -1) {
+                    setGameData(currentUser.uid, "blackjack-score", highestRiskScore);
+                } else {
+                    let newScore = (currentScore * (currentNumGamesPlayed - 1) + highestRiskScore) / (currentNumGamesPlayed);
+                    setGameData(currentUser.uid, "blackjack-score", newScore);
+                }
+            }
+        }
+    }
 
     function checkGameResults() {
         const dealer = calculateScore(cardValuesOfDealer);
         const player = calculateScore(cardValuesOfPlayer);
         setGameEnded(true);
+
         if (player > 21 || (dealer < 22 && dealer >= player)) {
             // update database for user's risk propensity score with final risk propensity score
             setWhoWon("You Lose :(");
@@ -280,6 +251,8 @@ function BlackJack() {
         if (gameEnded) {
             setWhoWon("Press play first");
         } else {
+            let riskScore = calculateRiskScore();
+            setAverageRiskPropensityScore(riskScore);
             dealerHand = realDealerHand;
             while (calculateScore(cardValuesOfDealer) < 17) {
                 let dealerCardsAndValues = setUpCards(1);
@@ -302,13 +275,13 @@ function BlackJack() {
      * @param lambda
      * @returns {JSX.Element}
      */
-        //function convertKeytoCard(num) {
-        //     return Math.floor(lon / lambda) * lambda;
+    //function convertKeytoCard(num) {
+    //     return Math.floor(lon / lambda) * lambda;
 
-        //}
-        // function Button() {
-        //     return <AwesomeButton type="primary"> Button</AwesomeButton>;
-        // }
+    //}
+    // function Button() {
+    //     return <AwesomeButton type="primary"> Button</AwesomeButton>;
+    // }
     const Button = styled.button`
   background-color: GoldenRod;
   color: black;
@@ -319,26 +292,39 @@ function BlackJack() {
   cursor: pointer;
 `;
 
-    async function handleScore(e) {
-        e.preventDefault();
-        let score = await getGameData(currentUser.uid, "blackjack-score");
-        console.log(score);
-    }
 
-    async function setScore(e) {
-        e.preventDefault();
-        await setGameData(currentUser.uid, "blackjack-score", 2);
-    }
+    // For debugging purposes
+    // async function handleScore(e) {
+    //     e.preventDefault();
+    //     let score = await getGameData(currentUser.uid, "blackjack-score");
+    //     console.log("score is: " + score);
+    // }
+
+    // async function handleNumGamesPlayed(e) {
+    //     e.preventDefault();
+    //     let num = await getGameData(currentUser.uid, "blackjack-games-played")
+    //     console.log("num games played is: " + num);
+    // }
+
+    // async function resetScoreData(e) {
+    //     e.preventDefault();
+    //     await setGameData(currentUser.uid, "blackjack-score", -1);
+    // }
+
+    // async function resetNumberData(e) {
+    //     e.preventDefault();
+    //     await setGameData(currentUser.uid, "blackjack-games-played", 0);
+    // }
 
     return (
         <div className="body">
             <div className="cards">
-                <GameMessage text={"Dealer's cards: "} hidden={gameEnded}/>
+                <GameMessage text={"Dealer's cards: "} hidden={gameEnded} />
                 <GameMessage text={cardsOfDealer} />
                 <Hand cards={dealerHand} />
                 <br />
-                <GameMessage text={"Player's cards: "} hidden={gameEnded}/>
-                <GameMessage text={"Player total " + calculateScore(cardValuesOfPlayer)} hidden={gameEnded}/>
+                <GameMessage text={"Player's cards: "} hidden={gameEnded} />
+                <GameMessage text={"Player total " + calculateScore(cardValuesOfPlayer)} hidden={gameEnded} />
                 <Hand cards={playerHand} />
             </div>
             <div className="buttons">
@@ -351,8 +337,12 @@ function BlackJack() {
                 <br />
                 <GameMessage text={whoWon} hidden={!gameEnded} />
             </div>
+            
+            {/* For debugging purposes
             <Button variant="contained" color="primary" onClick={handleScore}>get score</Button>
-            <Button variant="contained" color="primary" onClick={setScore}>set score</Button> 
+            <Button variant="contained" color="primary" onClick={handleNumGamesPlayed}>get games played</Button>
+            <Button variant="contained" color="primary" onClick={resetScoreData}>reset score data</Button>
+            <Button variant="contained" color="primary" onClick={resetNumberData}>reset number data</Button> */}
         </div>
 
     )

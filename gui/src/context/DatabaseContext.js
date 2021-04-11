@@ -31,6 +31,13 @@ export function DatabaseProvider({ children }) {
         return userRef.get();
     }
 
+    function getEntryData(id) {
+        let userRef = userDatabase.doc(id);
+        return userRef.get().then((doc) => {
+            return doc.data();
+        }).catch((error) => {});
+    }
+
     function setEntry(id, data) {
         let userRef = userDatabase.doc(id);
         return userRef.set(data);
@@ -76,6 +83,7 @@ export function DatabaseProvider({ children }) {
         addEntry,
         setEntry,
         getEntry,
+        getEntryData,
         getGameData,
         setGameData,
         uploadStorage,

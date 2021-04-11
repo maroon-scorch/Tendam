@@ -37,6 +37,10 @@
     background-color: rgba(0, 0, 0, 0.3);
 }
 
+.slick-track {
+    height: 45vh;
+}
+
 .dashboard-next {
     color: white;
 }

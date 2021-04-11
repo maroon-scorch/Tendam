@@ -1,4 +1,4 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.users;
 
 import edu.brown.cs.student.algorithm.HasCoordinate;
 

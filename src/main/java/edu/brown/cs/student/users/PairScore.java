@@ -1,12 +1,23 @@
 package edu.brown.cs.student.users;
 
+/**
+ * Supporting class for sorting amongst algorithm results.
+ */
 public class PairScore {
 
-  private final int mainID;
-  private final int optionID;
+  private final String mainID;
+  private final String optionID;
   private final double difference;
 
-  public PairScore(int mainID, int optionID, double difference) {
+  /**
+   * Public constructor for PairScore.
+   *
+   * @param mainID     the id of the main user
+   * @param optionID   the id of the user they are tested
+   *                   against for level of difference
+   * @param difference the level of difference
+   */
+  public PairScore(String mainID, String optionID, double difference) {
     this.mainID = mainID;
     this.optionID = optionID;
     this.difference = difference;
@@ -17,7 +28,7 @@ public class PairScore {
    *
    * @return the id of the main user
    */
-  public int getMainID() {
+  public String getMainID() {
     return mainID;
   }
 
@@ -26,7 +37,7 @@ public class PairScore {
    *
    * @return the id of the other user
    */
-  public int getOptionID() {
+  public String getOptionID() {
     return optionID;
   }
 

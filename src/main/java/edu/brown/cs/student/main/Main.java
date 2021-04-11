@@ -1,5 +1,7 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.databases.FireBaseDatabase;
+import edu.brown.cs.student.miscenllaneous.CustomException;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -33,7 +35,7 @@ public final class Main {
     new Main(args).run();
   }
 
-  private String[] args;
+  private final String[] args;
 
   private Main(String[] args) {
     this.args = args;
@@ -48,17 +50,16 @@ public final class Main {
     OptionSet options = parser.parse(args);
 
 
-    //REPL repl = new REPL();
-//    repl.registerCommand("stars", new Stars());
-//    repl.registerCommand("naive_neighbors", new NaiveNeighbors());
-//    repl.registerCommand("naive_radius", new NaiveRadius());
-//    repl.registerCommand("mock", new Mock());
-//    repl.registerCommand("neighbors", new Neighbors());
-//    repl.registerCommand("radius", new Radius());
-//    repl.registerCommand("map", new MapCommand());
-//    repl.registerCommand("ways", new WaysCommand());
-//    repl.registerCommand("nearest", new NearestCommand());
-//    repl.registerCommand("route", new RouteCommand());
+    REPL repl = new REPL();
+    try {
+      FireBaseDatabase database = new FireBaseDatabase();
+      database.retrieveUsers();
+      System.out.println("DATABASE LOADED!");
+    } catch (CustomException e) {
+      e.getResponse();
+    } catch (IOException e) {
+      System.out.println("ERROR: You got an IO Exception!");
+    }
 
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
@@ -68,7 +69,7 @@ public final class Main {
             new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
       String input;
       while ((input = br.readLine()) != null) {
-        // repl.run(input);
+         repl.run(input);
       }
     } catch (RuntimeException e) {
       System.err.println("ERROR: Runtime exception");

@@ -1,6 +1,6 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.main;
 
-import edu.brown.cs.student.main.Command;
+import edu.brown.cs.student.replsupport.Command;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -7,32 +7,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class representing a user and some of their most significant data.
+ * Used primarily to run the algorithmic pipeline.
+ */
 public class User {
   //id is shared between a user and a person
-  private final Integer id;
-  //not sure if the id is the same as the username
-  private String userName;
+  private String id;
+  private String name;
   private Map<String, Source> userData;
-  private List<Integer> friends;
-  private String password;
-  private String email;
+  private List<String> matches;
 
   /**
    * Public constructor for users
    *
-   * @param id       unique id
-   * @param userName username, does not have to be unique
-   * @param password string password
-   * @param email    string email
-   * @param friends  list of friend IDs
+   * @param id      unique id
+   * @param name    username, does not have to be unique
+   * @param matches list of friend IDs
    */
-  public User(Integer id, String userName, String password, String email, List<Integer> friends) {
+  public User(String id, String name, List<String> matches) {
     this.id = id;
-    this.userName = userName;
+    this.name = name;
     this.userData = new HashMap<>();
-    this.friends = friends;
-    this.password = password;
-    this.email = email;
+    this.matches = matches;
+  }
+
+  /**
+   * No argument constructor used for FireBase serialization
+   */
+  public User() {
   }
 
   //method to add new surveys or games when one is created
@@ -45,12 +48,40 @@ public class User {
     this.userData.replace(surveyName, surveyData);
   }
 
-  public Integer getId() {
+  /**
+   * Accesses the id of a user
+   *
+   * @return integer id
+   */
+  public String getID() {
     return id;
   }
 
+  /**
+   * Accesses the name of a user
+   *
+   * @return a string name
+   */
   public String getName() {
-    return userName;
+    return name;
+  }
+
+  /**
+   * Acceses the source data of a user.
+   *
+   * @return a map of string to source
+   */
+  public Map<String, Source> getUserData() {
+    return userData;
+  }
+
+  /**
+   * Accesses the existing matches of the character.
+   *
+   * @return a list of integers
+   */
+  public List<String> getMatches() {
+    return matches;
   }
 
   /**
@@ -84,34 +115,34 @@ public class User {
    * @param newName a string username
    */
   public void updateName(String newName) {
-    this.userName = newName;
+    this.name = newName;
   }
 
-  /**
-   * Updates an individual's password
-   *
-   * @param newPassword a string password
-   */
-  public void updatePassword(String newPassword) {
-    this.password = newPassword;
-  }
+//  /**
+//   * Updates an individual's password
+//   *
+//   * @param newPassword a string password
+//   */
+//  public void updatePassword(String newPassword) {
+//    this.password = newPassword;
+//  }
 
-  /**
-   * Updates an individual's email
-   *
-   * @param newEmail a string email
-   */
-  public void updateEmail(String newEmail) {
-    this.email = newEmail;
-  }
+//  /**
+//   * Updates an individual's email
+//   *
+//   * @param newEmail a string email
+//   */
+//  public void updateEmail(String newEmail) {
+//    this.email = newEmail;
+//  }
 
   /**
    * Updates the individual's friends list with the id of a friend.
    *
    * @param friendID an integer id
    */
-  public void addFriend(Integer friendID) {
-    this.friends.add(friendID);
+  public void addFriend(String friendID) {
+    this.matches.add(friendID);
   }
 
   /**
@@ -120,7 +151,7 @@ public class User {
    * @param friendID an integer id
    */
   public void removeFriend(Integer friendID) {
-    this.friends.remove(friendID);
+    this.matches.remove(friendID);
   }
 
 

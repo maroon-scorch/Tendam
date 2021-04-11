@@ -1,11 +1,17 @@
-package edu.brown.cs.student;
+package edu.brown.cs.student.databases;
 
 import edu.brown.cs.student.datasources.Source;
 import edu.brown.cs.student.users.User;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +23,13 @@ public class Database {
   private final String filepath;
 
 
+  /**
+   * Instance of a database.
+   *
+   * @param filepath the path
+   * @throws FileNotFoundException if the file cannot be found
+   * @throws SQLException          if something goes wrong with the SQl command
+   */
   public Database(String filepath) throws FileNotFoundException, SQLException {
     File file = new File(filepath);
     if (!file.exists() || !file.isFile()) {
@@ -32,21 +45,20 @@ public class Database {
   }
 
   /**
-   *
-   * @param id user's unique ID used to identify them
+   * @param id       user's unique ID used to identify them
    * @param userName username inputted by user
    * @param password password inputted by user
-   * @param email email inputted by user
+   * @param email    email inputted by user
    * @throws SQLException if data cannot be parsed
    */
   //inserts a new user into the user table
   public void insertUser(String id, String userName, String password, String email) throws SQLException {
     try (PreparedStatement prepTable = conn.prepareStatement(
             "CREATE TABLE IF NOT EXISTS 'users' ("
-            + "id INTEGER, "
-            + "username TEXT, "
-            + "password TEXT, "
-            + "email TEXT);")) {
+                    + "id INTEGER, "
+                    + "username TEXT, "
+                    + "password TEXT, "
+                    + "email TEXT);")) {
       prepTable.executeUpdate();
       PreparedStatement prepUser;
       prepUser = conn.prepareStatement("INSERT INTO users VALUES (?, ?, ?, ?);");
@@ -59,9 +71,8 @@ public class Database {
     }
   }
 
-  //inserts a new table into the database when a new survey is created
-
   /**
+   * Inserts a new table into the database when a new survey is created.
    *
    * @param surveyName adds a new column with this name
    * @throws SQLException if sql command cannot be executed
@@ -73,19 +84,17 @@ public class Database {
     }
   }
 
-
-  // TODO: Change survey score parameter from double to Source
-
   /**
    * updates the field for a user in the table when they complete a survey
-   * @param userId the unique id of the user
-   * @param surveyName the name of the survey
+   *
+   * @param userId      the unique id of the user
+   * @param surveyName  the name of the survey
    * @param surveyScore the score they got on the survey
    * @throws SQLException if the SQl command goes awry
    */
   public void updateSurveyData(String userId, String surveyName, Source surveyScore) throws SQLException {
     try (PreparedStatement prep = conn.prepareStatement("UPDATE users "
-    + "SET ? = ?  WHERE id = ?;")) {
+            + "SET ? = ?  WHERE id = ?;")) {
       prep.setString(1, surveyName);
       prep.setObject(2, surveyScore);
       prep.setString(3, userId);
@@ -93,43 +102,41 @@ public class Database {
     }
   }
 
-  //adds friend relations to a new table
-  /* if A is friends with B, need to call addFriends(a.id, b.id) and
-  addFriends(b.id, a.id)
-   */
 
   /**
+   * Adds friend relations to a new table
+   * If A is friends with B, need to call addFriends(a.id, b.id) and
+   * addFriends(b.id, a.id)
    *
-   * @param userId ID of the user
+   * @param userId   ID of the user
    * @param friendId ID of the user's friend
    * @throws SQLException if sql command cannot be executed
    */
-  public void addFriends(Integer userId, Integer friendId) throws SQLException {
+  public void addFriends(String userId, String friendId) throws SQLException {
     try (PreparedStatement prepTable = conn.prepareStatement("CREATE TABLE IF NOT EXISTS 'friends' "
             + " user TEXT, friend TEXT;")) {
       prepTable.executeUpdate();
     }
-      try (PreparedStatement prep = conn.prepareStatement("INSERT INTO friends VALUES (?, ?);")) {
-      prep.setInt(1, userId);
-      prep.setInt(2, friendId);
+    try (PreparedStatement prep = conn.prepareStatement("INSERT INTO friends VALUES (?, ?);")) {
+      prep.setString(1, userId);
+      prep.setString(2, friendId);
       prep.addBatch();
       prep.executeBatch();
     }
   }
 
   /**
-   *
    * @param userId ID of the user
    * @return list of users friends
    * @throws SQLException if sql command cannot be executed
    */
-  public List<Integer> findFriends(Integer userId) throws SQLException {
+  public List<String> findFriends(String userId) throws SQLException {
     try (PreparedStatement prep = conn.prepareStatement(
             "SELECT friends.friend FROM friends WHERE friends.user = ?;")) {
-      List<Integer> friends = new LinkedList<>();
+      List<String> friends = new LinkedList<>();
       ResultSet rs = prep.executeQuery();
       while (rs.next()) {
-        friends.add(rs.getInt(1));
+        friends.add(rs.getString(1));
       }
       rs.close();
       return friends;
@@ -137,6 +144,7 @@ public class Database {
   }
 
   /**
+   * Returns all the users in the database.
    *
    * @return list of users
    * @throws SQLException if sql command cannot be executed
@@ -158,18 +166,16 @@ public class Database {
       List<User> users = new LinkedList<>();
 
       while (rs.next()) {
-        Integer id = rs.getInt(1);
+        String id = rs.getString(1);
         String username = rs.getString(2);
-        String password = rs.getString(3);
-        String email = rs.getString(4);
         int k = 5;
         while (k <= c) {
           Source surveyData = (Source) rs.getObject(k);
           surveys.put(rd.getColumnName(k), surveyData);
           k++;
         }
-        List<Integer> friends = findFriends(id);
-        User user = new User(id, username, password, email, friends);
+        List<String> friends = findFriends(id);
+        User user = new User(id, username,friends);
         users.add(user);
       }
       rs.close();

@@ -18,7 +18,7 @@ public class GaleShapley {
       // TODO: Make sure to remove one from freeOne and sometimes add back onePrime to freeOne
       T one = freeOne.poll();
       boolean notMatched = true;
-      for (Integer twoId : one.getRankings()) {
+      for (String twoId : one.getRankings()) {
         if (!notMatched) {
           break;
         }
@@ -46,7 +46,7 @@ public class GaleShapley {
               // (one, two) become engaged
               pairings.put(one, two);
               reversePairings.put(two, one);
-              pairings.put(onePrime, null);
+              pairings.remove(onePrime);
               freeOne.offer(onePrime);
               notMatched = false;
               // onePrime becomes free

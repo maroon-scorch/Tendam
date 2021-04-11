@@ -461,5 +461,29 @@ public abstract class CustomException extends Exception {
       return RESPONSE;
     }
   }
+
+  /**
+   * Sub-class for when something goes wrong with the future
+   */
+  public static class FutureBreakException extends CustomException {
+    private static final long serialVersionUID = 76;
+
+    public static final String RESPONSE = "ERROR: Something went wrong with your future!";
+
+    /**
+     * Empty Constructor.
+     */
+    public FutureBreakException() {
+    }
+
+    /**
+     * Returns the response associated with this exception.
+     *
+     * @return a string response
+     */
+    public String getResponse() {
+      return RESPONSE;
+    }
+  }
 }
 

@@ -14,7 +14,7 @@
     width: 50%;
 }
 
-.profile-picture {
+.profile-picture-container {
     border-radius: 50%;
     border: 5px solid #aaa;
     width: 15rem;
@@ -26,6 +26,16 @@
     right: 0;
     margin-top: -4.0rem;
     margin-right: -4.0rem;
+    overflow: hidden;
+
+    background-color: white;
+}
+
+.profile-picture {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
 }
 
 .profile-picture:hover {

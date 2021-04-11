@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react'
-import { useAuth } from "../../context/AuthContext.js";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState, useEffect, useRef } from 'react'
+import { Link } from "react-router-dom";
 
 import circus from "./selection/circus-transparent.png";
 import book from "./selection/book-transparent.png";
@@ -17,18 +16,19 @@ import { Typography } from '@material-ui/core';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-// Referenced and Adapted from https://github.com/chrisdesilva/3d-slider
+// Referenced and Learned from https://github.com/chrisdesilva/3d-slider
 
 function Dashboard() {
-    const history = useHistory();
-    const { currentUser } = useAuth();
-    const [currentIndex, setIndex] = useState(0);
-    const isFirstLoad = useRef(true);
 
-    // let settings = {
-    //     width: '50%',
-    //     infiniteLoop: true
-    // };
+    const _isMounted = useRef(true); // Initial value _isMounted = true
+
+    useEffect(() => {
+      return () => { // ComponentWillUnmount in Class Component
+          _isMounted.current = false;
+      }
+    }, []);
+
+    const [currentIndex, setIndex] = useState(0);
 
     function handleChange(current) {
         console.log(current);
@@ -50,24 +50,29 @@ function Dashboard() {
 
     const sliderItems = [
         {
+            id: 'games-tag',
             children: <Link to='/games'>
                 <img src={circus} width={'300px'} height={'300px'} className="unselected-item" />
             </Link>
         },
         {
+            id: 'quizzes-tag',
             children: <Link to='/quizzes'>
                 <img src={book} width={'300px'} height={'300px'} className="unselected-item" />
                 </Link>
         },
         {
+            id: 'setting-tag',
             children: <Link to='/setting'>
                 <img src={wheel} width={'300px'} height={'300px'} className="unselected-item" /></Link>
         },
         {
+            id: 'profile-tag',
             children: <Link to='/profile'>
                 <img src={profile} width={'300px'} height={'300px'} className="unselected-item"  /></Link>
         },
         {
+            id: 'match-tag',
             children: <Link to='/match'>
                 <img src={match} width={'300px'} height={'300px'} className="unselected-item" /></Link>
         }
@@ -79,34 +84,14 @@ function Dashboard() {
             <Typography variant="h1" className="signup-title">Dashboard</Typography>
         <Slider {...settings}>
             {sliderItems.map((item, index) => {
-                return(<div>
+                return(<div key={item.id}>
                     <div className={ index===currentIndex ? "selected-item" : "unselected-item"}>
                     {item.children}
                     </div>
                 </div>);
             })}
-      </Slider>
-      {/* <div className="background-container">
-                <img src={neon} />
-            </div> */}
+        </Slider>
       </div>
-        // <div className="dashboard-container">
-        //     <Typography variant="h6" className="signup-title">
-        //         {currentUser.email}</Typography>
-        //         {/* <Carousel {...settings}>
-        //         <div>
-        //         <img src={circus} />
-        //             <p className="legend">Games</p>
-        //         </div>
-        //         <div>
-        //         <img src={book} />
-        //             <p className="legend">Quizzes</p>
-        //         </div>
-        //         <div>
-        //         <img src={wheel} />
-        //             <p className="legend">Settings</p>
-        //         </div>
-        //     </Carousel>        </div> */}
     )
 }
 

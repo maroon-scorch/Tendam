@@ -14,7 +14,7 @@ function Home() {
                 <Typography variant="h1">TƎNDAM</Typography>
                 <Typography variant="h5" className="home-description">The Youngest Social Media Matching App in the World</Typography>
                 <Link to='/signup'>
-                    <Button variant="contained" color="primary"  disabled={currentUser} size="large">Create Account</Button>
+                    <Button variant="contained" color="primary"  disabled={currentUser !== null} size="large">Create Account</Button>
                 </Link>
             </div>
             <div className="background-container">

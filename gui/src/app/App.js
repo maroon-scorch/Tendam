@@ -25,6 +25,8 @@ import Match from '../components/Match/Match.js';
 import Profile from '../components/Profile/Profile.js';
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle.js';
 
+import { ModalProvider } from '../context/ModalContext.js';
+
 // AKA - I am so totally screwed.
 function App() {
   const [isDark, setDark] = useState(true);
@@ -67,24 +69,26 @@ function App() {
       <CssBaseline />
       <div className="App">
       <Router>
-        <AuthProvider>
-          <DatabaseProvider>
-          <Header />
-          <Switch>
-            <Route path='/' exact component={Home}></Route>
-            <PublicRoute path='/signup' exact component={Signup}></PublicRoute>
-            <Route path='/login' exact component={Login}></Route>
-            <Route path='/forgot-password' exact component={ForgotPassword}></Route>
-            <Route path="/terms-of-service" exact component={TermsOfService}></Route>
-            <PrivateRoute path="/dashboard" exact component={DashBoard}></PrivateRoute>
-            <PrivateRoute path="/games" exact component={BlackJack}></PrivateRoute>
-            <PrivateRoute path="/quizzes" exact component={Quiz}></PrivateRoute>
-            <PrivateRoute path="/setting" exact component={Setting}></PrivateRoute>
-            <PrivateRoute path="/match" exact component={Match}></PrivateRoute>
-            <PrivateRoute path="/profile" exact component={Profile}></PrivateRoute>
-          </Switch>
-          </DatabaseProvider>
-        </AuthProvider>
+        <ModalProvider>
+          <AuthProvider>
+            <DatabaseProvider>
+            <Header />
+            <Switch>
+              <Route path='/' exact component={Home}></Route>
+              <PublicRoute path='/signup' exact component={Signup}></PublicRoute>
+              <Route path='/login' exact component={Login}></Route>
+              <Route path='/forgot-password' exact component={ForgotPassword}></Route>
+              <Route path="/terms-of-service" exact component={TermsOfService}></Route>
+              <PrivateRoute path="/dashboard" exact component={DashBoard}></PrivateRoute>
+              <PrivateRoute path="/games" exact component={BlackJack}></PrivateRoute>
+              <PrivateRoute path="/quizzes" exact component={Quiz}></PrivateRoute>
+              <PrivateRoute path="/setting" exact component={Setting}></PrivateRoute>
+              <PrivateRoute path="/match" exact component={Match}></PrivateRoute>
+              <PrivateRoute path="/profile" exact component={Profile}></PrivateRoute>
+            </Switch>
+            </DatabaseProvider>
+          </AuthProvider>
+        </ModalProvider>
       </Router>
       <ThemeToggle className="light-dark-toggle" checked={isDark} checkSetter={setDark}/>
       </div>

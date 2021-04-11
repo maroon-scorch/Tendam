@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button, Typography, TextField } from '@material-ui/core';
+import { Button, Typography, TextField, Tooltip } from '@material-ui/core';
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
 
@@ -16,6 +16,8 @@ function Profile() {
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", matches: []});
+
+    const [profilePic, setProfilePic] = useState("blank-profile.png");
     
     const [isEditing, setIsEditing] = useState(false);
 
@@ -45,7 +47,7 @@ function Profile() {
     function handleSave(e){
         e.preventDefault();
         setIsEditing(false);
-        // setEntry('1', '2');
+
         let data = profileInfo;
         setEntry(currentUser.uid, data).then(() => {
                 console.log("Document successfully written!");
@@ -64,12 +66,26 @@ function Profile() {
         });
     }
 
+    function changeFile(event) {
+        let fileAdded = event.target.files[0];
+        if (fileAdded !== undefined) {
+            let binaryData = [];
+            binaryData.push(fileAdded);
+            let newImageURL = URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+            setProfilePic(newImageURL);
+            console.log(fileAdded);
+        }
+    }
+
     return (
         <div className="profile-container" data-aos="fade-up" data-aos-duration="2000">
             <div className="profile">
-            <Link>
-                <img className="profile-picture" src="blank-profile.png" alt="Avatar" />
-            </Link>
+            <Tooltip title="Change Profile Picture">
+                <div className="profile-picture-container">
+                    <img className="profile-picture" src={profilePic} alt="Avatar" />
+                </div>
+            </Tooltip>
+            <input type="file" accept="image/*" onChange={changeFile} />
             Profile Page:
             <Typography variant="h5">Bio: <TextField label="Bio"
             name="bio" value={profileInfo.bio} disabled={!isEditing} onChange={handleChange}/></Typography>

@@ -95,9 +95,6 @@ function Signup() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log('Signing up');
-        console.log(formValues);
-
         setError('');
 
         if (entriesAreValid()) {

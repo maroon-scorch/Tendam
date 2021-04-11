@@ -56,8 +56,6 @@ function ForgotPassword() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log('Reset Password');
-        console.log(formValues);
 
         setError('');
 

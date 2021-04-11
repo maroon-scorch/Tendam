@@ -65,22 +65,18 @@ function Login() {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log('Logging In');
-        console.log(formValues);
-
-        setError('');
-
         if (entriesAreValid()) {
-            setLoading(true);
             try {
+                setError('');
+                setLoading(true);
                 await login(formValues.email, formValues.password);
-                history.push('/dashboard');
+                history.push('/profile');
             } catch(err) {
                 setError(err.message);
             }
-        }
 
-        setLoading(false);
+            setLoading(false);
+        }
     }
 
     return (

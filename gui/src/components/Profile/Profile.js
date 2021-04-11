@@ -1,21 +1,17 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Button, Typography, TextField, Tooltip } from '@material-ui/core';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
-import { useModal } from "../../context/ModalContext";
 
-import { Link, useHistory } from 'react-router-dom';
-
+import MatchDisplay from './MatchDisplay';
 import './Profile.css';
 
 import Aos from 'aos';
 import "aos/dist/aos.css";
 
-function Profile() {
+function Profile({ history }) {
     const { currentUser } = useAuth();
     const { getEntry, setEntry, uploadStorage, getFile, getEntryData } = useDatabase();
-    const { close, open, setContent } = useModal();
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", id: "", matches: []});
@@ -23,12 +19,10 @@ function Profile() {
     
     const selectFile = useRef(null);
     const [profilePic, setProfilePic] = useState("blank-profile.png");
-    
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(async () => {
         Aos.init({});
-
         if (currentUser !== null) {
             getEntry(currentUser.uid).then((doc) => {
                 if (doc.exists) {
@@ -98,35 +92,6 @@ function Profile() {
         selectFile.current.click();
     }
 
-    async function displayMatch() {
-        let matches = profileInfo['matches'];
-        let matchItems = [];
-        
-        let userData = await getEntryData('uwuJFRo9GcO5D8YGWz6E3FjbXNj1');
-        console.log(userData);
-
-        // matches.forEach((id) => {
-        //     let userData = getEntry(id);
-        //     console.log(userData);
-        // });
-
-        // console.log(matchItems);
-
-        let matchDisplay = matchItems.map((item, index) => {
-            return(<div key={index} className="modal-profile-matches">
-                <div className="modal-matches-left">
-                    {item}
-                </div>
-                <div className="modal-matches-right">
-                    <HighlightOffIcon className="match-delete" color="secondary" fontSize="large" />
-                </div>
-                </div>); 
-        });
-
-        open();
-        setContent(matchDisplay);
-    }
-
     return (
         <div className="profile-container" data-aos="fade-up" data-aos-duration="2000">
             <div className="profile">
@@ -151,9 +116,7 @@ function Profile() {
                 <Button variant="contained" color="secondary" disabled={!isEditing} onClick={handleSave}>SAVE</Button>
                 <br />
                 <br />
-                <Button variant="contained" color="secondary" onClick={displayMatch}>
-                    <Typography variant="h5">Matches: {profileInfo.matches.length}</Typography>
-                </Button>
+                <MatchDisplay matches={profileInfo.matches} />
             </div>
             </div>
         </div>

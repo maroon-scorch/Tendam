@@ -4,6 +4,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { Typography } from '@material-ui/core';
 import { useAuth } from "../../context/AuthContext.js";
 import Button from '@material-ui/core/Button';
+import logo from './tendam-logo.png';
 import './Header.css';
 
 function Header() {
@@ -57,7 +58,7 @@ function Header() {
             <nav className={"header-bar"}>
                 <Link to="/" className="header-logo">
                 <Typography variant="h3">TƎNDAM</Typography>
-                    <img src="./logo.png" className="header-logo-img"/>
+                <img src={logo} className="header-logo-img"/>
                 </Link>
                 <ul className="header-menu">
                 {headerItems.map((item, index) => {

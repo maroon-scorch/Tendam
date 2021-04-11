@@ -51,7 +51,7 @@
 .modal-profile-matches {
     margin: 1rem auto;
     padding: 1rem;
-    border: 3px solid white;
+
     border-radius: 5px;
     width: 75%;
 
@@ -64,10 +64,31 @@
     background: linear-gradient(90deg, rgba(58,64,180,1) 0%, rgba(29,82,253,1) 50%, rgba(69,242,252,1) 100%);
 }
 
+.modal-profile-matches:hover {
+    border: 3px solid white;
+}
+
 /* .modal-matches-left {
     float: left;
 }
  */
+
+.modal-picture-wrapper {
+    border-radius: 50%;
+    border: 5px solid #aaa;
+    width: 5rem;
+    height: 5rem;
+    /* filter: drop-shadow(5px 5px 5px #000000); */
+    overflow: hidden;
+    background-color: white;
+}
+
+ .modal-picture {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+ }
 
 .match-delete:hover {
     color: white;

@@ -15,6 +15,7 @@ export function useDatabase() {
 export function DatabaseProvider({ children }) {
     const userDatabase = app.firestore().collection("/users");
     const gameDatabase = app.firestore().collection("/games");
+    const fireStorage = app.storage();
 
     function addEntry(id, data) {
         let entry = {
@@ -60,12 +61,25 @@ export function DatabaseProvider({ children }) {
         });
     }
 
+    function uploadStorage(id, address, file) {
+        let storageName = id + address;
+        let storageRef = fireStorage.ref(storageName);
+        return storageRef.put(file);
+    }
+
+    function getFile(id, address) {
+        let storageName = id + address;
+        return fireStorage.ref(storageName).getDownloadURL();
+    }
+
     const databaseInfo = {
         addEntry,
         setEntry,
         getEntry,
         getGameData,
-        setGameData
+        setGameData,
+        uploadStorage,
+        getFile
     };
 
     return (

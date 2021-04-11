@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, Typography, TextField, Tooltip } from '@material-ui/core';
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
@@ -12,16 +12,18 @@ import "aos/dist/aos.css";
 
 function Profile() {
     const { currentUser } = useAuth();
-    const { getEntry, setEntry } = useDatabase();
+    const { getEntry, setEntry, uploadStorage, getFile } = useDatabase();
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", matches: []});
 
+    
+    const selectFile = useRef(null);
     const [profilePic, setProfilePic] = useState("blank-profile.png");
     
     const [isEditing, setIsEditing] = useState(false);
 
-    useEffect(() => {
+    useEffect(async () => {
         Aos.init({});
 
         if (currentUser !== null) {
@@ -36,6 +38,13 @@ function Profile() {
             }).catch((error) => {
                 console.log("Error getting document:", error);
             });
+
+            getFile(currentUser.uid, '/profilePicture').then((imageFile) => {
+                setProfilePic(imageFile);
+            }).catch((error) => {
+                console.log("Error getting document:", error);
+            });
+
         }
     }, []);
 
@@ -66,26 +75,35 @@ function Profile() {
         });
     }
 
-    function changeFile(event) {
+    async function changeFile(event) {
         let fileAdded = event.target.files[0];
         if (fileAdded !== undefined) {
             let binaryData = [];
             binaryData.push(fileAdded);
             let newImageURL = URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
             setProfilePic(newImageURL);
-            console.log(fileAdded);
+
+            try {
+                await uploadStorage(currentUser.uid, '/profilePicture', fileAdded);
+            } catch (err) {
+                console.log(err.message);
+            }
         }
+    }
+
+    function uploadImage() {
+        selectFile.current.click();
     }
 
     return (
         <div className="profile-container" data-aos="fade-up" data-aos-duration="2000">
             <div className="profile">
             <Tooltip title="Change Profile Picture">
-                <div className="profile-picture-container">
+                <div className="profile-picture-container" onClick={uploadImage}>
                     <img className="profile-picture" src={profilePic} alt="Avatar" />
                 </div>
             </Tooltip>
-            <input type="file" accept="image/*" onChange={changeFile} />
+            <input type="file" accept="image/*" onChange={changeFile}  ref={selectFile} style={{display: 'none'}} />
             Profile Page:
             <Typography variant="h5">Bio: <TextField label="Bio"
             name="bio" value={profileInfo.bio} disabled={!isEditing} onChange={handleChange}/></Typography>

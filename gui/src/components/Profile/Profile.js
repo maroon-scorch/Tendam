@@ -75,15 +75,19 @@ function Profile({ history }) {
     async function changeFile(event) {
         let fileAdded = event.target.files[0];
         if (fileAdded !== undefined) {
-            let binaryData = [];
-            binaryData.push(fileAdded);
-            let newImageURL = URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
-            setProfilePic(newImageURL);
-
-            try {
-                await uploadStorage(currentUser.uid, '/profilePicture', fileAdded);
-            } catch (err) {
-                console.log(err.message);
+            if (fileAdded.size > 2097152) {
+                alert("Image File is too big, please make sure it is under 2 MB");
+            } else {
+                let binaryData = [];
+                binaryData.push(fileAdded);
+                let newImageURL = URL.createObjectURL(new Blob(binaryData, {type: "application/zip"}));
+                setProfilePic(newImageURL);
+    
+                try {
+                    await uploadStorage(currentUser.uid, '/profilePicture', fileAdded);
+                } catch (err) {
+                    console.log(err.message);
+                }
             }
         }
     }

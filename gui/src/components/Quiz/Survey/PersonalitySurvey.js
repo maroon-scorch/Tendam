@@ -167,6 +167,7 @@ const formItems = [
     }
 ];
 
+
 const initialValue = {
     Q1: '',
     Q2: '',
@@ -188,6 +189,21 @@ const initialValue = {
 
 function onSubmitForm(formValue) {
     console.log(formValue);
+    // let base = {};
+
+    // for (let ind in formItems) {
+    //     let currentEntry = formItems[ind];
+    //     let quest = currentEntry.label;
+    //     let ans = formValue[currentEntry.key];
+    //     base[currentEntry.key] = {
+    //         question: quest,
+    //         answer: ans
+    //     };
+    // }
+
+    // console.log(base);
+    // writeSurvey('iLgQ7fahR8ZIv43GOjxVAy7Xl6o2', 'mtbi', base);
+
 }
 
 export const PersonalityJSON = {

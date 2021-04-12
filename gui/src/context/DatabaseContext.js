@@ -15,6 +15,7 @@ export function useDatabase() {
 export function DatabaseProvider({ children }) {
     const userDatabase = app.firestore().collection("/users");
     const gameDatabase = app.firestore().collection("/games");
+    const surveyDatabase = app.firestore().collection("/surveys");
     const fireStorage = app.storage();
 
     function addEntry(id, data) {
@@ -68,6 +69,13 @@ export function DatabaseProvider({ children }) {
         });
     }
 
+    function writeSurvey(id, fieldname, newData) {
+        let surveyRef = surveyDatabase.doc(id);
+        let dataSent = {};
+        dataSent[fieldname] = newData;
+        return surveyRef.update(dataSent);
+    }
+
     function uploadStorage(id, address, file) {
         let storageName = id + address;
         let storageRef = fireStorage.ref(storageName);
@@ -86,6 +94,7 @@ export function DatabaseProvider({ children }) {
         getEntryData,
         getGameData,
         setGameData,
+        writeSurvey,
         uploadStorage,
         getFile
     };

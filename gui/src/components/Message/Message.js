@@ -8,7 +8,7 @@ function Message({ history }) {
 
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", id: "", matches: []});
-    // const [profilePic, setProfilePic] = useState("blank-profile.png");
+    const [profilePic, setProfilePic] = useState("blank-profile.png");
 
     useEffect(async () => {
         let userData = history.location.state;
@@ -16,11 +16,11 @@ function Message({ history }) {
         if (typeof userData !== "undefined") {
             setProfileInfo(userData.data);
 
-            // getFile(userData.data.id, '/profilePicture').then((imageFile) => {
-            //     setProfilePic(imageFile);
-            // }).catch((error) => {
-            //     // console.log("Error getting document:", error);
-            // });
+            getFile(userData.data.id, '/profilePicture').then((imageFile) => {
+                setProfilePic(imageFile);
+            }).catch((error) => {
+                // console.log("Error getting document:", error);
+            });
         }
     }, []);
 

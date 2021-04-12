@@ -25,7 +25,7 @@ import Setting from '../components/Setting/Setting.js';
 import Match from '../components/Match/Match.js';
 import Profile from '../components/Profile/Profile.js';
 import OtherProfile from '../components/Profile/OtherProfile.js';
-import Message from '../components/Message/Message';
+import Chat from "../components/Chat/Chat";
 import ThemeToggle from '../components/ThemeToggle/ThemeToggle.js';
 
 import { ModalProvider } from '../context/ModalContext.js';
@@ -89,10 +89,11 @@ function App() {
               <PrivateRoute path="/quizzes/:name" component={QuizSurvey}></PrivateRoute> 
               <PrivateRoute path="/setting" exact component={Setting}></PrivateRoute>
               <PrivateRoute path="/match" exact component={Match}></PrivateRoute>
-              <PrivateRoute path="/profile" exact component={Profile}></PrivateRoute>
+              <PrivateRoute path="/profile" exact component={Profile}/>
               <PrivateRoute path="/profile/:name"
               component={props => <OtherProfile key={props.location.key} {...props} />}></PrivateRoute>
-              <PrivateRoute path="/message/:name" component={Message}></PrivateRoute>
+              <PrivateRoute path="/message" component={Chat}></PrivateRoute>
+              <PrivateRoute path="/message#:name" component={Chat}></PrivateRoute>
             </Switch>
             </DatabaseProvider>
           </AuthProvider>

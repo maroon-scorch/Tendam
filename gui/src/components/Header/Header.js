@@ -29,6 +29,10 @@ function Header() {
             address: '/match'
         },
         {
+            title: <Button variant="outlined" size="large">CHAT</Button>,
+            address: '/message'
+        },
+        {
             title: <Button variant="outlined" size="large">PROFILE</Button>,
             address: '/profile'
         },

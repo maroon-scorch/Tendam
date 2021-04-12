@@ -48,15 +48,22 @@ function Chat() {
     const [recipientId, setRecipientId] = useState();
 
     useEffect(async () => {
-        getEntryData(currentUser.uid).then(setSender);
+        const self = await getEntryData(currentUser.uid);
+        setSender(self);
 
-        const id = history.location.hash.substring(1)
-            || history.location.state.data.id;
         try {
-            const user = await getEntryData(id);
-            setRecipientId(user.id);
+            const id = history.location.hash.substring(1)
+            || (history.location.state && history.location.state.data.id);
+            if (self.matches.includes(id)) {
+                try {
+                    const user = await getEntryData(id);
+                    setRecipientId(user.id);
+                } catch (e) {
+                    console.error(`${id} is not a user id`)
+                }
+            }
         } catch (e) {
-            console.error(`${id} is not a user id`)
+            console.error(e);
         }
     }, []);
 

@@ -99,7 +99,7 @@ function Profile({ history }) {
     return (
         <div className="profile-container" data-aos="fade-up" data-aos-duration="2000">
             <div className="profile">
-            <Tooltip title="Change Profile Picture">
+            <Tooltip title={<h1>Change Profile Picture</h1>}>
                 <div className="profile-picture-container" onClick={uploadImage}>
                     <img className="profile-picture" src={profilePic} alt="Avatar" />
                 </div>

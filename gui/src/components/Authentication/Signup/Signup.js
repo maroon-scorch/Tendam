@@ -74,9 +74,22 @@ function Signup() {
         Aos.init({});
     }, []);
 
+    // Regex taken from the top rated answer of the post:
+    // https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
+    // provided by 22 users' cumulative revision as of 4/12/2021
+    function validateEmail(email) {
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
     function entriesAreValid() {
         if (formValues.email === '') {
             setError('Email Shouldn\'t be Blank');
+            return false;
+        }
+
+        if (!validateEmail(formValues.email)) {
+            setError('Email Address is invalid, please check if you have entered it correctly');
             return false;
         }
 

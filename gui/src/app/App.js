@@ -98,7 +98,7 @@ function App() {
           </AuthProvider>
         </ModalProvider>
       </Router>
-      <ThemeToggle className="light-dark-toggle" checked={isDark} checkSetter={setDark}/>
+      {/* <ThemeToggle className="light-dark-toggle" checked={isDark} checkSetter={setDark}/> */}
       </div>
     </ThemeProvider>
   );

@@ -34,6 +34,54 @@
     padding-top: 2.5rem;
 }
 
+.header-avatar-container {
+    border-radius: 50%;
+    border: 2px solid black;
+    width: 5rem;
+    height: 5rem;
+    
+    overflow: hidden;
+    background-color: white;
+
+    float: left;
+    float: right;
+    margin-right: 5rem;
+}
+
+.header-avatar-container::after {
+    background-color: red;
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+.header-avatar {
+    display: inline;
+    margin: 0 auto;
+    height: 100%;
+    width: auto;
+}
+
+.header-avatar-container:hover {
+    border-color: red;
+}
+
+/* .header-avatar:hover {
+    opacity: 0.75;
+} */
+
+.red-dot-notification {
+    background-color: orange;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    z-index: 100;
+
+    position: absolute;
+    right: 5.1rem;
+    top: 3px;
+}
+
 .header-links {
     text-decoration: none; 
     color: white;

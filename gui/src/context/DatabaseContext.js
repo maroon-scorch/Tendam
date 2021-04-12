@@ -16,6 +16,7 @@ export function DatabaseProvider({ children }) {
     const userDatabase = app.firestore().collection("/users");
     const gameDatabase = app.firestore().collection("/games");
     const surveyDatabase = app.firestore().collection("/surveys");
+    const notificationDatabase = app.firestore().collection("/notifications");
     const fireStorage = app.storage();
 
     function addEntry(id, data) {
@@ -87,6 +88,11 @@ export function DatabaseProvider({ children }) {
         return fireStorage.ref(storageName).getDownloadURL();
     }
 
+    // Realtime Listener to get Notification Update
+    function listenNotification(id, handleSnapshot) {
+        return notificationDatabase.doc(id).collection('/matches').orderBy('time').onSnapshot(handleSnapshot);
+    }
+
     const databaseInfo = {
         addEntry,
         setEntry,
@@ -96,7 +102,8 @@ export function DatabaseProvider({ children }) {
         setGameData,
         writeSurvey,
         uploadStorage,
-        getFile
+        getFile,
+        listenNotification
     };
 
     return (

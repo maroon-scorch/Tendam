@@ -70,7 +70,8 @@ function Login() {
                 setError('');
                 setLoading(true);
                 await login(formValues.email, formValues.password);
-                history.push('/profile');
+                history.push('/dashboard');
+                // history.push('/profile');
             } catch(err) {
                 setError(err.message);
             }

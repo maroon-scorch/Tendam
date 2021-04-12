@@ -12,6 +12,7 @@ const useStyles = makeStyles(theme => ({
         display: 'flex',
         flexDirection: 'column',
         padding: theme.spacing(1),
+        wordBreak: 'break-all',
     },
     messageList: {
         height: '100%',
@@ -29,12 +30,13 @@ function ChatPanel({to, className}) {
     const [participants, setParticipants] = useState();
 
     useEffect(async () => {
+        setMessages([]);
         const participants = {};
         participants[currentUser.uid] = await getUser(currentUser.uid);
         participants[to] = await getUser(to);
-        setParticipants(participants)
+        setParticipants(participants);
         setThread(await getThread(to));
-    }, []);
+    }, [to]);
 
     useEffect(() => {
         if (!thread) return;
@@ -53,16 +55,26 @@ function ChatPanel({to, className}) {
 
     const classes = useStyles();
 
+    function Message({message}) {
+        const participant = participants[message.sender];
+        if (!participant) {
+            return <ListItem></ListItem>
+        }
+        return (
+            <ListItem className={classes.message}>
+                {/* TODO substitute avatar */}
+                <ListItemAvatar><Avatar src={participants[message.sender].profilePicture}/></ListItemAvatar>
+                <ListItemText>{participants[message.sender].name || 'Tendam User'}: {message.data}</ListItemText>
+            </ListItem>
+        );
+    }
+
     return (
         <div className={`${classes.root} ${className}`}>
             <List className={classes.messageList}>
-                {messages.map(message => (
-                    <ListItem>
-                        {/* TODO substitute avatar */}
-                        <ListItemAvatar><Avatar src={participants[message.sender].profilePicture}/></ListItemAvatar>
-                        <ListItemText>{participants[message.sender].name || 'Tendam User'}: {message.data}</ListItemText>
-                    </ListItem>
-                ))}
+                {messages && messages.length ? messages.map(message => (
+                    <Message message={message} />
+                )) : undefined}
             </List>
             <ChatBar onSubmit={sendTextMessage} />
         </div>

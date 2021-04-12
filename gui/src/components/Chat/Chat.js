@@ -24,10 +24,7 @@ const useStyles = makeStyles(theme => ({
         right: 0,
     },
     userList: {
-        flexGrow: 1,
-        flexShrink: 1,
-        flexBasis: 'auto',
-        width: '20%',
+        width: '25%',
         backgroundColor: '#00000020',
     },
     messagingArea: {

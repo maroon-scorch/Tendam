@@ -16,17 +16,20 @@ const useStyles = makeStyles(theme => ({
 }))
 
 function ChatBar({onSubmit}) {
-    const [text, setText] = useState();
+    const [text, setText] = useState('');
     const textRef = useRef();
 
     const classes = useStyles();
 
     function changeText(event) {
-        setText(event.target.value);
+        setText(event.target.value || '');
     }
 
     function submit(event) {
         event.preventDefault();
+        if (text.length === 0) {
+            return;
+        }
         if (onSubmit) {
             onSubmit.call(onSubmit, text);
         }

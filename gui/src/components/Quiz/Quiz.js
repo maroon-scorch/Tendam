@@ -56,30 +56,30 @@ function Quiz() {
 
     const sliderItems = [
         {
-            id: 'games-tag',
-            children: <Link to='/games' className='survey-slicker-item'>
+            id: 'food',
+            children: <Link to='/quizzes/food' className='survey-slicker-item'>
                 <SurveyCard imageLink={food} title="Food Survey"
                 body="Explore the culinary boundaries of your relationship with food 
                 in our 'creative' survey right here!" />
             </Link>
         },
         {
-            id: 'quizzes-tag',
-            children: <Link to='/quizzes' className='survey-slicker-item'>
+            id: 'horoscope',
+            children: <Link to='/quizzes/horoscope' className='survey-slicker-item'>
                 <SurveyCard imageLink={star} title="Horoscope Survey"
                 body="Tell us what your Horoscope is!" />
             </Link>
         },
         {
-            id: 'setting-tag',
-            children: <Link to='/setting' className='survey-slicker-item'>
+            id: 'mbti',
+            children: <Link to='/quizzes/mbti' className='survey-slicker-item'>
                 <SurveyCard imageLink={personality} title="MBTI Survey 'Simplified'"
                 body="Ever wanted to try a simplified personality quiz, here's your
                 chance!" />
             </Link>
         },
         {
-            id: 'setting-tag',
+            id: 'about-quiz',
             children: <div className='survey-slicker-item' onClick={showQuizPurpose}>
                 <SurveyCard imageLink={question} title="About Quizzes"
                 body="Learn More on the purposes of these surveys and how they are used here" />
@@ -89,7 +89,7 @@ function Quiz() {
 
     return (
         <div className="quiz-container">
-            <br />
+            <br />   
             <Typography variant="h1" className="signup-title">Quizzes</Typography>
         <Slider {...settings}>
             {sliderItems.map((item, index) => {

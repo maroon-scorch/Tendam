@@ -19,6 +19,7 @@ import TermsOfService from '../components/Authentication/TermsOfService/TermsOfS
 
 import DashBoard from '../components/Dashboard/Dashboard.js';
 import Quiz from '../components/Quiz/Quiz.js';
+import QuizSurvey from '../components/Quiz/Survey/QuizSurvey.js';
 import BlackJack from '../components/Game/BlackJack.js';
 import Setting from '../components/Setting/Setting.js';
 import Match from '../components/Match/Match.js';
@@ -84,7 +85,8 @@ function App() {
               <Route path="/terms-of-service" exact component={TermsOfService}></Route>
               <PrivateRoute path="/dashboard" exact component={DashBoard}></PrivateRoute>
               <PrivateRoute path="/games" exact component={BlackJack}></PrivateRoute>
-              <PrivateRoute path="/quizzes" exact component={Quiz}></PrivateRoute>
+              <PrivateRoute path="/quizzes" exact component={Quiz}></PrivateRoute> 
+              <PrivateRoute path="/quizzes/:name" component={QuizSurvey}></PrivateRoute> 
               <PrivateRoute path="/setting" exact component={Setting}></PrivateRoute>
               <PrivateRoute path="/match" exact component={Match}></PrivateRoute>
               <PrivateRoute path="/profile" exact component={Profile}></PrivateRoute>

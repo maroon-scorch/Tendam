@@ -1,5 +1,6 @@
 import React from 'react';
-import { TextField } from '@material-ui/core';
+import { TextField, Radio, RadioGroup,
+    FormControl, FormLabel, FormControlLabel } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 // formItems contains the key to the initialValues
@@ -46,9 +47,38 @@ function formatForm(formItems, initialValues, setFormValue) {
         );
     };
 
+    /*
+    Accepts a JSON of form:
+        {
+        type: 'radio',
+        label: The question of the entry,
+        options: The options for to select from,
+        className: className,
+        key: the name of the entry, which should be the same as the key to initialValues
+        isRow: true => display radio in rows; false => display radio in columns
+        }
+    */
+    function toRadioSelection(props, index) {
+        return (
+            <div>
+                <FormControl>
+                <FormLabel>{(index + 1) + ". " + props.label}</FormLabel>
+                <RadioGroup row={props.isRow} name={props.key} value={initialValues[props.key]} onChange={handleChange}>
+                    {
+                        props.options.map((item, index) => {
+                            return(<FormControlLabel key={item + index} value={item} control={<Radio />} label={item} />);
+                        })
+                    }
+                </RadioGroup>
+                </FormControl>
+            </div>
+        );
+    };
+
     const convertDict = {
         'text': toTextBox,
-        'password': toEncryptedBox
+        'password': toEncryptedBox,
+        'radio': toRadioSelection
     };
 
     return (

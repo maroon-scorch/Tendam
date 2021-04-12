@@ -8,33 +8,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * The food survey.
- */
-public class FoodSurvey implements Surveys {
-
-  /*
-  Survey that asks these questions, with the following options:
-  1. What is your favorite fruit among these options?
-   (Banana, Apple, Pear, Grapes, Watermelon, Strawberries, Blueberries)
-   2. What is your least favorite fruit among this same list?
-   3. What do you most enjoy having for breakfast?
-   (Cereal, Oatmeal, PB&J, Eggs, Noodles)
-   */
+public class MBTISurvey implements Surveys {
 
   private final Map<String, Object> answers;
 
-//  private final String favoriteFruit;
-//  private final String leastFavoriteFruit;
-//  private final String favoriteBreakfast;
+  public MBTISurvey(Map<String, Object> answers) {
+    this.answers = answers;
+  }
+
+
+
+
 
   /**
-   * Public constructor for the food survey. Represents a set of survey responses.
-   *
-   * @param answers the user's questions and answers to the questions
+   * Accesses the answers of a Source.
+   * @return a map of string to objects
    */
-  public FoodSurvey(Map<String, Object> answers) {
-    this.answers = answers;
+  public Map<String, Object> getAnswers() {
+    return answers;
   }
 
   /**
@@ -48,7 +39,6 @@ public class FoodSurvey implements Surveys {
     List<Object> values = new ArrayList<>(this.getAnswers().values());
     Surveys castedSurvey = (Surveys) otherSource;
     List<Object> otherValues = new ArrayList<>(castedSurvey.getAnswers().values());
-//    List<Object> otherValues = otherSource.valuesToList();
     double difference = 100;
     for (int i = 0; i < values.size(); i++) {
       if (values.get(i) == otherValues.get(i)) {
@@ -56,27 +46,6 @@ public class FoodSurvey implements Surveys {
       }
     }
     return difference;
-  }
-
-//  /**
-//   * Converts a FoodSurvey instance into a list of its values.
-//   *
-//   * @return a list of objects
-//   */
-//  public List<Object> valuesToList() {
-//    List<Object> values = new ArrayList<>();
-//    values.add(this.favoriteFruit);
-//    values.add(this.leastFavoriteFruit);
-//    values.add(this.favoriteBreakfast);
-//    return values;
-//  }
-
-  /**
-   * Accesses the answers of a Source.
-   * @return a map of string to objects
-   */
-  public Map<String, Object> getAnswers() {
-    return answers;
   }
 
   /**
@@ -93,6 +62,4 @@ public class FoodSurvey implements Surveys {
     }
     return new FoodSurvey(returnedMap);
   }
-
-
 }

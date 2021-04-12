@@ -19,7 +19,7 @@ public class User {
   private List<String> matches;
 
   /**
-   * Public constructor for users
+   * Public constructor for users.
    *
    * @param id      unique id
    * @param name    username, does not have to be unique

@@ -463,7 +463,7 @@ public abstract class CustomException extends Exception {
   }
 
   /**
-   * Sub-class for when something goes wrong with the future
+   * Sub-class for when something goes wrong with the future.
    */
   public static class FutureBreakException extends CustomException {
     private static final long serialVersionUID = 76;

@@ -3,47 +3,30 @@ package edu.brown.cs.student.datasources.games.gamelist;
 import edu.brown.cs.student.datasources.Source;
 import edu.brown.cs.student.datasources.games.Games;
 
-import java.util.Collections;
-import java.util.List;
-
+/**
+ * Class for implementing the processing of blackjack game data.
+ */
 public class BlackJack implements Games {
 
   // List of up to the 10 most recent scores
-  private List<Double> riskScores;
+  private final Double riskScore;
 
   /**
    * Public constructor.
    *
-   * @param riskScores the risk propensity scores of the individual
+   * @param riskScore the risk propensity scores of the individual
    */
-  public BlackJack(List<Double> riskScores) {
-    this.riskScores = riskScores;
+  public BlackJack(Double riskScore) {
+    this.riskScore = riskScore;
   }
 
   /**
-   * Adds the newest score to the list of risk scores.
+   * Accesses the riskScore.
    *
-   * @param riskScore the newest risk score
+   * @return a double risk score
    */
-  public void addScore(double riskScore) {
-    if (this.riskScores.size() == 10) {
-      this.riskScores.remove(0);
-    }
-    this.riskScores.add(riskScore);
-  }
-
-  /**
-   * Provides a final score from the riskScores of an
-   * individual's blackjack results.
-   *
-   * @return a double score
-   */
-  public double score(List<Object> listedValues) {
-    double sum = 0;
-    for (Object datum : listedValues) {
-      sum += (double) datum;
-    }
-    return (sum / listedValues.size());
+  public Double getScore() {
+    return riskScore;
   }
 
   /**
@@ -54,17 +37,30 @@ public class BlackJack implements Games {
    * @return a double representing the level of difference
    */
   public double difference(Source otherSource) {
-    return score(this.valuesToList())
-            - score(otherSource.valuesToList());
+    Games castedScore = (Games) otherSource;
+    return Math.abs(this.getScore()
+            - (castedScore.getScore()));
   }
 
   /**
-   * Converts the attached dataset into a list of objects (usually doubles or strings or a mixture)
+   * Converts an object retrieved from FireBase into a Source.
    *
+   * @param data the input data
    * @return a list of objects
    */
   @Override
-  public List<Object> valuesToList() {
-    return Collections.singletonList(this.riskScores);
+  public Source convert(Object data) {
+    return null;
   }
+
+//  /**
+//   * Converts the attached dataset into a list of objects
+//   * (usually doubles or strings or a mixture).
+//   *
+//   * @return a list of objects
+//   */
+//  @Override
+//  public List<Object> valuesToList() {
+//    return Collections.singletonList(this.riskScores);
+//  }
 }

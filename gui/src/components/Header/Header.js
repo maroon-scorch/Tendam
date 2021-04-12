@@ -109,7 +109,7 @@ function Header() {
                         </div>
                     </Tooltip>
                 </Link>
-                <div className="red-dot-notification"></div>
+                <div className="red-dot-notification" style={{display: currentUser ? 'inline' : 'none'}}></div>
             </nav>
         </div>
     )

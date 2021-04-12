@@ -88,6 +88,8 @@ function Profile({ history }) {
                 } catch (err) {
                     console.log(err.message);
                 }
+
+                window.location.reload();
             }
         }
     }

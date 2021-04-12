@@ -114,6 +114,7 @@ function Signup() {
             setLoading(true)
             try {
                 await signup(formValues.email, formValues.password, formValues.userName);
+                window.location.reload();
                 history.push('/dashboard');
             } catch (err) {
                 setError(err.message);

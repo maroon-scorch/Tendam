@@ -2,6 +2,8 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.databases.FireBaseDatabase;
 import edu.brown.cs.student.miscenllaneous.CustomException;
+import edu.brown.cs.student.users.Matcher;
+import edu.brown.cs.student.users.User;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -17,13 +19,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
+import java.util.Calendar;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.TimeUnit;
 
 /**
  * The Main class of our project. This is where execution begins.
  */
 public final class Main {
+
+  private FireBaseDatabase database = null;
 
   private static final int DEFAULT_PORT = 4567;
 
@@ -50,8 +61,6 @@ public final class Main {
             .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
-    FireBaseDatabase database = null;
-
     try {
       database = new FireBaseDatabase();
     } catch (IOException e) {
@@ -69,35 +78,77 @@ public final class Main {
     System.out.println("------------------------------------");
     System.out.println("------------------------------------");
     System.out.println("------------------------------------");
-
-    try {
-      Map<String, Map<String, Object>> surveyMap = database.retrieveSourceData("surveys");
-      for (String key : surveyMap.keySet()) {
-        System.out.println(key);
-        System.out.println(surveyMap.get(key).entrySet());
-      }
-    } catch (CustomException e) {
-      e.printStackTrace();
-    }
-
-    System.out.println("------------------------------------");
-    System.out.println("------------------------------------");
-    System.out.println("------------------------------------");
-
-    try {
-      Map<String, Map<String, Object>> gamesMap = database.retrieveSourceData("games");
-      for (String key : gamesMap.keySet()) {
-        System.out.println(key);
-        System.out.println(gamesMap.get(key).entrySet());
-      }
-    } catch (CustomException e) {
-      e.printStackTrace();
-    }
-
+//
+//    try {
+//      Map<String, Map<String, Object>> surveyMap = database.retrieveSourceData("surveys");
+//      for (String key : surveyMap.keySet()) {
+//        System.out.println(key);
+//        System.out.println(surveyMap.get(key).entrySet());
+//      }
+//    } catch (CustomException e) {
+//      e.printStackTrace();
+//    }
+//
+//    System.out.println("------------------------------------");
+//    System.out.println("------------------------------------");
+//    System.out.println("------------------------------------");
+//
+//    try {
+//      Map<String, Map<String, Object>> gamesMap = database.retrieveSourceData("gamesCopy");
+//      System.out.println("done");
+//      for (String key : gamesMap.keySet()) {
+//        System.out.println(key);
+//        System.out.println(gamesMap.get(key).entrySet());
+//      }
+//    } catch (CustomException e) {
+//      e.printStackTrace();
+//    }
+//
+//    System.out.println("------------------------------------");
+//    System.out.println("------------------------------------");
+//    System.out.println("------------------------------------");
+//
+//    try {
+//      System.out.println("starting merge");
+////      System.out.println(database.retrieveSourceData("games").toString());
+//      List<User> newUsers = database.merge(database.retrieveUsers(),
+//              database.retrieveSourceData("surveys"), "Survey");
+//      newUsers.forEach(user ->
+//              System.out.println("BEFORE: " + user.getUserData().toString()));
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
 
 
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
+    }
+
+    Calendar today = Calendar.getInstance();
+
+    today.set(Calendar.HOUR_OF_DAY, 1);
+    today.set(Calendar.MINUTE, 37);
+    today.set(Calendar.SECOND, 15);
+
+// every night at 2am you run your task
+    Timer timer = new Timer();
+    try {
+      TimerTask intervalTask = new TimerTask() {
+        @Override
+        public void run() {
+          try {
+            runInterval();
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      };
+
+      timer.schedule(intervalTask, today.getTime(),
+              TimeUnit.MILLISECONDS.convert(1,
+                      TimeUnit.DAYS)); // period: 1 day
+    } catch (Exception e) {
+      e.printStackTrace();
     }
 
     try (BufferedReader br = new BufferedReader(
@@ -111,6 +162,29 @@ public final class Main {
     } catch (Exception e) {
       System.err.println("ERROR: Invalid input for REPL");
     }
+
+  }
+
+  public void runInterval() throws CustomException.FutureBreakException,
+          ClassNotFoundException, NoSuchMethodException,
+          InvocationTargetException, InstantiationException,
+          IllegalAccessException, CustomException.NoUsersException {
+
+    List<User> addedSurveys = Objects.requireNonNull(
+            database).merge(database.retrieveUsers(),
+            database.retrieveSourceData("surveys"), "Survey");
+
+    List<User> addedGames = database.merge(addedSurveys,
+            database.retrieveSourceData("gamesCopy"), "");
+
+    System.out.println("+++++++++++++++++++++++++++++++");
+    System.out.println("+++++++++++++++++++++++++++++++");
+    System.out.println("+++++++++++++++++++++++++++++++");
+    addedGames.forEach(user -> System.out.println("User ID: "
+            + user.getID() + " userData: " + user.getUserData()));
+
+    Matcher.run(addedGames);
+    System.out.println("ran!");
 
   }
 

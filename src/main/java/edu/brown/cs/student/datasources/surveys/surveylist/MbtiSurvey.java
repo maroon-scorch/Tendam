@@ -8,20 +8,29 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MBTISurvey implements Surveys {
+public class MbtiSurvey implements Surveys {
 
-  private final Map<String, Object> answers;
+  private Map<String, Object> answers;
 
-  public MBTISurvey(Map<String, Object> answers) {
+  /**
+   * Public constructor.
+   *
+   * @param answers the map of answers to the survey
+   */
+  public MbtiSurvey(Map<String, Object> answers) {
     this.answers = answers;
   }
 
+  /**
+   * Empty constructor.
+   */
+  public MbtiSurvey() {
 
-
-
+  }
 
   /**
    * Accesses the answers of a Source.
+   *
    * @return a map of string to objects
    */
   public Map<String, Object> getAnswers() {
@@ -55,7 +64,7 @@ public class MBTISurvey implements Surveys {
    * @return a list of objects
    */
   public Source convert(Object data) {
-    Map<String, Object>[] converted = (Map<String, Object>[]) data;
+    List<Map<String, Object>> converted = (List<Map<String, Object>>) data;
     Map<String, Object> returnedMap = new HashMap<>();
     for (Map<String, Object> map : converted) {
       returnedMap.put(String.valueOf(map.get("question")), map.get("answer"));

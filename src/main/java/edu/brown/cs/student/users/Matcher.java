@@ -46,6 +46,7 @@ public class Matcher {
   /**
    * Gets all the users from the database and creates a list of Persons from it.
    *
+   * @param users the list of users to create preferences for
    * @return a list of Person
    * @throws CustomException.NoUsersException if there are no users in the database
    */
@@ -89,10 +90,10 @@ public class Matcher {
    * Runs the entire pipeline - building a set of preferences
    * for each user and then producing a single match each for them.
    *
+   * @param users the input list of users
    * @throws CustomException.NoUsersException if there are no users in the database
-   * @throws SQLException                     if something goes wrong with the SQL command
    */
-  public static void run(List<User> users) throws CustomException.NoUsersException, SQLException {
+  public static void run(List<User> users) throws CustomException.NoUsersException {
     List<Person> people = createAllPreferences(users);
 
     Map<Person, Person> results = GaleShapley.galeShapleyAlgo(people, people);
@@ -103,6 +104,14 @@ public class Matcher {
 
     // Creates a reference to the users collection
     CollectionReference docRef = db.collection("users");
+
+    people.forEach(person -> System.out.println("Person ID: "
+            + person.getID() + ", Preferences: " + person.getRankings()));
+
+    System.out.println("...............................");
+    System.out.println("...............................");
+    System.out.println("...............................");
+    System.out.println(results.toString());
 
     for (Person key : keys) {
       DocumentReference userRef = docRef.document(key.getID());

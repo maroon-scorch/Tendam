@@ -9,7 +9,6 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.brown.cs.student.datasources.Source;
-import edu.brown.cs.student.datasources.surveys.surveylist.FoodSurvey;
 import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.users.User;
 import org.apache.commons.lang3.StringUtils;
@@ -115,31 +114,45 @@ public class FireBaseDatabase {
   // First map is ID, second map is survey name,
   // third map is hidden within object array but represents
   // each answer
-  public List<User> merge(List<User> usersToMerge, Map<String, Map<String, Object>> sourceToMerge)
+  public List<User> merge(List<User> usersToMerge, Map<String,
+          Map<String, Object>> sourceToMerge, String tail)
           throws ClassNotFoundException, NoSuchMethodException,
           IllegalAccessException, InvocationTargetException,
           InstantiationException {
+
+    String prefix;
+    if (tail.equals("Survey")) {
+      prefix = ".surveys.surveylist.";
+    } else {
+      prefix = ".games.gamelist.";
+    }
+
+    List<User> finalList = new ArrayList<>();
     for (User u : usersToMerge) {
       Map<String, Object> mapData = sourceToMerge.get(u.getID());
+      if (mapData == null) {
+        u.setUserData(new HashMap<String, Source>());
+        finalList.add(u);
+        continue;
+      }
+      Map<String, Source> sourceParam = new HashMap<>();
       for (Map.Entry<String, Object> entry : mapData.entrySet()) {
         // TODO: fix this line
-        Class<?> classType = Class.forName(StringUtils.capitalize(entry.getKey()) + "Survey");
-
+        String sourceName = StringUtils.capitalize(entry.getKey()) + tail;
+        Class<?> classType = Class.forName("edu.brown.cs.student.datasources"
+                + prefix + sourceName);
         for (Class<?> c : Source.GLOBAL_SOURCES) {
           if (classType == c) {
-            Source instance = (Source) c.getDeclaredConstructor().newInstance();
-            instance.convert(entry.getValue());
-
+            Source instance = (Source) c.getConstructor().newInstance();
+            Source wrapped = instance.convert(entry.getValue());
+            sourceParam.put(sourceName, wrapped);
           }
         }
-
-
-        if (classType == FoodSurvey.class) {
-
-        }
       }
-
+      u.updateUserData(sourceParam);
+      finalList.add(u);
     }
+    return finalList;
   }
 }
 

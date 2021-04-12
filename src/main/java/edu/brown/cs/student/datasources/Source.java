@@ -1,8 +1,9 @@
 package edu.brown.cs.student.datasources;
 
+import edu.brown.cs.student.datasources.games.gamelist.BlackJack;
 import edu.brown.cs.student.datasources.surveys.surveylist.FoodSurvey;
 import edu.brown.cs.student.datasources.surveys.surveylist.HoroscopeSurvey;
-import edu.brown.cs.student.datasources.surveys.surveylist.MBTISurvey;
+import edu.brown.cs.student.datasources.surveys.surveylist.MbtiSurvey;
 import org.reflections.Reflections;
 
 import java.util.Arrays;
@@ -19,7 +20,7 @@ public interface Source {
 
 //  Set<Class<? extends Source>> GLOBAL_SOURCES = SURVEY_REFLECTIONS.getSubTypesOf(Source.class);
 
-  List<Class<?>> GLOBAL_SOURCES = Arrays.asList(FoodSurvey.class, HoroscopeSurvey.class, MBTISurvey.class);
+  List<Class<?>> GLOBAL_SOURCES = Arrays.asList(FoodSurvey.class, HoroscopeSurvey.class, MbtiSurvey.class, BlackJack.class);
 
 //  Set<Class<? extends Source>> GLOBALGAMES = GAME_REFLECTIONS.getSubTypesOf(Games.class);
 
@@ -51,7 +52,7 @@ public interface Source {
    * Converts an object retrieved from FireBase into a Source.
    *
    * @param data the input data
-   * @return a list of objects
+   * @return a Source object
    */
   Source convert(Object data);
 

@@ -33,7 +33,7 @@ public class User {
   }
 
   /**
-   * No argument constructor used for FireBase serialization
+   * No argument constructor used for FireBase serialization.
    */
   public User() {
   }
@@ -49,7 +49,7 @@ public class User {
   }
 
   /**
-   * Accesses the id of a user
+   * Accesses the id of a user.
    *
    * @return integer id
    */
@@ -58,7 +58,7 @@ public class User {
   }
 
   /**
-   * Accesses the name of a user
+   * Accesses the name of a user.
    *
    * @return a string name
    */
@@ -73,6 +73,30 @@ public class User {
    */
   public Map<String, Source> getUserData() {
     return userData;
+  }
+
+  /**
+   * Sets the userData field.
+   *
+   * @param userData a map of string to source
+   */
+  public void setUserData(Map<String, Source> userData) {
+    this.userData = userData;
+  }
+
+  /**
+   * Sets the userData field.
+   *
+   * @param data a map of string to source
+   */
+  public void updateUserData(Map<String, Source> data) {
+    if (this.userData == null) {
+      this.userData = data;
+    } else {
+      for (String key : data.keySet()) {
+        this.userData.put(key, data.get(key));
+      }
+    }
   }
 
   /**
@@ -110,7 +134,7 @@ public class User {
   }
 
   /**
-   * Updates an individual's username
+   * Updates an individual's username.
    *
    * @param newName a string username
    */

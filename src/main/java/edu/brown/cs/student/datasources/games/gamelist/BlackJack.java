@@ -3,13 +3,15 @@ package edu.brown.cs.student.datasources.games.gamelist;
 import edu.brown.cs.student.datasources.Source;
 import edu.brown.cs.student.datasources.games.Games;
 
+import java.util.Map;
+
 /**
  * Class for implementing the processing of blackjack game data.
  */
 public class BlackJack implements Games {
 
   // List of up to the 10 most recent scores
-  private final Double riskScore;
+  private Double riskScore;
 
   /**
    * Public constructor.
@@ -18,6 +20,12 @@ public class BlackJack implements Games {
    */
   public BlackJack(Double riskScore) {
     this.riskScore = riskScore;
+  }
+
+  /**
+   * Empty Constructor.
+   */
+  public BlackJack() {
   }
 
   /**
@@ -46,11 +54,13 @@ public class BlackJack implements Games {
    * Converts an object retrieved from FireBase into a Source.
    *
    * @param data the input data
-   * @return a list of objects
+   * @return a Source
    */
   @Override
   public Source convert(Object data) {
-    return null;
+    Map<String, Object> preConvert = (Map<String, Object>) data;
+    Double num = ((Number) preConvert.get("blackjack-score")).doubleValue();
+    return new BlackJack(num);
   }
 
 //  /**

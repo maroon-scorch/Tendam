@@ -22,7 +22,7 @@ public class FoodSurvey implements Surveys {
    (Cereal, Oatmeal, PB&J, Eggs, Noodles)
    */
 
-  private final Map<String, Object> answers;
+  private Map<String, Object> answers;
 
 //  private final String favoriteFruit;
 //  private final String leastFavoriteFruit;
@@ -35,6 +35,13 @@ public class FoodSurvey implements Surveys {
    */
   public FoodSurvey(Map<String, Object> answers) {
     this.answers = answers;
+  }
+
+  /**
+   * Empty constructor.
+   */
+  public FoodSurvey() {
+
   }
 
   /**
@@ -86,7 +93,7 @@ public class FoodSurvey implements Surveys {
    * @return a list of objects
    */
   public Source convert(Object data) {
-    Map<String, Object>[] converted = (Map<String, Object>[]) data;
+    List<Map<String, Object>> converted = (List<Map<String, Object>>) data;
     Map<String, Object> returnedMap = new HashMap<>();
     for (Map<String, Object> map : converted) {
       returnedMap.put(String.valueOf(map.get("question")), map.get("answer"));

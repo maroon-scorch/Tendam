@@ -54,7 +54,7 @@ function OtherProfile({ history }) {
             <div className="profile-control">
                 <MatchDisplay matches={profileInfo.matches} />
                 <Link to={{  
-                    pathname: `/message/${profileInfo.name}`,
+                    pathname: `/message#${profileInfo.id}`,
                     state: {
                     data: profileInfo
                 }}}>

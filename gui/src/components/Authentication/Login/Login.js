@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, Typography } from '@material-ui/core';
 import neon from './neon.png';
 
-import { Link, useHistory } from 'react-router-dom';
+import {Link, Redirect, useHistory} from 'react-router-dom';
 import './Login.css';
 
 import Aos from 'aos';
@@ -52,7 +52,7 @@ function Login() {
     const [formValues, setFormValues] = useState(initialValue);
     const classes = useStyles();
 
-    const { login } = useAuth();
+    const { currentUser, login } = useAuth();
     const history = useHistory();
 
     useEffect(() => {
@@ -81,12 +81,13 @@ function Login() {
 
     return (
         <div className="login-form-container">
+            {currentUser ? <Redirect to="/dashboard" /> : undefined}
             <div className="login-form" data-aos="fade-up" data-aos-duration="2250">
             <Typography variant="h3" className="signup-title">Log In</Typography>
             {error !== '' ? <Alert severity="warning">{error}</Alert> : <div />}
-            <form className={classes.root} autoComplete="off">
+            <form className={classes.root} autoComplete="off" onSubmit={handleSubmit}>
                 {formatForm(formItems, formValues, setFormValues)}
-                <Button id="login-submit" variant="contained" color="secondary" onClick={handleSubmit} disabled={loading}>
+                <Button id="login-submit" variant="contained" color="secondary" type="submit" disabled={loading}>
                  Submit
                 </Button>
             </form>

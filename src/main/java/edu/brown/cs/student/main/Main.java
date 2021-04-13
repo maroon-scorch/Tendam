@@ -1,9 +1,8 @@
 package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.databases.FireBaseDatabase;
-import edu.brown.cs.student.miscenllaneous.CustomException;
-import edu.brown.cs.student.users.Matcher;
-import edu.brown.cs.student.users.User;
+import edu.brown.cs.student.main.commands.ClearField;
+import edu.brown.cs.student.main.commands.UpdateMatches;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -19,12 +18,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
@@ -34,7 +29,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Main {
 
-  private FireBaseDatabase database = null;
+  private static FireBaseDatabase database = null;
 
   private static final int DEFAULT_PORT = 4567;
 
@@ -49,10 +44,20 @@ public final class Main {
 
   private final String[] args;
 
+  /**
+   * Constructor for Main.
+   *
+   * @param args the string arguments passed to Main
+   */
   private Main(String[] args) {
     this.args = args;
   }
 
+
+  /**
+   * The method that runs when inputting ./run in console.
+   * Activates the matching process that runs on a set interval.
+   */
   private void run() {
     // Parse command line arguments
     OptionParser parser = new OptionParser();
@@ -61,83 +66,41 @@ public final class Main {
             .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
 
+    REPL repl = new REPL();
+    repl.registerCommand("clear", new ClearField());
+    repl.registerCommand("update", new UpdateMatches());
+
+    // Sets up the FireBaseDatabase class
+    // and connects to the FireBase storage.
     try {
       database = new FireBaseDatabase();
+      System.out.println("DATABASE LOADED!");
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    REPL repl = new REPL();
-    try {
-      database.retrieveUsers();
-      System.out.println("DATABASE LOADED!");
-    } catch (CustomException e) {
-      e.getResponse();
+    for (int i = 0; i < 3; i++) {
+      System.out.println("--------------------------------");
     }
 
-    System.out.println("------------------------------------");
-    System.out.println("------------------------------------");
-    System.out.println("------------------------------------");
-//
-//    try {
-//      Map<String, Map<String, Object>> surveyMap = database.retrieveSourceData("surveys");
-//      for (String key : surveyMap.keySet()) {
-//        System.out.println(key);
-//        System.out.println(surveyMap.get(key).entrySet());
-//      }
-//    } catch (CustomException e) {
-//      e.printStackTrace();
-//    }
-//
-//    System.out.println("------------------------------------");
-//    System.out.println("------------------------------------");
-//    System.out.println("------------------------------------");
-//
-//    try {
-//      Map<String, Map<String, Object>> gamesMap = database.retrieveSourceData("gamesCopy");
-//      System.out.println("done");
-//      for (String key : gamesMap.keySet()) {
-//        System.out.println(key);
-//        System.out.println(gamesMap.get(key).entrySet());
-//      }
-//    } catch (CustomException e) {
-//      e.printStackTrace();
-//    }
-//
-//    System.out.println("------------------------------------");
-//    System.out.println("------------------------------------");
-//    System.out.println("------------------------------------");
-//
-//    try {
-//      System.out.println("starting merge");
-////      System.out.println(database.retrieveSourceData("games").toString());
-//      List<User> newUsers = database.merge(database.retrieveUsers(),
-//              database.retrieveSourceData("surveys"), "Survey");
-//      newUsers.forEach(user ->
-//              System.out.println("BEFORE: " + user.getUserData().toString()));
-//    } catch (Exception e) {
-//      e.printStackTrace();
-//    }
-
-
+    // Activates the GUI
     if (options.has("gui")) {
       runSparkServer((int) options.valueOf("port"));
     }
 
+    // Sets up and runs the interval code on a schedule
     Calendar today = Calendar.getInstance();
-
-    today.set(Calendar.HOUR_OF_DAY, 1);
-    today.set(Calendar.MINUTE, 37);
+    today.set(Calendar.HOUR_OF_DAY, 5);
+    today.set(Calendar.MINUTE, 52);
     today.set(Calendar.SECOND, 15);
 
-// every night at 2am you run your task
     Timer timer = new Timer();
     try {
       TimerTask intervalTask = new TimerTask() {
         @Override
         public void run() {
           try {
-            runInterval();
+            new UpdateMatches().execute("print");
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -146,11 +109,13 @@ public final class Main {
 
       timer.schedule(intervalTask, today.getTime(),
               TimeUnit.MILLISECONDS.convert(1,
-                      TimeUnit.DAYS)); // period: 1 day
+                      TimeUnit.DAYS));
     } catch (Exception e) {
       e.printStackTrace();
     }
 
+    // Reads the data into the console and runs it in the REPL.
+    // Not currently used, but there for backup testing
     try (BufferedReader br = new BufferedReader(
             new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
       String input;
@@ -158,38 +123,28 @@ public final class Main {
         repl.run(input);
       }
     } catch (RuntimeException e) {
-      System.err.println("ERROR: Runtime exception");
+      System.out.println("ERROR: Runtime exception");
     } catch (Exception e) {
-      System.err.println("ERROR: Invalid input for REPL");
+      System.out.println("ERROR: Invalid input for REPL");
     }
-
   }
 
-  public void runInterval() throws CustomException.FutureBreakException,
-          ClassNotFoundException, NoSuchMethodException,
-          InvocationTargetException, InstantiationException,
-          IllegalAccessException, CustomException.NoUsersException {
-
-    List<User> addedSurveys = Objects.requireNonNull(
-            database).merge(database.retrieveUsers(),
-            database.retrieveSourceData("surveys"), "Survey");
-
-    List<User> addedGames = database.merge(addedSurveys,
-            database.retrieveSourceData("gamesCopy"), "");
-
-    System.out.println("+++++++++++++++++++++++++++++++");
-    System.out.println("+++++++++++++++++++++++++++++++");
-    System.out.println("+++++++++++++++++++++++++++++++");
-    addedGames.forEach(user -> System.out.println("User ID: "
-            + user.getID() + " userData: " + user.getUserData()));
-
-    Matcher.run(addedGames);
-    System.out.println("ran!");
-
+  /**
+   * Accesses the database.
+   *
+   * @return a FireBaseDatabase instance
+   */
+  public static FireBaseDatabase getDatabase() {
+    return database;
   }
 
+  /**
+   * Builds a FreeMarkerEngine engine.
+   *
+   * @return a FreeMarkerEngine
+   */
   private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
+    Configuration config = new Configuration(Configuration.VERSION_2_3_25);
     File templates = new File("src/main/resources/spark/template/freemarker");
     try {
       config.setDirectoryForTemplateLoading(templates);
@@ -201,6 +156,9 @@ public final class Main {
     return new FreeMarkerEngine(config);
   }
 
+  /**
+   * Runs the built spark GUI server.
+   */
   private void runSparkServer(int port) {
     Spark.port(port);
     Spark.externalStaticFileLocation("src/main/resources/static");

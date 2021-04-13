@@ -1,5 +1,9 @@
 package edu.brown.cs.student.algorithm;
 
+import edu.brown.cs.student.users.User;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -16,10 +20,12 @@ import java.util.stream.IntStream;
  */
 public class PropertyBasedTesting {
 
+  private final Random rd = SecureRandom.getInstanceStrong(); //
+
   /**
    * Creates a new PropertyBasedTesting object.
    */
-  public PropertyBasedTesting() {
+  public PropertyBasedTesting() throws NoSuchAlgorithmException {
   }
 
   /**
@@ -30,7 +36,6 @@ public class PropertyBasedTesting {
    * @return True if all n tests pass and false otherwise
    */
   public boolean nTrials(int n, int kMax) {
-    Random rd = new Random();
     for (int i = 0; i < n; i++) {
       int k = rd.nextInt(kMax) + 1;
 
@@ -54,12 +59,12 @@ public class PropertyBasedTesting {
   /**
    * Run one trial of the property based test.
    *
-   * @param k Number of persons to be generated in list
+   * @param k Number of users to be generated in list
    * @return True if test passes, false otherwise
    */
   private boolean oneTrial(int k) {
-    List<Person> personsList1 = generateInputs(0, k, k, 2*k);
-    List<Person> personsList2 = generateInputs(k, 2*k, 0, k);
+    List<User> personsList1 = generateInputs(0, k, k, 2 * k);
+    List<User> personsList2 = generateInputs(k, 2 * k, 0, k);
 
 //    System.out.println("List 1: ");
 //    for (Person p : personsList1) {
@@ -75,6 +80,7 @@ public class PropertyBasedTesting {
     try {
       test = galeShapleyProperty(personsList1, personsList2);
     } catch (Exception e) {
+      System.out.println("on trial error");
       throw e;
     }
 
@@ -96,14 +102,14 @@ public class PropertyBasedTesting {
 
 
   /**
-   * Generates input list of persons.
+   * Generates input list of users.
    *
    * @param kMin minimum id
    * @param kMax maximum id
-   * @return
+   * @return a list of users
    */
-  private List<Person> generateInputs(int kMin, int kMax, int prefKMin, int prefKMax) {
-    List<Person> persons = new ArrayList<>();
+  private List<User> generateInputs(int kMin, int kMax, int prefKMin, int prefKMax) {
+    List<User> persons = new ArrayList<>();
     List<Integer> personList = IntStream.range(kMin, kMax).boxed().collect(Collectors.toList());
     Collections.shuffle(personList);
     List<Integer> prefL = IntStream.range(prefKMin, prefKMax).boxed().collect(Collectors.toList());
@@ -113,11 +119,13 @@ public class PropertyBasedTesting {
     }
 
     for (int i = 0; i < kMax - kMin; i++) {
+      //TODO: Checkstyle error. you should not be List.remove() within an ascending for loop
       String personID = personList.remove(0).toString();
       Collections.shuffle(prefList);
       List<String> preferenceList = new ArrayList<>(prefList);
 
-      Person toAdd = new Person(personID, preferenceList);
+      User toAdd = new User(personID, personID, new ArrayList<>());
+      toAdd.setPreferences(preferenceList);
 
       persons.add(toAdd);
     }
@@ -128,23 +136,24 @@ public class PropertyBasedTesting {
   /**
    * Property based testing for gale-shapley algorithm.
    *
-   * @param p1 First list of persons as input
-   * @param p2 Second list of persons as input
+   * @param p1 First list of users as input
+   * @param p2 Second list of users as input
    * @return true if test passes and false otherwise
    */
-  private boolean galeShapleyProperty(List<Person> p1, List<Person> p2) {
-    Map<Person, Person> pairings = GaleShapley.galeShapleyAlgo(p1, p2);
-    Map<Person, Person> reversePairings = new HashMap<>();
+  private boolean galeShapleyProperty(List<User> p1, List<User> p2) {
+    Map<User, User> pairings = GaleShapley.galeShapleyAlgo(p1, p2);
+    Map<User, User> reversePairings = new HashMap<>();
 
     int count = 0;
 
-    for (Map.Entry<Person, Person> entry : pairings.entrySet()) {
+    for (Map.Entry<User, User> entry : pairings.entrySet()) {
       reversePairings.put(entry.getValue(), entry.getKey());
       count++;
     }
 
+    // TODO: Add docstrings for this
     // This for loop checks that all pairings are stable
-    for (Map.Entry<Person, Person> entry : pairings.entrySet()) {
+    for (Map.Entry<User, User> entry : pairings.entrySet()) {
       if (!(isOneStable(p1, pairings, List.of(entry.getKey(), entry.getValue()))
               && isOneStable(p2, reversePairings, List.of(entry.getValue(), entry.getKey())))) {
         System.out.println("Incorrect pairing for: " + entry.getKey().getID()
@@ -154,24 +163,22 @@ public class PropertyBasedTesting {
     }
 
     // This checks that there are no duplicates and that there is a right number of pairings
-    Set<Person> p1Set = new HashSet<>(p1);
-    Set<Person> p2Set = new HashSet<>(p2);
-    if (p1Set.size() < p1.size() || p2Set.size() < p2.size() || count != p1.size()) {
-      return false;
-    }
-
-    return true;
+    Set<User> p1Set = new HashSet<>(p1);
+    Set<User> p2Set = new HashSet<>(p2);
+    return p1Set.size() >= p1.size() && p2Set.size() >= p2.size() && count == p1.size();
   }
 
-  private boolean isOneStable(List<Person> p1, Map<Person, Person> pairings, List<Person> pairing) {
+  //TODO: Add docstrings for this
+  private boolean isOneStable(List<User> p1, Map<User, User> pairings, List<User> pairing) {
     for (String personID : pairing.get(1).getRankings()) {
       if (personID.equals(pairing.get(0).getID())) {
         return true;
       }
-      for (Person p : p1) {
+      for (User p : p1) {
         if (p.getID().equals(personID)) {
-          Person currentPairingOfP = pairings.get(p);
-          if (p.getRanking(currentPairingOfP.getID()) > p.getRanking(pairing.get(1).getID())) {
+          User currentPairingOfP = pairings.get(p);
+          if (p.getRanking(currentPairingOfP.getID())
+                  > p.getRanking(pairing.get(1).getID())) {
             return false;
           }
           break;

@@ -1,22 +1,25 @@
 package edu.brown.cs.student.users;
 
+import edu.brown.cs.student.algorithm.HasRanking;
 import edu.brown.cs.student.datasources.Source;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Class representing a user and some of their most significant data.
  * Used primarily to run the algorithmic pipeline.
  */
-public class User {
-  //id is shared between a user and a person
+public class User implements HasRanking<User> {
+
   private String id;
   private String name;
   private Map<String, Source> userData;
   private List<String> matches;
+  private List<String> preferences;
 
   /**
    * Public constructor for users.
@@ -30,58 +33,14 @@ public class User {
     this.name = name;
     this.userData = new HashMap<>();
     this.matches = matches;
+    this.preferences = new ArrayList<>();
   }
 
   /**
-   * No argument constructor used for FireBase serialization.
+   * Public no-arguments constructor.
+   * Used for FireBase data -> User.class conversion.
    */
   public User() {
-  }
-
-  //method to add new surveys or games when one is created
-  //this should be done for every user
-  public void addNewSurvey(String surveyName) {
-    userData.put(surveyName, null);
-  }
-
-  public void addSurveyData(String surveyName, Source surveyData) {
-    this.userData.replace(surveyName, surveyData);
-  }
-
-  /**
-   * Accesses the id of a user.
-   *
-   * @return integer id
-   */
-  public String getID() {
-    return id;
-  }
-
-  /**
-   * Accesses the name of a user.
-   *
-   * @return a string name
-   */
-  public String getName() {
-    return name;
-  }
-
-  /**
-   * Acceses the source data of a user.
-   *
-   * @return a map of string to source
-   */
-  public Map<String, Source> getUserData() {
-    return userData;
-  }
-
-  /**
-   * Sets the userData field.
-   *
-   * @param userData a map of string to source
-   */
-  public void setUserData(Map<String, Source> userData) {
-    this.userData = userData;
   }
 
   /**
@@ -93,8 +52,8 @@ public class User {
     if (this.userData == null) {
       this.userData = data;
     } else {
-      for (String key : data.keySet()) {
-        this.userData.put(key, data.get(key));
+      for (Map.Entry<String, Source> m : data.entrySet()) {
+        this.userData.put(m.getKey(), m.getValue());
       }
     }
   }
@@ -106,6 +65,15 @@ public class User {
    */
   public List<String> getMatches() {
     return matches;
+  }
+
+  /**
+   * Sets the matches field of a user to the contents of toSet.
+   *
+   * @param toSet the list of strings to set matches to
+   */
+  public void setMatches(List<String> toSet) {
+    this.matches = toSet;
   }
 
   /**
@@ -134,49 +102,118 @@ public class User {
   }
 
   /**
-   * Updates an individual's username.
+   * Accesses the id of a user.
    *
-   * @param newName a string username
+   * @return integer id
    */
-  public void updateName(String newName) {
-    this.name = newName;
-  }
-
-//  /**
-//   * Updates an individual's password
-//   *
-//   * @param newPassword a string password
-//   */
-//  public void updatePassword(String newPassword) {
-//    this.password = newPassword;
-//  }
-
-//  /**
-//   * Updates an individual's email
-//   *
-//   * @param newEmail a string email
-//   */
-//  public void updateEmail(String newEmail) {
-//    this.email = newEmail;
-//  }
-
-  /**
-   * Updates the individual's friends list with the id of a friend.
-   *
-   * @param friendID an integer id
-   */
-  public void addFriend(String friendID) {
-    this.matches.add(friendID);
+  public String getID() {
+    return id;
   }
 
   /**
-   * Updates the individual's friends list by removing the id of a friend.
+   * Accesses the name of a user.
    *
-   * @param friendID an integer id
+   * @return a string name
    */
-  public void removeFriend(Integer friendID) {
-    this.matches.remove(friendID);
+  public String getName() {
+    return name;
   }
 
+  /**
+   * Accesses the source data of a user.
+   *
+   * @return a map of string to source
+   */
+  public Map<String, Source> getUserData() {
+    return userData;
+  }
 
+  /**
+   * Sets the userData field.
+   *
+   * @param userData a map of string to source
+   */
+  public void setUserData(Map<String, Source> userData) {
+    this.userData = userData;
+  }
+
+  /**
+   * Sets the preferences for a Person.
+   *
+   * @param prefs a list of strings
+   */
+  public void setPreferences(List<String> prefs) {
+    this.preferences = prefs;
+  }
+
+  /**
+   * Returns the preferences for a Person.
+   *
+   * @return a list of strings
+   */
+  public List<String> getPreferences() {
+    return preferences;
+  }
+
+  /**
+   * Accesses the rankings of the Person.
+   *
+   * @return a list of strings
+   */
+  public List<String> getRankings() {
+    return new ArrayList<>(preferences);
+  }
+
+  /**
+   * Returns the index that a particular userID appears at.
+   *
+   * @param userID a string user id
+   * @return an integer
+   */
+  public int getRanking(String userID) {
+    return preferences.indexOf(userID);
+  }
+
+  /**
+   * Returns the person's id and preferences. Used for setting equality.
+   *
+   * @return an array of objects
+   */
+  private Object[] getSigFields() {
+    return new Object[]{id, preferences};
+  }
+
+  /**
+   * Overrides equality for this class.
+   *
+   * @param obj a given object
+   * @return a bool value
+   */
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj) {
+      return true;
+    }
+    if (!(obj instanceof User)) {
+      return false;
+    }
+    User second = (User) obj;
+    for (int i = 0; i < this.getSigFields().length; i++) {
+      if (!Objects.equals(this.getSigFields()[i],
+              second.getSigFields()[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Overrides hashCode equality for this class.
+   *
+   * @return an integer based on equality
+   */
+  @Override
+  public int hashCode() {
+    return id.hashCode();
+  }
 }

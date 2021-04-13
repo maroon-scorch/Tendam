@@ -10,6 +10,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.brown.cs.student.datasources.Source;
 import edu.brown.cs.student.miscenllaneous.CustomException;
+import edu.brown.cs.student.miscenllaneous.ProgressBar;
 import edu.brown.cs.student.users.User;
 import org.apache.commons.lang3.StringUtils;
 
@@ -29,6 +30,7 @@ public class FireBaseDatabase {
 
   /**
    * Public Constructor.
+   * Sets up the connection to the FireBase on instantiation.
    */
   public FireBaseDatabase() throws IOException {
     setupConnection();
@@ -37,13 +39,22 @@ public class FireBaseDatabase {
   /**
    * Sets up and initializes the FireBase connection
    * with admin privileges.
+   * Must be run with the json security file in the code.
+   * Otherwise there is no security key to the database
+   * and the connection is forbidden
    *
    * @throws IOException if the connection attempt fails
    */
   public void setupConnection() throws IOException {
-    FileInputStream serviceAccount =
-            new FileInputStream("tendam-cs0320-2021-firebase-adminsdk-3qrxb-fdf62de72b.json");
 
+    // Security credentials that grants the system
+    // admin privileges over the database.
+    FileInputStream serviceAccount =
+            new FileInputStream("tendam-cs0320-2021"
+                    + "-firebase-adminsdk-3qrxb-fdf62de72b.json");
+
+    // The options to pass into the initialization.
+    // Contains the credentials from above
     FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
             .setDatabaseUrl("https://tendam-cs0320-2021-default-rtdb.firebaseio.com")
@@ -53,13 +64,14 @@ public class FireBaseDatabase {
   }
 
   /**
-   * Returns a list of users from the database.
+   * Returns a list of users from the database
+   * with only the public constructor
+   * parameters filled (id, name, matches).
    *
    * @return a list of users
    * @throws CustomException.FutureBreakException if something goes wrong with the future
    */
   public List<User> retrieveUsers() throws CustomException.FutureBreakException {
-    System.out.println("starting retrieval for users");
     List<User> cumulativeUsers = new ArrayList<>();
 
     Firestore db = FirestoreClient.getFirestore();
@@ -70,13 +82,21 @@ public class FireBaseDatabase {
     try {
       userCollection = future.get();
     } catch (InterruptedException | ExecutionException e) {
+
+      // Interrupts the future to maintain its broken state.
       future.cancel(true);
       throw new CustomException.FutureBreakException();
     }
+
     if (userCollection != null) {
+      ProgressBar bar = new ProgressBar("Retrieving Users",
+              userCollection.size());
       userCollection.forEach(doc -> {
+
+        // Converts the obtained user data into an instance of User.
         User storedUser = doc.toObject(User.class);
         cumulativeUsers.add(storedUser);
+        bar.update();
       });
     }
     return cumulativeUsers;
@@ -91,34 +111,58 @@ public class FireBaseDatabase {
    */
   public Map<String, Map<String, Object>> retrieveSourceData(String collectionPath)
           throws CustomException.FutureBreakException {
-    System.out.println("starting retrieval for " + collectionPath + " data");
-    Map<String, Map<String, Object>> cumulativeSources = new HashMap<>();
 
+    Map<String, Map<String, Object>> cumulativeSources = new HashMap<>();
     Firestore db = FirestoreClient.getFirestore();
     CollectionReference docRef = db.collection(collectionPath);
     ApiFuture<QuerySnapshot> future = docRef.get();
 
-    QuerySnapshot surveyCollection;
+    QuerySnapshot sourceCollection;
     try {
-      surveyCollection = future.get();
+      sourceCollection = future.get();
     } catch (InterruptedException | ExecutionException e) {
+
+      // Interrupts the future to maintain its broken state.
       future.cancel(true);
       throw new CustomException.FutureBreakException();
     }
-    if (surveyCollection != null) {
-      surveyCollection.forEach(doc -> cumulativeSources.put(doc.getId(), doc.getData()));
+    if (sourceCollection != null) {
+
+      // Iterates through the FireBase-formatted data
+      // and puts each entry pair into the returned map
+      ProgressBar bar = new ProgressBar("Retrieving " + collectionPath
+              + " data from FireBase", sourceCollection.size());
+      sourceCollection.forEach(doc -> {
+        cumulativeSources.put(doc.getId(), doc.getData());
+        bar.update();
+      });
     }
     return cumulativeSources;
   }
 
-  // First map is ID, second map is survey name,
-  // third map is hidden within object array but represents
-  // each answer
+  /**
+   * Adds the given details in the Map to the
+   * list of users' respective userData fields.
+   *
+   * @param usersToMerge  the list of users to merge with the map
+   * @param sourceToMerge the map to merge into the users
+   * @param tail          a string to be appended to produce the
+   *                      correct FireBase -> Java class namespace
+   * @return an updated list of users
+   * @throws ClassNotFoundException    if the class cannot be found
+   * @throws NoSuchMethodException     if the method cannot be found
+   * @throws IllegalAccessException    if not given access to the database
+   * @throws InvocationTargetException if the .newInstance method fails
+   * @throws InstantiationException    if a class cannot be instantiated
+   */
   public List<User> merge(List<User> usersToMerge, Map<String,
           Map<String, Object>> sourceToMerge, String tail)
           throws ClassNotFoundException, NoSuchMethodException,
           IllegalAccessException, InvocationTargetException,
           InstantiationException {
+
+    // Changes the value of the package prefix
+    // string based on the tail string
 
     String prefix;
     if (tail.equals("Survey")) {
@@ -128,19 +172,29 @@ public class FireBaseDatabase {
     }
 
     List<User> finalList = new ArrayList<>();
+
+    // Iterates through each user
     for (User u : usersToMerge) {
       Map<String, Object> mapData = sourceToMerge.get(u.getID());
+
+      // Skips if there is no mapData to
+      // add for this particular user
       if (mapData == null) {
-        u.setUserData(new HashMap<String, Source>());
+        u.setUserData(new HashMap<>());
         finalList.add(u);
         continue;
       }
       Map<String, Source> sourceParam = new HashMap<>();
+
+      // Iterates through the mapData for a particular user
       for (Map.Entry<String, Object> entry : mapData.entrySet()) {
-        // TODO: fix this line
         String sourceName = StringUtils.capitalize(entry.getKey()) + tail;
         Class<?> classType = Class.forName("edu.brown.cs.student.datasources"
                 + prefix + sourceName);
+
+        // Iterates through a pre-defined list of classes to
+        // find a matching one and convert the map data into
+        // an instance of that class.
         for (Class<?> c : Source.GLOBAL_SOURCES) {
           if (classType == c) {
             Source instance = (Source) c.getConstructor().newInstance();

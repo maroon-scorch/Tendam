@@ -8,14 +8,10 @@ import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
 import edu.brown.cs.student.algorithm.GaleShapley;
-import edu.brown.cs.student.algorithm.Person;
-import edu.brown.cs.student.databases.Database;
 import edu.brown.cs.student.miscenllaneous.CustomException;
+import edu.brown.cs.student.miscenllaneous.ProgressBar;
 
-import java.io.FileNotFoundException;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -25,22 +21,12 @@ import java.util.concurrent.ExecutionException;
  * Specifically, it creates preferences for every user,
  * runs gale shapely, then insert matches back into database.
  */
-public class Matcher {
-
-
-  private final String databaseFile;
-  private Database db;
+public final class Matcher {
 
   /**
    * Public constructor for Matchers.
-   *
-   * @param file the string file path
-   * @throws FileNotFoundException if the file cannot be found at that path
-   * @throws SQLException          if something goes wrong with the SQL command
    */
-  public Matcher(String file) throws FileNotFoundException, SQLException {
-    this.databaseFile = file;
-    this.db = new Database(databaseFile);
+  private Matcher() {
   }
 
   /**
@@ -50,9 +36,9 @@ public class Matcher {
    * @return a list of Person
    * @throws CustomException.NoUsersException if there are no users in the database
    */
-  public static List<Person> createAllPreferences(List<User> users)
+  public static List<User> createAllPreferences(List<User> users)
           throws CustomException.NoUsersException {
-    List<Person> people = new ArrayList<>();
+    List<User> people = new ArrayList<>();
 
     if (users == null || users.isEmpty()) {
       throw new CustomException.NoUsersException();
@@ -60,10 +46,16 @@ public class Matcher {
 
     for (User datum : users) {
 
-      // preferences is a list of string ID keys
+      if (datum.getMatches() == null) {
+        datum.setMatches(new ArrayList<>());
+      }
+
+      // Preferences is a list of string ID keys
       List<String> preferences = new ArrayList<>();
       List<PairScore> prePreferences = new ArrayList<>();
 
+      // Builds a list of PairScores representing the
+      // difference between this user and every other user.
       for (User otherUser : users) {
         PairScore newPair = new PairScore(datum.getID(),
                 otherUser.getID(), datum.calcDist(otherUser));
@@ -72,15 +64,17 @@ public class Matcher {
 
       prePreferences.sort(new PairScoreCompare());
 
+      // Adds the IDs of the other users "this" user is compared
+      // against to the preferences list so long as they aren't
+      // themselves and aren't already present in their matches
       for (PairScore ps : prePreferences) {
         if ((!ps.getOptionID().equals(datum.getID()))
                 && (!datum.getMatches().contains(ps.getOptionID()))) {
           preferences.add(ps.getOptionID());
         }
       }
-
-      Person human = new Person(datum.getID(), preferences);
-      people.add(human);
+      datum.setPreferences(preferences);
+      people.add(datum);
     }
 
     return people;
@@ -94,10 +88,8 @@ public class Matcher {
    * @throws CustomException.NoUsersException if there are no users in the database
    */
   public static void run(List<User> users) throws CustomException.NoUsersException {
-    List<Person> people = createAllPreferences(users);
-
-    Map<Person, Person> results = GaleShapley.galeShapleyAlgo(people, people);
-    Collection<Person> keys = results.keySet();
+    List<User> people = createAllPreferences(users);
+    people.forEach(person -> System.out.println(person.getName() + ", " + person.getPreferences()));
 
     // the database instance
     Firestore db = FirestoreClient.getFirestore();
@@ -105,35 +97,32 @@ public class Matcher {
     // Creates a reference to the users collection
     CollectionReference docRef = db.collection("users");
 
-    people.forEach(person -> System.out.println("Person ID: "
-            + person.getID() + ", Preferences: " + person.getRankings()));
+    // The results of running the Gale Shapley algorithm on the inputs
+    Map<User, User> results = GaleShapley.galeShapleyAlgo(people, people);
 
-    System.out.println("...............................");
-    System.out.println("...............................");
-    System.out.println("...............................");
-    System.out.println(results.toString());
+    for (int i = 0; i < 3; i++) {
+      System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    }
+    people.forEach(person -> System.out.println("User Name: "
+            + person.getName() + ", Preferences: " + person.getRankings()));
+    for (int i = 0; i < 3; i++) {
+      System.out.println("...............................");
+    }
 
-    for (Person key : keys) {
-      DocumentReference userRef = docRef.document(key.getID());
+    ProgressBar bar = new ProgressBar("Writing New Matches to FireBase", results.size());
+    // Loops through the entries in the map of gale shapley results
+    // and stores them in FireBase.
+    for (Map.Entry<User, User> keyPair : results.entrySet()) {
+      DocumentReference userRef = docRef.document(keyPair.getKey().getID());
       ApiFuture<WriteResult> future = userRef.update("matches",
-              FieldValue.arrayUnion(results.get(key).getID()));
+              FieldValue.arrayUnion(keyPair.getValue().getID()));
       try {
         WriteResult result = future.get();
-        System.out.println("Write result: " + result);
-      } catch (InterruptedException e) {
-        e.printStackTrace();
-      } catch (ExecutionException e) {
+        System.out.println("Wrote result: " + result.toString());
+      } catch (InterruptedException | ExecutionException e) {
         e.printStackTrace();
       }
-    }
-  }
-
-  private List<User> getUsers() {
-    try {
-      return this.db.getAllUsers();
-    } catch (SQLException throwables) {
-      throwables.printStackTrace();
-      return null;
+      bar.update();
     }
   }
 }

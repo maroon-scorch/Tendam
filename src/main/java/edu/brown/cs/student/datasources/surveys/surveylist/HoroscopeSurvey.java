@@ -69,6 +69,6 @@ public class HoroscopeSurvey implements Surveys {
     for (Map<String, Object> map : converted) {
       returnedMap.put(String.valueOf(map.get("question")), map.get("answer"));
     }
-    return new FoodSurvey(returnedMap);
+    return new HoroscopeSurvey(returnedMap);
   }
 }

@@ -100,7 +100,7 @@ public final class Main {
         @Override
         public void run() {
           try {
-            new UpdateMatches().execute("print");
+            new UpdateMatches().execute("users");
           } catch (Exception e) {
             e.printStackTrace();
           }

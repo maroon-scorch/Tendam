@@ -68,14 +68,15 @@ public class FireBaseDatabase {
    * with only the public constructor
    * parameters filled (id, name, matches).
    *
+   * @param userPath the path to the user collection
    * @return a list of users
    * @throws CustomException.FutureBreakException if something goes wrong with the future
    */
-  public List<User> retrieveUsers() throws CustomException.FutureBreakException {
+  public List<User> retrieveUsers(String userPath) throws CustomException.FutureBreakException {
     List<User> cumulativeUsers = new ArrayList<>();
 
     Firestore db = FirestoreClient.getFirestore();
-    CollectionReference docRef = db.collection("users");
+    CollectionReference docRef = db.collection(userPath);
     ApiFuture<QuerySnapshot> future = docRef.get();
 
     QuerySnapshot userCollection;

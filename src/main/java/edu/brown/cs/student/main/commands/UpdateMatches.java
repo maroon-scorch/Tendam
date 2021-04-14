@@ -40,7 +40,7 @@ public class UpdateMatches implements Command {
 
     // Merges retrieved survey data into the list of users
     List<User> addedSurveys = Objects.requireNonNull(
-            database).merge(database.retrieveUsers(),
+            database).merge(database.retrieveUsers("users"),
             database.retrieveSourceData("surveys"), "Survey");
 
     // Takes the list of users with merged survey

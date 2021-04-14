@@ -49,7 +49,7 @@ public class User implements HasRanking<User> {
    * @param data a map of string to source
    */
   public void updateUserData(Map<String, Source> data) {
-    if (this.userData.isEmpty()) {
+    if (this.userData == null || this.userData.isEmpty()) {
       this.userData = data;
     } else {
       for (Map.Entry<String, Source> m : data.entrySet()) {

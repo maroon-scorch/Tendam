@@ -189,15 +189,18 @@ public class FireBaseDatabase {
 
       // Skips if there is no mapData to
       // add for this particular user
-      if (mapData == null) {
+      if (mapData == null || mapData.isEmpty()) {
         u.setUserData(new HashMap<>());
         finalList.add(u);
         continue;
       }
       Map<String, Source> sourceParam = new HashMap<>();
-
+      System.out.println(sourceParam);
+      System.out.println("done1");
       // Iterates through the mapData for a particular user
       for (Map.Entry<String, Object> entry : mapData.entrySet()) {
+        System.out.println(sourceParam);
+        System.out.println("doneX");
         String sourceName = StringUtils.capitalize(entry.getKey()) + tail;
         Class<?> classType = Class.forName("edu.brown.cs.student.datasources"
                 + prefix + sourceName);

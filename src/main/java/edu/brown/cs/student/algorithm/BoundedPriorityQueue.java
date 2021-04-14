@@ -17,6 +17,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
   /**
    * Constructs a bounded priority queue,
    * which stores items in reversed order of their priority.
+   *
    * @param bound max number of items in the queue
    */
   public BoundedPriorityQueue(int bound) {
@@ -26,6 +27,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
 
   /**
    * Inserts the item into the bounded priority queue.
+   *
    * @param item item to be inserted
    */
   public void add(T item) {
@@ -53,6 +55,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
    * Retrieves, but does not remove, the head of this queue,
    * which is the element with the lowest priority,
    * or returns null if this queue is empty.
+   *
    * @return the head of the queue
    */
   public T peekLowestPriority() {
@@ -61,6 +64,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
 
   /**
    * Returns the number of elements in the queue.
+   *
    * @return number of elements
    */
   public int size() {
@@ -69,6 +73,7 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
 
   /**
    * Returns a list containing all of the elements in this queue, preserving priority order.
+   *
    * @return a list of all elements
    */
   public List<T> toList() {
@@ -79,5 +84,13 @@ public class BoundedPriorityQueue<T extends Comparable<T>> {
     }
     Collections.reverse(list);
     return list;
+  }
+
+  public int getBound() {
+    return this.bound;
+  }
+
+  public PriorityQueue getPq() {
+    return this.pq;
   }
 }

@@ -25,6 +25,7 @@ public class PropertyBasedTesting {
 
   /**
    * Creates a new PropertyBasedTesting object.
+   * @throws NoSuchAlgorithmException if algorithm is not found
    */
   public PropertyBasedTesting() throws NoSuchAlgorithmException {
   }

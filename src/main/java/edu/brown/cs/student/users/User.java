@@ -38,7 +38,7 @@ public class User implements HasRanking<User> {
 
   /**
    * Public no-arguments constructor.
-   * Used for FireBase data -> User.class conversion.
+   * Used for FireBase data to User.class conversion.
    */
   public User() {
   }
@@ -49,7 +49,7 @@ public class User implements HasRanking<User> {
    * @param data a map of string to source
    */
   public void updateUserData(Map<String, Source> data) {
-    if (this.userData == null) {
+    if (this.userData.isEmpty()) {
       this.userData = data;
     } else {
       for (Map.Entry<String, Source> m : data.entrySet()) {
@@ -61,7 +61,7 @@ public class User implements HasRanking<User> {
   /**
    * Accesses the existing matches of the character.
    *
-   * @return a list of integers
+   * @return a list of strings
    */
   public List<String> getMatches() {
     return matches;

@@ -14,7 +14,7 @@ public class HoroscopeSurvey implements Surveys {
 
   /**
    * Public constructor.
-   * @param answers
+   * @param answers answers provided for the survey
    */
   public HoroscopeSurvey(Map<String, Object> answers) {
     this.answers = answers;

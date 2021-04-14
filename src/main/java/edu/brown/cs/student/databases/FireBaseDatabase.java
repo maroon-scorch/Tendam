@@ -39,6 +39,7 @@ public class FireBaseDatabase {
   /**
    * Public Constructor.
    * Sets up the connection to the FireBase on instantiation.
+   * @throws IOException if connection attempt fails
    */
   public FireBaseDatabase() throws IOException {
     setupConnection();
@@ -156,7 +157,7 @@ public class FireBaseDatabase {
    * @param usersToMerge  the list of users to merge with the map
    * @param sourceToMerge the map to merge into the users
    * @param tail          a string to be appended to produce the
-   *                      correct FireBase -> Java class namespace
+   *                      correct FireBase to Java class namespace
    * @return an updated list of users
    * @throws ClassNotFoundException    if the class cannot be found
    * @throws NoSuchMethodException     if the method cannot be found

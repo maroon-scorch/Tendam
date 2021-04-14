@@ -6,7 +6,7 @@ import java.util.List;
  * An interface for anything that represents
  * a set of preferences or rankings.
  *
- * @param <T>
+ * @param <T> generic parameter which has a set of preferences
  */
 public interface HasRanking<T extends HasRanking<T>> {
 

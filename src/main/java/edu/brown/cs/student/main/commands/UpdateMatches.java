@@ -22,7 +22,7 @@ public class UpdateMatches implements Command {
   /**
    * The code to run on a set interval. Updates matches in the firebase.
    *
-   * @param print if set to "print", prints relevant information to the terminal
+   * @param userPath the path to the user data you want to access
    * @throws CustomException.FutureBreakException If the requested future doesn't work
    * @throws ClassNotFoundException               if the class cannot be found
    * @throws NoSuchMethodException                if the method cannot be found
@@ -30,17 +30,19 @@ public class UpdateMatches implements Command {
    * @throws InstantiationException               if a class cannot be instantiated
    * @throws IllegalAccessException               if not granted access to a database
    * @throws CustomException.NoUsersException     if there are no users in the database
+   * @throws CustomException.NoMatchException     if no matches could be made
    */
-  public void execute(String print) throws CustomException.FutureBreakException,
+  public void execute(String userPath) throws CustomException.FutureBreakException,
           ClassNotFoundException, NoSuchMethodException,
           InvocationTargetException, InstantiationException,
-          IllegalAccessException, CustomException.NoUsersException {
+          IllegalAccessException, CustomException.NoUsersException,
+          CustomException.NoMatchException {
 
     FireBaseDatabase database = Main.getDatabase();
 
     // Merges retrieved survey data into the list of users
     List<User> addedSurveys = Objects.requireNonNull(
-            database).merge(database.retrieveUsers("users"),
+            database).merge(database.retrieveUsers(userPath),
             database.retrieveSourceData("surveys"), "Survey");
 
     // Takes the list of users with merged survey
@@ -55,13 +57,11 @@ public class UpdateMatches implements Command {
       }
     });
 
-    if (print.equals("print")) {
-      for (int i = 0; i < 3; i++) {
-        System.out.println("+++++++++++++++++++++++++++++++");
-      }
-      filteredNew.forEach(user -> System.out.println("User Name: "
-              + user.getName() + " userData: " + user.getUserData()));
+    for (int i = 0; i < 3; i++) {
+      System.out.println("+++++++++++++++++++++++++++++++");
     }
+    filteredNew.forEach(user -> System.out.println("User Name: "
+            + user.getName() + " userData: " + user.getUserData()));
 
     // Runs the matching pipeline on the list of
     // users and sends the results back to FireBase

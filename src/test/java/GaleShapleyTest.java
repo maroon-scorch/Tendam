@@ -1,5 +1,6 @@
 import edu.brown.cs.student.algorithm.GaleShapley;
 import edu.brown.cs.student.algorithm.PropertyBasedTesting;
+import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.users.User;
 import org.junit.After;
 import org.junit.Before;
@@ -63,9 +64,11 @@ public class GaleShapleyTest {
 
   /**
    * General hard-written test between two groups of people
+   *
+   * @throws CustomException.NoMatchException if no matches could be made at all
    */
   @Test
-  public void testGaleShapleyAlgo() {
+  public void testGaleShapleyAlgo() throws CustomException.NoMatchException {
     User m1 = new User("1", "1", new ArrayList<>());
     m1.setPreferences(List.of("15", "13", "14", "12", "16"));
     User m2 = new User("2", "2", new ArrayList<>());
@@ -97,9 +100,12 @@ public class GaleShapleyTest {
 
   /**
    * Tests a list of users paired against themselves.
+   *
+   * @throws CustomException.NoMatchException if no matches could be made at all;
+   *                                          represents a runtime error
    */
   @Test
-  public void testAlgoSelf() {
+  public void testAlgoSelf() throws CustomException.NoMatchException {
     User p1 = new User("1", "1", new ArrayList<>());
     p1.setPreferences(List.of("2", "5", "4", "3", "1"));
     User p2 = new User("2", "2", new ArrayList<>());
@@ -121,9 +127,12 @@ public class GaleShapleyTest {
   /**
    * Scenario where one user has a shorter
    * list of preferences for whatever reason.
+   *
+   * @throws CustomException.NoMatchException if no matches could be made at all;
+   *                                          represents a runtime error.
    */
   @Test
-  public void testAlgoSelfLimitedPreference() {
+  public void testAlgoSelfLimitedPreference() throws CustomException.NoMatchException {
     User p1 = new User("1", "1", new ArrayList<>());
     p1.setPreferences(List.of("2", "5"));
     User p2 = new User("2", "2", new ArrayList<>());
@@ -147,9 +156,12 @@ public class GaleShapleyTest {
 
   /**
    * Edge cases where users have no preferences
+   *
+   * @throws CustomException.NoMatchException if no matches could be made at all;
+   *                                          represents a runtime error.
    */
   @Test
-  public void edgeCase() {
+  public void edgeCase() throws CustomException.NoMatchException {
     User p1 = new User("1", "1", new ArrayList<>());
     User p2 = new User("2", "2", new ArrayList<>());
     User p3 = new User("3", "3", new ArrayList<>());

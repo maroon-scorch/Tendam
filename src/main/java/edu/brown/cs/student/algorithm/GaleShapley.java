@@ -1,15 +1,37 @@
 package edu.brown.cs.student.algorithm;
 
 
+import edu.brown.cs.student.miscenllaneous.CustomException;
+
 import java.util.ArrayDeque;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-public class GaleShapley {
+/**
+ * Class that implements and runs the gale shapley algorithm.
+ */
+public final class GaleShapley {
+
+  /**
+   * Private unused constructor.
+   */
+  private GaleShapley() {
+  }
+
+  /**
+   * Runs the Gale Shapley Algorithm.
+   *
+   * @param listOne the first list of users
+   * @param listTwo the second list of users. For our purposes this is identical to list one.
+   * @param <T>     A HasRanking implementation class
+   * @return a a HasRanking implementation class
+   * @throws CustomException.NoMatchException if no matches could be found at all.
+   *                                          Represents a RuntimeError
+   */
   public static <T extends HasRanking<T>> Map<T, T> galeShapleyAlgo(
-          List<T> listOne, List<T> listTwo) {
+          List<T> listOne, List<T> listTwo) throws CustomException.NoMatchException {
     Queue<T> freeOne = new ArrayDeque<>(listOne);
     Map<T, T> pairings = new HashMap<>();
     Map<T, T> reversePairings = new HashMap<>();
@@ -33,7 +55,7 @@ public class GaleShapley {
         }
 
         if (two == null) {
-          throw new RuntimeException("ERROR: Could not find matching");
+          throw new CustomException.NoMatchException();
         } else {
           if (reversePairings.get(two) == null) {
             pairings.put(one, two);

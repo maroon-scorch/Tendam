@@ -1,29 +1,10 @@
 package edu.brown.cs.student.datasources;
 
-import org.reflections.Reflections;
-import org.reflections.scanners.SubTypesScanner;
-import org.reflections.scanners.TypeAnnotationsScanner;
-import org.reflections.util.ClasspathHelper;
-import org.reflections.util.ConfigurationBuilder;
-
-import java.util.Set;
-
-
+/**
+ * Interface for the Sources of data that the
+ * matching algorithm uses to produce preference lists for users.
+ */
 public interface Source {
-
-  Reflections SOURCE_REFLECTIONS = new
-          Reflections("edu.brown.cs.student.datasources");
-
-  Set<Class<? extends Source>> GLOBAL_SOURCES = SOURCE_REFLECTIONS.getSubTypesOf(Source.class);
-
-//  List<Class<?>> GLOBAL_SOURCES = Arrays.asList(FoodSurvey.class,
-//          HoroscopeSurvey.class, MbtiSurvey.class, BlackJack.class);
-
-//  Set<Class<? extends Source>> GLOBALGAMES = GAME_REFLECTIONS.getSubTypesOf(Games.class);
-
-//  List<Class<Surveys>> GLOBALSURVEYS = new ArrayList<>();
-//  List<Class<Games>> GLOBALGAMES = new ArrayList<>();
-
 
   /**
    * Calculates the amount of difference between this data set of results and another.

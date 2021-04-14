@@ -1,5 +1,6 @@
 package edu.brown.cs.student.algorithm;
 
+import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.users.User;
 
 import java.security.NoSuchAlgorithmException;
@@ -61,8 +62,10 @@ public class PropertyBasedTesting {
    *
    * @param k Number of users to be generated in list
    * @return True if test passes, false otherwise
+   * @throws CustomException.NoMatchException if no matches could be made at all;
+   *                                          represents a runtime error.
    */
-  private boolean oneTrial(int k) {
+  private boolean oneTrial(int k) throws CustomException.NoMatchException {
     List<User> personsList1 = generateInputs(0, k, k, 2 * k);
     List<User> personsList2 = generateInputs(k, 2 * k, 0, k);
 
@@ -139,8 +142,10 @@ public class PropertyBasedTesting {
    * @param p1 First list of users as input
    * @param p2 Second list of users as input
    * @return true if test passes and false otherwise
+   * @throws CustomException.NoMatchException if no matches could be made at all
    */
-  private boolean galeShapleyProperty(List<User> p1, List<User> p2) {
+  private boolean galeShapleyProperty(List<User> p1, List<User> p2)
+          throws CustomException.NoMatchException {
     Map<User, User> pairings = GaleShapley.galeShapleyAlgo(p1, p2);
     Map<User, User> reversePairings = new HashMap<>();
 

@@ -13,6 +13,7 @@ import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.miscenllaneous.ProgressBar;
 import edu.brown.cs.student.users.User;
 import org.apache.commons.lang3.StringUtils;
+import org.reflections.Reflections;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,12 +22,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
  * Class for requesting and adding data to the Firebase database.
  */
 public class FireBaseDatabase {
+
+  private static final Reflections SOURCE_REFLECTIONS = new
+          Reflections("edu.brown.cs.student.datasources");
+
+  private static final Set<Class<? extends Source>> GLOBAL_SOURCES
+          = SOURCE_REFLECTIONS.getSubTypesOf(Source.class);
 
   /**
    * Public Constructor.
@@ -196,7 +204,7 @@ public class FireBaseDatabase {
         // Iterates through a pre-defined list of classes to
         // find a matching one and convert the map data into
         // an instance of that class.
-        for (Class<?> c : Source.GLOBAL_SOURCES) {
+        for (Class<?> c : GLOBAL_SOURCES) {
           if (classType == c) {
             Source instance = (Source) c.getConstructor().newInstance();
             Source wrapped = instance.convert(entry.getValue());

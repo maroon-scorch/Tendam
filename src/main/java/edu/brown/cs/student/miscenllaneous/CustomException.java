@@ -485,5 +485,30 @@ public abstract class CustomException extends Exception {
       return RESPONSE;
     }
   }
+
+  /**
+   * Sub-class for when a match cannot be found at all in the algorithm.
+   */
+  public static class NoMatchException extends CustomException {
+    private static final long serialVersionUID = 76;
+
+    public static final String RESPONSE = "ERROR: No matches could"
+            + " be produced by the Gale Shapley Algorithm!";
+
+    /**
+     * Empty Constructor.
+     */
+    public NoMatchException() {
+    }
+
+    /**
+     * Returns the response associated with this exception.
+     *
+     * @return a string response
+     */
+    public String getResponse() {
+      return RESPONSE;
+    }
+  }
 }
 

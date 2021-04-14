@@ -90,8 +90,10 @@ public final class Main {
 
     // Sets up and runs the interval code on a schedule
     Calendar today = Calendar.getInstance();
-    today.set(Calendar.HOUR_OF_DAY, 0);
-    today.set(Calendar.MINUTE, 0);
+    today.set(Calendar.YEAR, 2021);
+    today.set(Calendar.MONTH, Calendar.APRIL);
+    today.set(Calendar.HOUR_OF_DAY, 15);
+    today.set(Calendar.MINUTE, 15);
     today.set(Calendar.SECOND, 0);
 
     Timer timer = new Timer();

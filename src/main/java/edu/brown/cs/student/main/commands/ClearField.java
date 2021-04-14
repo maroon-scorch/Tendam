@@ -26,8 +26,13 @@ public class ClearField implements Command {
    * @throws CustomException.FutureBreakException if the future breaks down
    */
   public void execute(String field) throws CustomException.FutureBreakException {
+
+    String[] inputs = field.split(" ", 2);
+    String usersPath = inputs[0];
+    String usersField = inputs[1];
+
     Firestore db = FirestoreClient.getFirestore();
-    CollectionReference colRef = db.collection("users");
+    CollectionReference colRef = db.collection(usersPath);
     ApiFuture<QuerySnapshot> future = colRef.get();
     List<String> keys = new ArrayList<>();
 
@@ -49,12 +54,12 @@ public class ClearField implements Command {
       });
     }
 
-    ProgressBar bar = new ProgressBar("Clearing " + field, keys.size());
+    ProgressBar bar = new ProgressBar("Clearing " + usersField + " in " + usersPath, keys.size());
     for (String key : keys) {
       DocumentReference docRef = colRef.document(key);
-      docRef.update(field, null);
+      docRef.update(usersField, null);
       bar.update();
     }
-    System.out.println(field + " cleared!");
+    System.out.println("The field " + usersField + " in " + usersPath + " has been cleared!");
   }
 }

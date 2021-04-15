@@ -70,7 +70,7 @@ public class UpdateMatches implements Command {
 
     // Runs the matching pipeline on the list of
     // users and sends the results back to FireBase
-    Matcher.run(filteredNew);
+    Matcher.run(filteredNew, userPath);
 
 
     // Prints out date and time in REPL to verify that it is running at the correct time

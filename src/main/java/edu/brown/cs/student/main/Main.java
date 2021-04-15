@@ -93,7 +93,7 @@ public final class Main {
     Calendar today = Calendar.getInstance();
     today.set(Calendar.YEAR, 2021);
     today.set(Calendar.MONTH, Calendar.APRIL);
-    today.set(Calendar.HOUR_OF_DAY, 20);
+    today.set(Calendar.HOUR_OF_DAY, 24);
     today.set(Calendar.MINUTE, 15);
     today.set(Calendar.SECOND, 0);
 
@@ -127,7 +127,7 @@ public final class Main {
       System.out.println(e.getResponse());
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("ERROR: Invalid input for REPL");
+      System.out.println("ERROR: You ran into an error produced from a REPL command!");
     }
   }
 

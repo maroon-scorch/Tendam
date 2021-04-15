@@ -193,7 +193,7 @@ public class FireBaseDatabase {
       // Skips if there is no mapData to
       // add for this particular user
       if (mapData == null || mapData.isEmpty()) {
-        u.setUserData(new HashMap<>());
+        u.updateUserData(new HashMap<>());
         finalList.add(u);
         continue;
       }

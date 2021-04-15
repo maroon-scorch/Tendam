@@ -338,31 +338,6 @@ public abstract class CustomException extends Exception {
   }
 
   /**
-   * Sub-class for a runtime error where weights have not yet been calculated.
-   */
-  public static class WeightNonexistentException extends CustomException {
-    private static final long serialVersionUID = 68;
-
-    public static final String RESPONSE = "ERROR: Weights Did Not Exist";
-
-    /**
-     * Empty constructor.
-     */
-    public WeightNonexistentException() {
-    }
-
-    /**
-     * Returns the response associated with this exception.
-     *
-     * @return a string response
-     */
-    public String getResponse() {
-      return RESPONSE;
-    }
-
-  }
-
-  /**
    * Sub-class for a runtime error where the database has not been loaded yet.
    */
   public static class NoDatabaseLoadedException extends CustomException {
@@ -374,31 +349,6 @@ public abstract class CustomException extends Exception {
      * Empty constructor.
      */
     public NoDatabaseLoadedException() {
-    }
-
-    /**
-     * Returns the response associated with this exception.
-     *
-     * @return a string response
-     */
-    public String getResponse() {
-      return RESPONSE;
-    }
-
-  }
-
-  /**
-   * Sub-class for an error where a nearest neighbor cannot be found.
-   */
-  public static class NoNearestException extends CustomException {
-    private static final long serialVersionUID = 74;
-
-    public static final String RESPONSE = "ERROR: There was no nearest node.";
-
-    /**
-     * Empty constructor.
-     */
-    public NoNearestException() {
     }
 
     /**
@@ -441,7 +391,7 @@ public abstract class CustomException extends Exception {
    * Sub-class for when something goes wrong with the future.
    */
   public static class FutureBreakException extends CustomException {
-    private static final long serialVersionUID = 76;
+    private static final long serialVersionUID = 78;
 
     public static final String RESPONSE = "ERROR: Something went wrong with your future!";
 
@@ -465,7 +415,7 @@ public abstract class CustomException extends Exception {
    * Sub-class for when a match cannot be found at all in the algorithm.
    */
   public static class NoMatchException extends CustomException {
-    private static final long serialVersionUID = 76;
+    private static final long serialVersionUID = 80;
 
     public static final String RESPONSE = "ERROR: No matches could"
             + " be produced by the Gale Shapley Algorithm!";
@@ -490,7 +440,7 @@ public abstract class CustomException extends Exception {
    * Sub-class for when a match cannot be found at all in the algorithm.
    */
   public static class NoActivitiesException extends CustomException {
-    private static final long serialVersionUID = 76;
+    private static final long serialVersionUID = 82;
 
     public static final String RESPONSE = "ERROR: None of the users have "
             + "taken any surveys or games yet!";

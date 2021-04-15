@@ -85,10 +85,11 @@ public final class Matcher {
    * for each user and then producing a single match each for them.
    *
    * @param users the input list of users
+   * @param usersPath the path to update user data in
    * @throws CustomException.NoUsersException if there are no users in the database
    * @throws CustomException.NoMatchException if no matches could be made
    */
-  public static void run(List<User> users) throws CustomException.NoUsersException,
+  public static void run(List<User> users, String usersPath) throws CustomException.NoUsersException,
           CustomException.NoMatchException {
     List<User> people = createAllPreferences(users);
     people.forEach(person -> System.out.println(person.getName() + ", " + person.getPreferences()));
@@ -97,7 +98,7 @@ public final class Matcher {
     Firestore db = FirestoreClient.getFirestore();
 
     // Creates a reference to the users collection
-    CollectionReference docRef = db.collection("users");
+    CollectionReference docRef = db.collection(usersPath);
 
     // The results of running the Gale Shapley algorithm on the inputs
     Map<User, User> results = GaleShapley.galeShapleyAlgo(people, people);
@@ -122,6 +123,7 @@ public final class Matcher {
         WriteResult result = future.get();
         System.out.println("Wrote result: " + result.toString());
       } catch (InterruptedException | ExecutionException e) {
+        future.cancel(true);
         e.printStackTrace();
       }
       bar.update();

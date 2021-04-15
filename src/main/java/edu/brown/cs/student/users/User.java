@@ -31,9 +31,9 @@ public class User implements HasRanking<User> {
   public User(String id, String name, List<String> matches) {
     this.id = id;
     this.name = name;
-    this.userData = new HashMap<>();
+    this.userData = null;
     this.matches = matches;
-    this.preferences = new ArrayList<>();
+    this.preferences = null;
   }
 
   /**
@@ -85,8 +85,14 @@ public class User implements HasRanking<User> {
    * @return a double distance
    */
   public double calcDist(User otherUser) {
-    Map<String, Source> mapOfSources = this.userData;
-    Map<String, Source> otherSources = otherUser.userData;
+    if (this.getUserData() == null) {
+      this.setUserData(new HashMap<>());
+    }
+    if (otherUser.getUserData() == null) {
+      otherUser.setUserData(new HashMap<>());
+    }
+    Map<String, Source> mapOfSources = this.getUserData();
+    Map<String, Source> otherSources = otherUser.getUserData();
     List<String> keys = new ArrayList<>(mapOfSources.keySet());
     double totalDistance = 0;
     int numSurveysBothTaken = 0;

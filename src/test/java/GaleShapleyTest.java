@@ -2,6 +2,7 @@ import edu.brown.cs.student.algorithm.GaleShapley;
 import edu.brown.cs.student.algorithm.PropertyBasedTesting;
 import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.users.User;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -167,6 +168,11 @@ public class GaleShapleyTest {
     User p3 = new User("3", "3", new ArrayList<>());
     User p4 = new User("4", "4", new ArrayList<>());
     User p5 = new User("5", "5", new ArrayList<>());
+    p1.setPreferences(new ArrayList<>());
+    p2.setPreferences(new ArrayList<>());
+    p3.setPreferences(new ArrayList<>());
+    p4.setPreferences(new ArrayList<>());
+    p5.setPreferences(new ArrayList<>());
 
     List<User> people = List.of(p1, p2, p3, p4, p5);
 

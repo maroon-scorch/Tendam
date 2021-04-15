@@ -112,7 +112,7 @@ public class UserTest {
 
   @Test
   public void testGetPreferences() {
-    assertEquals(user2.getPreferences(), new ArrayList<>());
+    assertEquals(user2.getPreferences(), null);
     user2.setPreferences(Arrays.asList("1", "3"));
     assertEquals(user2.getPreferences(), Arrays.asList("1", "3"));
   }

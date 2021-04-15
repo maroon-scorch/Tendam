@@ -98,26 +98,22 @@ public final class Main {
     today.set(Calendar.SECOND, 0);
 
     Timer timer = new Timer();
-    try {
-      TimerTask intervalTask = new TimerTask() {
-        @Override
-        public void run() {
-          try {
-            new UpdateMatches().execute("users");
-          } catch (CustomException e) {
-            System.out.println(e.getResponse());
-          } catch (Exception e) {
-            e.printStackTrace();
-          }
+    TimerTask intervalTask = new TimerTask() {
+      @Override
+      public void run() {
+        try {
+          new UpdateMatches().execute("users");
+        } catch (CustomException e) {
+          System.out.println(e.getResponse());
+        } catch (Exception e) {
+          e.printStackTrace();
         }
-      };
+      }
+    };
 
-      timer.schedule(intervalTask, today.getTime(),
-              TimeUnit.MILLISECONDS.convert(1,
-                      TimeUnit.DAYS));
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    timer.schedule(intervalTask, today.getTime(),
+            TimeUnit.MILLISECONDS.convert(1,
+                    TimeUnit.DAYS));
 
     // Reads the data into the console and runs it in the REPL.
     // Not currently used, but there for backup testing
@@ -127,8 +123,6 @@ public final class Main {
       while ((input = br.readLine()) != null) {
         repl.run(input);
       }
-    } catch (RuntimeException e) {
-      System.out.println("ERROR: Runtime exception");
     } catch (CustomException e) {
       System.out.println(e.getResponse());
     } catch (Exception e) {

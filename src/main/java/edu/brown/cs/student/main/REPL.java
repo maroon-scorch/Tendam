@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main;
 
+import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.replsupport.Command;
 
 import java.util.HashMap;
@@ -32,7 +33,7 @@ public class REPL {
    * Reports an error if command does not exist.
    *
    * @param input user input
-   * @throws Exception throws an exception if command does not exist.
+   * @throws Exception for other generic exceptions;
    */
   public void run(String input) throws Exception {
     String[] command = input.split(" ", 2);
@@ -42,7 +43,7 @@ public class REPL {
     if (c != null) {
       c.execute(parameters);
     } else {
-      System.err.println("ERROR: Command not found");
+      throw new CustomException.NaiveWrongArgsException();
     }
 
   }

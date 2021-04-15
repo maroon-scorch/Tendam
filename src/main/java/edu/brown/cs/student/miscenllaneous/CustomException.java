@@ -363,31 +363,6 @@ public abstract class CustomException extends Exception {
   }
 
   /**
-   * Sub-class for an error where an intersection cannot be found.
-   */
-  public static class NoIntersectionException extends CustomException {
-    private static final long serialVersionUID = 70;
-
-    public static final String RESPONSE = "ERROR: An intersection could not be found";
-
-    /**
-     * Empty constructor.
-     */
-    public NoIntersectionException() {
-    }
-
-    /**
-     * Returns the response associated with this exception.
-     *
-     * @return a string response
-     */
-    public String getResponse() {
-      return RESPONSE;
-    }
-
-  }
-
-  /**
    * Sub-class for a runtime error where the database has not been loaded yet.
    */
   public static class NoDatabaseLoadedException extends CustomException {
@@ -499,6 +474,31 @@ public abstract class CustomException extends Exception {
      * Empty Constructor.
      */
     public NoMatchException() {
+    }
+
+    /**
+     * Returns the response associated with this exception.
+     *
+     * @return a string response
+     */
+    public String getResponse() {
+      return RESPONSE;
+    }
+  }
+
+  /**
+   * Sub-class for when a match cannot be found at all in the algorithm.
+   */
+  public static class NoActivitiesException extends CustomException {
+    private static final long serialVersionUID = 76;
+
+    public static final String RESPONSE = "ERROR: None of the users have "
+            + "taken any surveys or games yet!";
+
+    /**
+     * Empty Constructor.
+     */
+    public NoActivitiesException() {
     }
 
     /**

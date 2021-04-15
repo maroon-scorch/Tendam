@@ -3,6 +3,7 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.databases.FireBaseDatabase;
 import edu.brown.cs.student.main.commands.ClearField;
 import edu.brown.cs.student.main.commands.UpdateMatches;
+import edu.brown.cs.student.miscenllaneous.CustomException;
 import freemarker.template.Configuration;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -92,7 +93,7 @@ public final class Main {
     Calendar today = Calendar.getInstance();
     today.set(Calendar.YEAR, 2021);
     today.set(Calendar.MONTH, Calendar.APRIL);
-    today.set(Calendar.HOUR_OF_DAY, 15);
+    today.set(Calendar.HOUR_OF_DAY, 20);
     today.set(Calendar.MINUTE, 15);
     today.set(Calendar.SECOND, 0);
 
@@ -126,7 +127,10 @@ public final class Main {
       }
     } catch (RuntimeException e) {
       System.out.println("ERROR: Runtime exception");
+    } catch (CustomException e) {
+      e.getResponse();
     } catch (Exception e) {
+      e.printStackTrace();
       System.out.println("ERROR: Invalid input for REPL");
     }
   }

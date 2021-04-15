@@ -31,12 +31,13 @@ public class UpdateMatches implements Command {
    * @throws IllegalAccessException               if not granted access to a database
    * @throws CustomException.NoUsersException     if there are no users in the database
    * @throws CustomException.NoMatchException     if no matches could be made
+   * @throws CustomException.NoActivitiesException if none of the users have taken anything yet
    */
   public void execute(String userPath) throws CustomException.FutureBreakException,
           ClassNotFoundException, NoSuchMethodException,
           InvocationTargetException, InstantiationException,
           IllegalAccessException, CustomException.NoUsersException,
-          CustomException.NoMatchException {
+          CustomException.NoMatchException, CustomException.NoActivitiesException {
 
     FireBaseDatabase database = Main.getDatabase();
 
@@ -56,6 +57,10 @@ public class UpdateMatches implements Command {
         filteredNew.add(user);
       }
     });
+
+    if (filteredNew.isEmpty()) {
+      throw new CustomException.NoActivitiesException();
+    }
 
     for (int i = 0; i < 3; i++) {
       System.out.println("+++++++++++++++++++++++++++++++");

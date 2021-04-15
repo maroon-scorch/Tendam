@@ -69,6 +69,6 @@ public class MbtiSurvey implements Surveys {
     for (Map<String, Object> map : converted) {
       returnedMap.put(String.valueOf(map.get("question")), map.get("answer"));
     }
-    return new HoroscopeSurvey(returnedMap);
+    return new MbtiSurvey(returnedMap);
   }
 }

@@ -80,7 +80,7 @@ public class UserTest {
     Source survey2 = new HoroscopeSurvey();
     data2.put("survey2", survey2);
     user1.updateUserData(data2);
-    assertTrue(Math.abs(user3.calcDist(user1) - 0) < threshold);
+    assertTrue(Math.abs(user1.calcDist(user3) - 0) < threshold);
     tearDown();
   }
 

@@ -76,8 +76,8 @@ public final class Main {
     try {
       database = new FireBaseDatabase();
       System.out.println("DATABASE LOADED!");
-    } catch (IOException e) {
-      e.printStackTrace();
+    } catch (CustomException e) {
+      System.out.println(e.getResponse());
     }
 
     for (int i = 0; i < 3; i++) {
@@ -104,6 +104,8 @@ public final class Main {
         public void run() {
           try {
             new UpdateMatches().execute("users");
+          } catch (CustomException e) {
+            System.out.println(e.getResponse());
           } catch (Exception e) {
             e.printStackTrace();
           }
@@ -128,7 +130,7 @@ public final class Main {
     } catch (RuntimeException e) {
       System.out.println("ERROR: Runtime exception");
     } catch (CustomException e) {
-      e.getResponse();
+      System.out.println(e.getResponse());
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("ERROR: Invalid input for REPL");

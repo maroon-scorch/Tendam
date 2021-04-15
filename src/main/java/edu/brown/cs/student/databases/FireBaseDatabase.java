@@ -39,9 +39,9 @@ public class FireBaseDatabase {
   /**
    * Public Constructor.
    * Sets up the connection to the FireBase on instantiation.
-   * @throws IOException if connection attempt fails
+   * @throws CustomException.NoDatabaseLoadedException if connection attempt fails
    */
-  public FireBaseDatabase() throws IOException {
+  public FireBaseDatabase() throws CustomException.NoDatabaseLoadedException {
     setupConnection();
   }
 
@@ -52,24 +52,27 @@ public class FireBaseDatabase {
    * Otherwise there is no security key to the database
    * and the connection is forbidden
    *
-   * @throws IOException if the connection attempt fails
+   * @throws CustomException.NoDatabaseLoadedException if it cannot connect to the database
    */
-  public void setupConnection() throws IOException {
+  public void setupConnection() throws CustomException.NoDatabaseLoadedException {
 
     // Security credentials that grants the system
     // admin privileges over the database.
-    FileInputStream serviceAccount =
+    try (FileInputStream serviceAccount =
             new FileInputStream("tendam-cs0320-2021"
-                    + "-firebase-adminsdk-3qrxb-fdf62de72b.json");
+                    + "-firebase-adminsdk-3qrxb-fdf62de72b.json")) {
 
-    // The options to pass into the initialization.
-    // Contains the credentials from above
-    FirebaseOptions options = FirebaseOptions.builder()
-            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-            .setDatabaseUrl("https://tendam-cs0320-2021-default-rtdb.firebaseio.com")
-            .build();
+      // The options to pass into the initialization.
+      // Contains the credentials from above
+      FirebaseOptions options = FirebaseOptions.builder()
+              .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+              .setDatabaseUrl("https://tendam-cs0320-2021-default-rtdb.firebaseio.com")
+              .build();
 
-    FirebaseApp.initializeApp(options);
+      FirebaseApp.initializeApp(options);
+    } catch (IOException e) {
+      throw new CustomException.NoDatabaseLoadedException();
+    }
   }
 
   /**

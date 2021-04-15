@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * Class for testing pair score equality and inequality.
+ */
 public class PairScoreCompareTest {
   PairScore score1;
   PairScore score2;
@@ -38,20 +41,20 @@ public class PairScoreCompareTest {
   @Test
   public void testPairScoreCompareEqualDifference() {
     setUp1();
-    assertEquals(psc.compare(score1, score2), 0);
+    assertEquals(0, psc.compare(score1, score2));
     tearDown();
   }
 
   @Test
   public void testPairScoreComparePositive() {
     setUp2();
-    assertEquals(psc.compare(score1, score2), -1);
+    assertEquals(-1, psc.compare(score1, score2));
     tearDown();
   }
   @Test
   public void testPairScoreCompareNegative() {
     setUp3();
-    assertEquals(psc.compare(score1, score2), 1);
+    assertEquals(1, psc.compare(score1, score2));
     tearDown();
   }
 }

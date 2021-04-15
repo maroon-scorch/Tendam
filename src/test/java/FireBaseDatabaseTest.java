@@ -8,12 +8,19 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+/**
+ * Tests the validity of the FireBase connection.
+ */
 public class FireBaseDatabaseTest {
   FireBaseDatabase fb;
 
 
+  /**
+   * Establishes a FireBase connection.
+   */
   @Before
   public void setUp() {
     try {
@@ -24,16 +31,24 @@ public class FireBaseDatabaseTest {
     }
   }
 
+  /**
+   * Disconnects the FireBase instance.
+   */
   @After
   public void tearDown() {
     fb = null;
   }
 
+  /**
+   * Tests whether basic access to the "users" collection
+   * is possible from the FireBase connection.
+   */
   @Test
   public void testGetUsers() {
-    Object newUser = new User("newUser1", "newUser1", null);
+    setUp();
+    User newUser = new User("newUser1", "newUser1", null);
     List<User> userList = new ArrayList<>();
-    userList.add((User) newUser);
+    userList.add(newUser);
     try {
       List<User> userList1 = fb.retrieveUsers("onlyNewUsers");
       assertEquals(userList, userList1);
@@ -41,6 +56,7 @@ public class FireBaseDatabaseTest {
       e.printStackTrace();
       fail();
     }
+    tearDown();
   }
 
 }

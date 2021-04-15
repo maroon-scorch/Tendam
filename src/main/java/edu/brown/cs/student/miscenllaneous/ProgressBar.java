@@ -21,17 +21,6 @@ public class ProgressBar {
     this.length = length;
   }
 
-//  /**
-//   * Builds an initial progress bar string based on a given length.
-//   *
-//   * @param length the length of the progress bar
-//   * @return a string progress bar
-//   */
-//  public String buildBar(int length) {
-//    String middle = new String(new char[length]).replace("\0", " ");
-//    return "|" + middle + "|" + "   0%";
-//  }
-
   /**
    * Prints out an updated bar.
    */

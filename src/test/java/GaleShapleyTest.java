@@ -93,7 +93,6 @@ public class GaleShapleyTest {
     w5.setPreferences(List.of("2", "5", "1", "3", "4"));
     Map<User, User> pairings = Map.of(m1, w4, m2, w5, m3,
             w3, m4, w2, m5, w1);
-    // Map<User, User> pairings = Map.of("A", "O", "B", "P", "C", "N", "D", "M", "E", "L");
     Map<User, User> testPairings = GaleShapley.galeShapleyAlgo(group1, group2);
 
     assertEquals(pairings, testPairings);
@@ -194,6 +193,8 @@ public class GaleShapleyTest {
     }
     assertTrue(pbt.nTrials(50, 100));
   }
+
+  //TODO: remove this block of code.
 
 //
 //  // PBT

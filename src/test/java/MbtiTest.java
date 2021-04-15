@@ -1,16 +1,17 @@
-import edu.brown.cs.student.datasources.surveys.surveylist.FoodSurvey;
 import edu.brown.cs.student.datasources.surveys.surveylist.MbtiSurvey;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Tests the methods within the MbtiSurvey class.
+ */
 public class MbtiTest {
   MbtiSurvey survey1;
   MbtiSurvey survey2;
@@ -22,7 +23,7 @@ public class MbtiTest {
   Map<String, Object> ans4 = new HashMap<>();
 
   @Before
-  public void setUp(){
+  public void setUp() {
     ans1.put("What is your favorite fruit?", "Apple");
     ans1.put("What is your favorite vegetable?", "Carrot");
     survey1 = new MbtiSurvey(ans1);
@@ -35,9 +36,11 @@ public class MbtiTest {
     ans4.put("What is your favorite fruit?", "Banana");
     ans4.put("What is your favorite vegetable?", "Potato");
     survey4 = new MbtiSurvey(ans4);
-
   }
 
+  /**
+   * Clears the surveys and answers.
+   */
   @After
   public void tearDown() {
     survey1 = null;
@@ -50,22 +53,30 @@ public class MbtiTest {
     ans4 = null;
   }
 
+  /**
+   * Tests the getAnswers() method.
+   */
   @Test
   public void testGetAnswers() {
     setUp();
-    assertEquals(survey1.getAnswers(), ans1);
-    assertEquals(survey2.getAnswers(), ans2);
-    assertEquals(survey3.getAnswers(), ans3);
-    assertEquals(survey4.getAnswers(), ans4);
+    assertEquals(ans1, survey1.getAnswers());
+    assertEquals(ans2, survey2.getAnswers());
+    assertEquals(ans3, survey3.getAnswers());
+    assertEquals(ans4, survey4.getAnswers());
     tearDown();
   }
 
+  /**
+   * Tests the difference method.
+   */
   @Test
   public void testDifference() {
+    setUp();
     assertTrue(Math.abs(survey1.difference(survey2) - 50) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey1) - 0) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey3) - 50) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey4) - 100) < 0.001);
+    tearDown();
   }
 }
 

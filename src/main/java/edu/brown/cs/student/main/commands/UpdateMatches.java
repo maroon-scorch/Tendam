@@ -23,14 +23,14 @@ public class UpdateMatches implements Command {
    * The code to run on a set interval. Updates matches in the firebase.
    *
    * @param userPath the path to the user data you want to access
-   * @throws CustomException.FutureBreakException If the requested future doesn't work
-   * @throws ClassNotFoundException               if the class cannot be found
-   * @throws NoSuchMethodException                if the method cannot be found
-   * @throws InvocationTargetException            if the .newInstance method fails
-   * @throws InstantiationException               if a class cannot be instantiated
-   * @throws IllegalAccessException               if not granted access to a database
-   * @throws CustomException.NoUsersException     if there are no users in the database
-   * @throws CustomException.NoMatchException     if no matches could be made
+   * @throws CustomException.FutureBreakException  If the requested future doesn't work
+   * @throws ClassNotFoundException                if the class cannot be found
+   * @throws NoSuchMethodException                 if the method cannot be found
+   * @throws InvocationTargetException             if the .newInstance method fails
+   * @throws InstantiationException                if a class cannot be instantiated
+   * @throws IllegalAccessException                if not granted access to a database
+   * @throws CustomException.NoUsersException      if there are no users in the database
+   * @throws CustomException.NoMatchException      if no matches could be made
    * @throws CustomException.NoActivitiesException if none of the users have taken anything yet
    */
   public void execute(String userPath) throws CustomException.FutureBreakException,
@@ -51,6 +51,7 @@ public class UpdateMatches implements Command {
     List<User> addedGames = database.merge(addedSurveys,
             database.retrieveSourceData("gamesCopy"), "");
 
+    // Filters the list for users who have not done any surveys / played any games
     List<User> filteredNew = new ArrayList<>();
     addedGames.forEach(user -> {
       if (!user.getUserData().isEmpty()) {
@@ -58,6 +59,8 @@ public class UpdateMatches implements Command {
       }
     });
 
+    // Throws an exception if all of the users
+    // are new and have done nothing yet
     if (filteredNew.isEmpty()) {
       throw new CustomException.NoActivitiesException();
     }

@@ -4,33 +4,44 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+/**
+ * Class for testing methods in the BoundedPriorityQueue class.
+ */
 public class BoundedPriorityQueueTest {
-  BoundedPriorityQueue bpq1;
-  BoundedPriorityQueue bpq2;
+  BoundedPriorityQueue<Integer> bpq1;
+  BoundedPriorityQueue<Integer> bpq2;
 
+  /**
+   * Sets up the function to run prior to the tests
+   */
   @Before
   public void setUp() {
-    bpq1 = new BoundedPriorityQueue(1);
-    bpq2 = new BoundedPriorityQueue(2);
+    bpq1 = new BoundedPriorityQueue<>(1);
+    bpq2 = new BoundedPriorityQueue<>(2);
   }
 
+  /**
+   * Resets the bpq values.
+   */
   @After
   public void tearDown() {
     bpq1 = null;
     bpq2 = null;
   }
+
+  /**
+   * Tests the constructor accessor methods.
+   */
   @Test
   public void testConstructor() {
     setUp();
-    BoundedPriorityQueue queue = new BoundedPriorityQueue(1);
-    assertEquals(queue.getBound(), 1);
+    BoundedPriorityQueue<Integer> queue = new BoundedPriorityQueue<>(1);
+    assertEquals(1, queue.getBound());
     assertTrue(queue.getPq().isEmpty());
     tearDown();
   }
@@ -39,32 +50,32 @@ public class BoundedPriorityQueueTest {
   public void testAdd() {
     setUp();
     bpq1.add(1);
-    assertEquals(bpq1.peekLowestPriority(), 1);
+    assertEquals(1, (long) bpq1.peekLowestPriority());
     bpq1.add(6);
-    assertEquals(bpq1.peekLowestPriority(), 1);
+    assertEquals(1, (long) bpq1.peekLowestPriority());
     bpq1.add(1);
-    assertEquals(bpq1.peekLowestPriority(), 1);
+    assertEquals(1, (long) bpq1.peekLowestPriority());
     bpq2.add(40);
     bpq2.add(50);
-    assertEquals(bpq2.peekLowestPriority(), 50);
+    assertEquals(50, (long) bpq2.peekLowestPriority());
     bpq2.add(1);
-    assertEquals(bpq2.peekLowestPriority(), 40);
+    assertEquals(40, (long) bpq2.peekLowestPriority());
     tearDown();
   }
 
   @Test
   public void testSize() {
     setUp();
-    assertEquals(bpq1.size(), 0);
-    assertEquals(bpq2.size(), 0);
+    assertEquals(0, bpq1.size());
+    assertEquals(0, bpq2.size());
     bpq1.add(5);
     bpq1.add(10);
     bpq1.add(50);
     bpq2.add(5);
     bpq2.add(10);
     bpq2.add(50);
-    assertEquals(bpq1.size(), 1);
-    assertEquals(bpq2.size(), 2);
+    assertEquals(1, bpq1.size());
+    assertEquals(2, bpq2.size());
     tearDown();
   }
 
@@ -84,7 +95,7 @@ public class BoundedPriorityQueueTest {
     List<Integer> bpq2List = new ArrayList<>();
     bpq2List.add(5);
     bpq2List.add(10);
-    assertEquals(bpq1.toList(), bpq1List);
-    assertEquals(bpq2.toList(), bpq2List);
+    assertEquals(bpq1List, bpq1.toList());
+    assertEquals(bpq2List, bpq2.toList());
   }
 }

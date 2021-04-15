@@ -7,17 +7,30 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static edu.brown.cs.student.users.Matcher.createAllPreferences;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.fail;
 
+/**
+ * Class for testing the creation of a list of preferences for users.
+ */
 public class MatcherTest {
-  List users = new ArrayList();
+  List<User> users = new ArrayList<>();
   User user1;
   User user2;
   User user3;
 
+  /**
+   * Builds a list of mock users.
+   */
   @Before
   public void setUp() {
     Map<String, Object> q1 = new HashMap<>();
@@ -30,9 +43,9 @@ public class MatcherTest {
     horoscopeSurvey1.put("horoscope", survey1);
     Map<String, Source> horoscopeSurvey2 = new HashMap<>();
     horoscopeSurvey1.put("horoscope", survey2);
-    user1 = new User("1", "name1", Arrays.asList("2"));
+    user1 = new User("1", "name1", Collections.singletonList("2"));
     user1.setUserData(horoscopeSurvey1);
-    user2 = new User("2", "name2", Arrays.asList("1"));
+    user2 = new User("2", "name2", Collections.singletonList("1"));
     user2.setUserData(horoscopeSurvey2);
     user3 = new User("3", "name3", null);
     user3.setUserData(horoscopeSurvey1);
@@ -41,22 +54,33 @@ public class MatcherTest {
     users.add(user3);
   }
 
+  /**
+   * clears the list of mock users
+   */
   @After
   public void tearDown() {
     users = null;
   }
 
+  /**
+   * Tests that passing in an empty list of users
+   * will result in a thrown NoUsersException.
+   */
   @Test
   public void testNullUserList() {
     setUp();
     assertThrows(CustomException.NoUsersException.class,
-            () -> createAllPreferences(null));
+            () -> createAllPreferences(new ArrayList<>()));
     tearDown();
   }
 
+  /**
+   * Tests the creation of preferences on a valid list.
+   */
   @Test
   public void testCreateAllPreferences() {
-    List newUserList = new ArrayList();
+    setUp();
+    List<User> newUserList = new ArrayList<>();
     user1.setPreferences(Arrays.asList("3", "2"));
     user2.setPreferences(Arrays.asList("3", "1"));
     user3.setPreferences(Arrays.asList("1", "2"));
@@ -64,7 +88,7 @@ public class MatcherTest {
     newUserList.add(user2);
     newUserList.add(user3);
     try {
-      assertEquals(Matcher.createAllPreferences(users), newUserList);
+      assertEquals(newUserList, Matcher.createAllPreferences(users));
     } catch (CustomException.NoUsersException e) {
       e.printStackTrace();
       fail();

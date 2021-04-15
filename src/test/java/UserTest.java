@@ -8,17 +8,27 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
+/**
+ * Class for testing the methods within the User class.
+ */
 public class UserTest {
   User user1;
   User user2;
   User user3;
   double threshold = 0.001;
 
+  /**
+   * Sets up a number of mock users.
+   */
   @Before
   public void setUp() {
     user1 = new User("1", "name1", Arrays.asList("2", "3"));
@@ -26,6 +36,9 @@ public class UserTest {
     user3 = new User("3", "name3", new ArrayList<>());
   }
 
+  /**
+   * Clears the data in the mock users.
+   */
   @After
   public void tearDown() {
     user1 = null;
@@ -33,6 +46,9 @@ public class UserTest {
     user3 = null;
   }
 
+  /**
+   * Tests whether updateUserData works.
+   */
   @Test
   public void testUpdateUserData() {
     setUp();
@@ -51,25 +67,34 @@ public class UserTest {
     tearDown();
   }
 
+  /**
+   * Tests whether getMatches works.
+   */
   @Test
   public void testGetMatches() {
     setUp();
-    assertEquals(user1.getMatches(), Arrays.asList("2", "3"));
-    assertEquals(user2.getMatches(), Arrays.asList("1", "3"));
-    assertEquals(user3.getMatches(), new ArrayList<>());
+    assertEquals(Arrays.asList("2", "3"), user1.getMatches());
+    assertEquals(Arrays.asList("1", "3"), user2.getMatches());
+    assertEquals(new ArrayList<>(), user3.getMatches());
     tearDown();
   }
 
+  /**
+   * Tests whether setMatches works.
+   */
   @Test
   public void testSetMatches() {
     setUp();
-    user3.setMatches(Arrays.asList("1"));
-    assertEquals(user3.getMatches(), Arrays.asList("1"));
+    user3.setMatches(Collections.singletonList("1"));
+    assertEquals(Collections.singletonList("1"), user3.getMatches());
     user1.setMatches(new ArrayList<>());
-    assertEquals(user1.getMatches(), new ArrayList<>());
+    assertEquals(new ArrayList<>(), user1.getMatches());
     tearDown();
   }
 
+  /**
+   * Tests whether calculateDistance works.
+   */
   @Test
   public void testCalculateDistance() {
     setUp();
@@ -84,14 +109,21 @@ public class UserTest {
     tearDown();
   }
 
+  /**
+   * Tests whether getName works.
+   */
   @Test
   public void testGetName() {
     setUp();
-    assertEquals(user1.getName(), "name1");
-    assertEquals(user2.getName(), "name2");
-    assertEquals(user3.getName(), "name3");
+    assertEquals("name1", user1.getName());
+    assertEquals("name2", user2.getName());
+    assertEquals("name3", user3.getName());
+    tearDown();
   }
 
+  /**
+   * Tests whether setUserData works.
+   */
   @Test
   public void testSetUserData() {
     setUp();
@@ -101,26 +133,33 @@ public class UserTest {
     Source survey2 = new HoroscopeSurvey();
     data2.put("survey2", survey2);
     user1.setUserData(data2);
-    assertEquals(user1.getUserData(), data2);
+    assertEquals(data2, user1.getUserData());
+    tearDown();
   }
 
   @Test
   public void testSetPreferences() {
+    setUp();
     user1.setPreferences(Arrays.asList("2", "3"));
-    assertEquals(user1.getPreferences(), Arrays.asList("2", "3"));
+    assertEquals(Arrays.asList("2", "3"), user1.getPreferences());
+    tearDown();
   }
 
   @Test
   public void testGetPreferences() {
-    assertEquals(user2.getPreferences(), null);
+    assertNull(user2.getPreferences());
     user2.setPreferences(Arrays.asList("1", "3"));
-    assertEquals(user2.getPreferences(), Arrays.asList("1", "3"));
+    assertEquals(Arrays.asList("1", "3"), user2.getPreferences());
   }
 
+  /**
+   * Tests user equality
+   */
   @Test
   public void testEquals() {
-    assertTrue(user1.equals(user1));
-    assertFalse(user1.equals("banana"));
-    assertFalse(user1.equals(user2));
+    setUp();
+    assertEquals(user1, user1);
+    assertNotEquals(user1, user2);
+    tearDown();
   }
 }

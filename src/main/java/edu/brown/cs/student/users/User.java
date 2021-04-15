@@ -204,13 +204,7 @@ public class User implements HasRanking<User> {
       return false;
     }
     User second = (User) obj;
-    for (int i = 0; i < this.getSigFields().length; i++) {
-      if (!Objects.equals(this.getSigFields()[i],
-              second.getSigFields()[i])) {
-        return false;
-      }
-    }
-    return true;
+    return (this.getID().equals(second.getID()));
   }
 
   /**

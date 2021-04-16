@@ -141,17 +141,16 @@ function Signup() {
             {error !== '' ? <Alert severity="warning">{error}</Alert> : <div />}
             <form className={classes.root} autoComplete="off">
                 {formatForm(formItems, formValues, setFormValues)}
-                <Button id="signup-submit" variant="contained" color="secondary" onClick={handleSubmit} disabled={loading}>
-                 Submit
-                </Button>
             </form>
-            <br />
             <div>
             <h4>
                 By creating this account, you agree to our <Link to="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</Link> <br/>
                 here that includes specifications on our privacy policies <br />
                 and how we will collect and use data about you.
             </h4>
+            <Button id="signup-submit" variant="contained" color="secondary" onClick={handleSubmit} disabled={loading}>
+                 Submit
+            </Button>
             </div>
             {/* <Button onClick={(e) => {console.log(currentUser);}}>Test</Button> */}
             </div>

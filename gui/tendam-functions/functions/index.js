@@ -25,9 +25,9 @@ exports.initializeUserInDatabase = functions.auth.user().onCreate(async (user) =
   }});
 });
 
-const createNotification = ((notification, id) => {
-  return admin.firestore().collection('notifications').doc(id).collection('matches')
-  .add(notification).then(doc => console.log('Added New Match!', doc))
+const createNotification = ((notification, field, id) => {
+  return admin.firestore().collection('notifications').doc(id).collection(field)
+  .add(notification).then(doc => console.log('Added New Notification!', doc))
   .catch(err => console.log('An error has occurred!'));
 });
 
@@ -49,11 +49,43 @@ exports.createMatchNotification = functions.firestore.document('users/{userId}')
             time: admin.firestore.FieldValue.serverTimestamp()
           };
 
-          return createNotification(notification, context.params.userId);
+          return createNotification(notification, 'matches', context.params.userId);
 
         }
       }
 });
+
+// Only Creating Notification for One on One Messages Now
+exports.createMessageNotification = functions.firestore.document('messages/{msgId}').onUpdate((change, context) => {
+  const previousValue = change.before.data();
+  const newValue = change.after.data();
+
+  const prevMessages = previousValue.messages;
+  const nextMessages = newValue.messages;
+
+  // If the update is on messages
+  if (JSON.stringify(prevMessages)!=JSON.stringify(nextMessages)
+  && nextMessages.length > prevMessages.length) {
+    // matches
+    let newestMsg = nextMessages[nextMessages.length - 1];
+    console.log(newestMsg);
+    let newestSender = newestMsg['sender'];
+    let rest = newValue['participants'].filter(elt => elt != newestSender);
+
+    if (rest.length == 1) {
+      const notification = {
+        content: 'You have a new message: ' + newestMsg['data'],
+        user: newestSender,
+        time: newestMsg['timestamp']
+      };
+
+      console.log(notification.content);
+      console.log(notification.user);
+
+      return createNotification(notification, 'messages', rest[0]);
+    }
+    }
+  });
 
 const deleteMatch = (async (idToDelete, otherID) => {
   let otherUserRef = admin.firestore().collection('users').doc(otherID);

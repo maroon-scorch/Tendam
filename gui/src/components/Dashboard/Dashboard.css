@@ -1,0 +1,76 @@
+/* .dashboard-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.dashboard {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    background: red;
+} */
+
+
+.slick-slider {
+    margin-top: 10vh;
+    width: 90%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.slick-arrow {
+    background-color: white;
+}
+
+.dashboard-prev {
+    float: left;
+    color: white;
+    display: table-cell;
+}
+
+.slick-list {
+    text-align: center;
+    height: 30vh;
+    display: table-cell;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.slick-track {
+    height: 45vh;
+}
+
+.dashboard-next {
+    color: white;
+}
+
+.slick-slide {
+    display: flex;
+}
+
+.slick-dots {
+    background-color: #fff;
+}
+
+.selected-item {
+    transform: scale(1.2);
+    transition: transform 500ms;
+    opacity: 1;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+
+.unselected-item {
+    transform: scale(0.833);
+    transition: transform 500ms;
+    opacity: 0.9;
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}

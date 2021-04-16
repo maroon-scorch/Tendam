@@ -1,0 +1,18 @@
+.login-title {
+    text-align: center;
+    padding-bottom: 1vh;
+}
+
+.login-form-container {
+    margin-top: 15vh;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.login-form {
+    border: 2px solid white;
+    background: rgba(5, 169, 240, 0.75);
+    padding: 4rem;
+    filter: drop-shadow(5px 5px 5px #000000);
+}

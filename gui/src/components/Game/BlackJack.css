@@ -1,0 +1,20 @@
+body {
+    background-color: ForestGreen;
+    margin: 0;
+    height: 100%;
+}
+.cards{
+    background-color: ForestGreen;
+    margin: 0;
+    height: 100%;
+}
+.buttons{
+    /*background-color: darkgreen;*/
+    margin: 0;
+    position: relative;
+    margin-top: 50px;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}

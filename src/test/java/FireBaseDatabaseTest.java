@@ -5,8 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -34,6 +33,7 @@ public class FireBaseDatabaseTest {
   /**
    * Disconnects the FireBase instance.
    */
+
   @After
   public void tearDown() {
     fb = null;
@@ -56,5 +56,31 @@ public class FireBaseDatabaseTest {
       fail();
     }
   }
+
+//  @Test
+//  public void testRetrieveSourceData() {
+//    Map<String, String> horoscope = new HashMap<>();
+//    horoscope.put("answer", "Virgo");
+//    horoscope.put("question", "What is your horoscope?");
+//    horoscope.put("key", "horoscope");
+//    Map<String, Object> q1 = new HashMap<>();
+//    q1.put("horoscope", Arrays.asList(horoscope));
+//    Map<String, Map<String, Object>> expectedData = new HashMap<>();
+//    expectedData.put("PersonA", q1);
+//    try {
+//      Map<String, Map<String, Object>> sourceData = fb.retrieveSourceData("surveysCopy");
+//      assertEquals(expectedData, sourceData);
+//    } catch (CustomException.FutureBreakException e) {
+//      e.printStackTrace();
+//      fail();
+//    }
+////    try {
+////      Map<String, Map<String, Object>> sourceData = fb2.retrieveSourceData("thisDoesntExist");
+////      assertEquals(new HashMap<>(), sourceData);
+////    } catch (CustomException.FutureBreakException e) {
+////      e.printStackTrace();
+////      fail();
+////    }
+
 
 }

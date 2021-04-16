@@ -62,10 +62,9 @@ public final class GaleShapley {
             pairings.put(one, two);
             reversePairings.put(two, one);
             notMatched = false;
-          }
-          // Otherwise, one matches with two only if two would rather match with one
-          // compared to their current match
-          else {
+          } else {
+            // Otherwise, one matches with two only if two would rather match with one
+            // compared to their current match
             T onePrime = reversePairings.get(two);
             // If two prefers one, two's previous match becomes free and one matches with two
             // Otherwise we loop one more to one's next preference

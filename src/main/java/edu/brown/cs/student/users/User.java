@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * Class representing a user and some of their most significant data.
@@ -178,15 +177,6 @@ public class User implements HasRanking<User> {
    */
   public int getRanking(String userID) {
     return preferences.indexOf(userID);
-  }
-
-  /**
-   * Returns the person's id and preferences. Used for setting equality.
-   *
-   * @return an array of objects
-   */
-  private Object[] getSigFields() {
-    return new Object[]{id, preferences};
   }
 
   /**

@@ -49,7 +49,7 @@ public class UpdateMatches implements Command {
     // Takes the list of users with merged survey
     // data and merges game data into it as well
     List<User> addedGames = database.merge(addedSurveys,
-            database.retrieveSourceData("gamesCopy"), "");
+            database.retrieveSourceData("games"), "");
 
     // Filters the list for users who have not done any surveys / played any games
     List<User> filteredNew = new ArrayList<>();

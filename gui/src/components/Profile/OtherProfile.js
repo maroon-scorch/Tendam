@@ -5,6 +5,7 @@ import { useDatabase } from "../../context/DatabaseContext";
 import MatchDisplay from './MatchDisplay';
 import './Profile.css';
 
+import Blank from './blank-profile.png';
 import { Link } from 'react-router-dom';
 import Aos from 'aos';
 import "aos/dist/aos.css";
@@ -15,7 +16,7 @@ function OtherProfile({ history }) {
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", id: "", matches: []});
 
-    const [profilePic, setProfilePic] = useState("blank-profile.png");
+    const [profilePic, setProfilePic] = useState(Blank);
 
     useEffect(async () => {
         Aos.init({});

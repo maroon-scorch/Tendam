@@ -65,7 +65,7 @@ function Match() {
             let userData = await getEntryData(userID);
             console.log(userData);
             history.push({
-            pathname: `/profile/${userData['name']}`,
+            pathname: userData['name'].length == 0 ? `/profile/${userData['id']}` : `/profile/${userData['name']}`,
             state: {
                 data: userData
             }

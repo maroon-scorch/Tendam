@@ -43,7 +43,6 @@ public class PropertyBasedTesting {
 
       boolean once;
 
-      // TODO: Fix catch statement from Exception
       try {
         once = oneTrial(k);
       } catch (Exception e) {
@@ -69,16 +68,6 @@ public class PropertyBasedTesting {
   private boolean oneTrial(int k) throws CustomException.NoMatchException {
     List<User> personsList1 = generateInputs(0, k, k, 2 * k);
     List<User> personsList2 = generateInputs(k, 2 * k, 0, k);
-
-//    System.out.println("List 1: ");
-//    for (Person p : personsList1) {
-//      System.out.println(p.getID() + ": " + p.getRankings().toString());
-//    }
-//
-//    System.out.println("List 2: ");
-//    for (Person p : personsList2) {
-//      System.out.println(p.getID() + ": " + p.getRankings().toString());
-//    }
 
     boolean test;
     try {
@@ -123,7 +112,6 @@ public class PropertyBasedTesting {
     }
 
     for (int i = 0; i < kMax - kMin; i++) {
-      //TODO: Checkstyle error. you should not be List.remove() within an ascending for loop
       String personID = personList.remove(0).toString();
       Collections.shuffle(prefList);
       List<String> preferenceList = new ArrayList<>(prefList);
@@ -157,7 +145,6 @@ public class PropertyBasedTesting {
       count++;
     }
 
-    // TODO: Add docstrings for this
     // This for loop checks that all pairings are stable
     for (Map.Entry<User, User> entry : pairings.entrySet()) {
       if (!(isOneStable(p1, pairings, List.of(entry.getKey(), entry.getValue()))
@@ -174,7 +161,13 @@ public class PropertyBasedTesting {
     return p1Set.size() >= p1.size() && p2Set.size() >= p2.size() && count == p1.size();
   }
 
-  //TODO: Add docstrings for this
+  /**
+   * Checks whether one pair of users are stable.
+   * @param p1 User 1
+   * @param pairings All matches for all users
+   * @param pairing Pairing of user 1 and whoever user 1 matched with
+   * @return True if the pairing is stable and false otherwise
+   */
   private boolean isOneStable(List<User> p1, Map<User, User> pairings, List<User> pairing) {
     for (String personID : pairing.get(1).getRankings()) {
       if (personID.equals(pairing.get(0).getID())) {

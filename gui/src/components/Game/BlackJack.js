@@ -24,34 +24,36 @@ function BlackJack() {
 
     const [cardsOfPlayer, setCardsOfPlayer] = useState([]);
     const [cardValuesOfPlayer, setCardValuesOfPlayer] = useState([]);
-    //todo change these initial values
-    //change to zero?
+
+    // -1 refers to showing the back of a card and not the face.
     let [playerHand, setPlayerHand] = useState([-1, -1]);
-    // let [dealerHand, setDealerHand] = useState([-1, -1]);
-
     const [highestRiskScore, setHighestRiskScore] = useState(-1);
-    // const [numGamesPlayed, setNumGamesPlayed] = useState(0);
 
+    // Sets up board after each round.
     useEffect(() => {
         if (deck.length === 52) {
             setUpBoard();
         }
     }, [deck])
 
+    // User presses play; resets values to default.
     async function play() {
+        // Resets cards to all 52 cards
         setDeck(Array.from(Array(52).keys()));
         setWhoWon("");
+
         setGameEnded(false);
-        // let currentScore = await getGameData(currentUser.uid, "blackjack-score");
         setHighestRiskScore(0);
+
+        // Gets user data so risk propensity score can be updated and set later
         let currentGameData = await getGameData(currentUser.uid, "BlackJack");
-        console.log(currentGameData);
         let currentNumGamesPlayed = currentGameData['blackjack-games-played'];
         setGameData(currentUser.uid, "BlackJack", "blackjack-games-played", currentNumGamesPlayed + 1);
-        // setNumGamesPlayed(currentNumGamesPlayed + 1);
     }
 
+    // Sets up board.
     function setUpBoard() {
+        // Deals 2 cards to dealer and player.
         let dealerCardsAndValues = setUpCards(2);
         let playerCardsAndValues = setUpCards(2);
 
@@ -65,12 +67,14 @@ function BlackJack() {
         setPlayerHand(playerCardsAndValues[2]);
     }
 
+    // Deals numCards number of cards.
     function setUpCards(numCards) {
         let cardsToAdd = [];
         let cardsOfPerson = [];
         let cardsValuesOfPerson = [];
         let chosenKeys = [];
 
+        // Gets numCards number of cards randomly
         for (let i = 0; i < numCards; i++) {
             let randIndex = Math.floor(Math.random() * deck.length);
             let chosenCardKey = deck.splice(randIndex, 1);
@@ -81,6 +85,7 @@ function BlackJack() {
             cardsOfPerson.push(chosenCard);
             chosenKeys.push(parseInt(chosenCardKey));
         }
+
         cardsToAdd.push(cardsOfPerson);
         cardsToAdd.push(cardsValuesOfPerson);
         cardsToAdd.push(chosenKeys);
@@ -88,12 +93,13 @@ function BlackJack() {
         return cardsToAdd;
     }
 
-    // TODO: Currently coded for the purpose of displaying as text message, but should change it
-    // to make it easier to find the right graphics to display
+    // Outputs a card from a key; in order of Spades, Hearts, Clubs, Diamonds
+    // Eg) key = 0 => card = Ace Spade, while key = 13 => card = Ace Hearts
     function cardFromKey(key) {
         console.log(key);
         let card = "";
 
+        // Gets the value of the card.
         let cardNumber = key % 13 + 1;
         if (cardNumber === 1) {
             card += "Ace ";
@@ -107,6 +113,7 @@ function BlackJack() {
             card += cardNumber + " ";
         }
 
+        // Gets the suit of the card.
         // Spades
         if (key < 13) {
             card += "Spades ";
@@ -127,28 +134,34 @@ function BlackJack() {
         return card;
     }
 
+    // Checks whether player busts
     useEffect(() => {
         checkBust();
     }, [cardValuesOfPlayer])
 
+    // Function to check whether player has busted
     function checkBust() {
-        const player = calculateScore(cardValuesOfPlayer);
-        if (player > 21) {
-            // update database for user's risk propensity score with final risk propensity score
+        const playerScore = calculateScore(cardValuesOfPlayer);
+        if (playerScore > 21) {
             setAverageRiskPropensityScore(null);
             setGameEnded(true);
             setWhoWon("You Lose :(");
         }
     }
 
+    // Function that calculates score of given list of cards.
     function calculateScore(cards) {
         let possibleScores = [0];
+
         for (let i = 0; i < cards.length; i++) {
+            // If statement to check whether we have Jack, Queen, or King.
             if (cards[i] === 11 || cards[i] === 12 || cards[i] === 13) {
                 for (let j = 0; j < possibleScores.length; j++) {
                     possibleScores[j] = possibleScores[j] + 10;
                 }
-            } else if (cards[i] === 1) {
+            } 
+            // Checks whether we have Ace.
+            else if (cards[i] === 1) {
                 let tentativeScores = [];
                 for (let j = 0; j < possibleScores.length; j++) {
                     tentativeScores.push(possibleScores[j] + 1);
@@ -161,10 +174,13 @@ function BlackJack() {
                 }
             }
         }
+
+        // Finds the best score from all possible scores.
         let score = bestScore(possibleScores);
         return score;
     }
 
+    // Finds the best score (since some values like Ace can be both 1 and 11).
     function bestScore(scores) {
         if (scores.length === 0) return 0;
         let best = scores[0];
@@ -176,7 +192,7 @@ function BlackJack() {
         return best;
     }
 
-
+    // Function to hit for player.
     function hit() {
         if (gameEnded) {
             setWhoWon("Press play first");
@@ -192,11 +208,11 @@ function BlackJack() {
 
     // Calculates probability that a new card will make the hand go over 21.
     function calculateRiskScore() {
-        let remainingSum = sumOfValues;
         const maxBeforeBust = 21 - calculateScore(cardValuesOfPlayer);
         let count = 0;
         for (let i = 0; i < deck.length; i++) {
             let cardValue = deck[i] % 13 + 1;
+            // Checking whether we have Jack, Queen, or Kings, since the values are 10.
             if (cardValue === 11 || cardValue === 12 || cardValue === 13) {
                 cardValue = 10;
             }
@@ -207,10 +223,14 @@ function BlackJack() {
         return 100 * count / deck.length;
     }
 
+    // Sets average risk propensity score for user.
     async function setAverageRiskPropensityScore(riskScore) {
+        // Gests user data.
         let currentGameData = await getGameData(currentUser.uid, "BlackJack");
         let currentScore = currentGameData["blackjack-score"];
         let currentNumGamesPlayed = currentGameData["blackjack-games-played"];
+
+        // Updates user data.
         if (riskScore) {
             if (currentNumGamesPlayed !== 0) {
                 if (currentScore === -1) {
@@ -232,59 +252,39 @@ function BlackJack() {
         }
     }
 
+    // Checks game results.
     function checkGameResults() {
         const dealer = calculateScore(cardValuesOfDealer);
         const player = calculateScore(cardValuesOfPlayer);
         setGameEnded(true);
 
         if (player > 21 || (dealer < 22 && dealer >= player)) {
-            // update database for user's risk propensity score with final risk propensity score
             setWhoWon("You Lose :(");
         } else {
-            //display "you win!"
-            // update database for user's risk propensity score with final risk propensity score
             setWhoWon("You Win!");
         }
     }
 
+    // Function for player to stand.
     function stand() {
-        // setPlayerStand(true);
-        // setDealerScore(calculateScore(cardValuesOfDealer));
-        // setDealerHand(realDealerHand);
         if (gameEnded) {
             setWhoWon("Press play first");
         } else {
             let riskScore = calculateRiskScore();
             setAverageRiskPropensityScore(riskScore);
             dealerHand = realDealerHand;
+            // Dealer deals for themself until they reach 17 or above.
             while (calculateScore(cardValuesOfDealer) < 17) {
                 let dealerCardsAndValues = setUpCards(1);
                 cardsOfDealer = cardsOfDealer.concat(dealerCardsAndValues[0]);
                 cardValuesOfDealer = cardValuesOfDealer.concat(dealerCardsAndValues[1]);
-                // setDealerHand(dealerHand.concat(dealerCardsAndValues[2]));
-                // setDealerHand(realDealerHand.concat(dealerCardsAndValues[2]));
-                // realDealerHand = realDealerHand.concat(dealerCardsAndValues[2]);
                 dealerHand = dealerHand.concat(dealerCardsAndValues[2]);
-                // setCardsOfDealer(cardsOfDealer.concat(dealerCardsAndValues[0]));
-                // setCardValuesOfDealer(cardValuesOfDealer.concat(dealerCardsAndValues[1]));
             }
             checkGameResults();
         }
     }
 
-    /**
-     * Gets key longitude
-     * @param lon
-     * @param lambda
-     * @returns {JSX.Element}
-     */
-    //function convertKeytoCard(num) {
-    //     return Math.floor(lon / lambda) * lambda;
-
-    //}
-    // function Button() {
-    //     return <AwesomeButton type="primary"> Button</AwesomeButton>;
-    // }
+    // Styling of buttons.
     const Button = styled.button`
   background-color: GoldenRod;
   color: black;
@@ -294,17 +294,6 @@ function BlackJack() {
   margin: 10px 0px;
   cursor: pointer;
 `;
-
-
-    // For debugging purposes
-    // async function handleGet() {
-    //     let data = await getGameData(currentUser.uid, "BlackJack");
-    //     console.log(data);
-    // }
-
-    // async function handleSet() {
-    //     setGameData(currentUser.uid, "BlackJack", "blackjack-games-played", 11);
-    // }
 
     return (
         <div className="body">
@@ -327,10 +316,6 @@ function BlackJack() {
                 <br />
                 <GameMessage text={whoWon} hidden={!gameEnded} />
             </div>
-            
-            {/* // For debugging purposes */}
-            {/* <Button variant="contained" color="primary" onClick={handleGet}>get data</Button>
-            <Button variant="contained" color="primary" onClick={handleSet}>set data</Button> */}
         </div>
 
     )

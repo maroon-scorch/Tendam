@@ -5,7 +5,7 @@ import Moment from 'react-moment';
 
 import { useAuth } from "../../context/AuthContext.js";
 import { useDatabase } from "../../context/DatabaseContext";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Match.css';
 
 function Match() {
@@ -13,20 +13,6 @@ function Match() {
     const { listenNotification, getEntryData} = useDatabase();
     const history = useHistory();
     const [notification, setNotification] = useState([]);
-    
-    // async function handleSnapshot(snapshot) {
-    //     let changes = snapshot.docChanges();
-    //     let base = [];
-    //     await changes.forEach(async (item) => {
-    //         base.push(item.doc.data());
-    //         // let notifData = item.doc.data();
-    //         // let userData = await getEntryData(notifData.user);
-    //         // notifData['name'] = userData['name'];
-    //         // base.push(notifData);
-    //     });
-    //     console.log(base);
-    //     setNotification(base);
-    // }
 
     function handleSnapshot(snapshot) {
         let changes = snapshot.docChanges();
@@ -43,13 +29,7 @@ function Match() {
             } else if (item.type == 'removed') {
                 base = base.filter(data => data.id != notifID);
             }
-
-            // let notifData = item.doc.data();
-            // // let userData = await getEntryData(notifData.user);
-            // // notifData['name'] = userData['name'];
-            // base.push(notifData);
         });
-        // console.log(base);
         setNotification([...base]);
     }
 

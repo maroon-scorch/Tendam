@@ -2,7 +2,6 @@ import edu.brown.cs.student.algorithm.GaleShapley;
 import edu.brown.cs.student.algorithm.PropertyBasedTesting;
 import edu.brown.cs.student.miscenllaneous.CustomException;
 import edu.brown.cs.student.users.User;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

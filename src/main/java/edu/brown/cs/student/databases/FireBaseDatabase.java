@@ -69,7 +69,9 @@ public class FireBaseDatabase {
               .setDatabaseUrl("https://tendam-cs0320-2021-default-rtdb.firebaseio.com")
               .build();
 
-      FirebaseApp.initializeApp(options);
+      if (FirebaseApp.getApps().isEmpty()) {
+        FirebaseApp.initializeApp(options);
+      }
     } catch (IOException e) {
       throw new CustomException.NoDatabaseLoadedException();
     }

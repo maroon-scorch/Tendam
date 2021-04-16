@@ -44,6 +44,9 @@ public class BoundedPriorityQueueTest {
     assertTrue(queue.getPq().isEmpty());
   }
 
+  /**
+   * Tests the add method
+   */
   @Test
   public void testAdd() {
     bpq1.add(1);
@@ -59,6 +62,9 @@ public class BoundedPriorityQueueTest {
     assertEquals(40, (long) bpq2.peekLowestPriority());
   }
 
+  /**
+   * Tests the size method
+   */
   @Test
   public void testSize() {
     assertEquals(0, bpq1.size());
@@ -73,6 +79,9 @@ public class BoundedPriorityQueueTest {
     assertEquals(2, bpq2.size());
   }
 
+  /**
+   * tests the toList method
+   */
   @Test
   public void testToList() {
     assertTrue(bpq1.toList().isEmpty());

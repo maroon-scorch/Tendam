@@ -14,18 +14,27 @@ public class PairScoreCompareTest {
   PairScore score2;
   PairScoreCompare psc = new PairScoreCompare();
 
+  /**
+   * set up where the two scores are equal
+   */
   @Before
   public void setUp1() {
     score1 = new PairScore("1", "2", 0);
     score2 = new PairScore("2", "1", 0);
   }
 
+  /**
+   * set up where the first score is less than the second score
+   */
   @Before
   public void setUp2() {
     score1 = new PairScore("1", "2", 5);
     score2 = new PairScore("2", "1", 6);
   }
 
+  /**
+   * set up where the first score is greater than the second score
+   */
   @Before
   public void setUp3() {
     score1 = new PairScore("1", "2", 6);
@@ -38,6 +47,9 @@ public class PairScoreCompareTest {
     score2 = null;
   }
 
+  /**
+   * tests the output of the compare method when the two scores are equal
+   */
   @Test
   public void testPairScoreCompareEqualDifference() {
     setUp1();
@@ -45,12 +57,21 @@ public class PairScoreCompareTest {
     tearDown();
   }
 
+  /**
+   * tests the output of the compare method when
+   * the first score is less than the second score
+   */
   @Test
   public void testPairScoreComparePositive() {
     setUp2();
     assertEquals(-1, psc.compare(score1, score2));
     tearDown();
   }
+
+  /**
+   * tests the output of the compare method when
+   * the first score is greater than the second score
+   */
   @Test
   public void testPairScoreCompareNegative() {
     setUp3();

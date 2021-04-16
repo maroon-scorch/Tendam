@@ -56,16 +56,19 @@ exports.createMatchNotification = functions.firestore.document('users/{userId}')
 });
 
 const deleteMatch = (async (idToDelete, otherID) => {
-  let otherData = await admin.firestore().collection('users').doc(otherID).data();
-  let otherMatches = otherData['matches'];
-  let deleteMatch = otherMatches.filter((id) => id != idToDelete);
-  // last line, no need to async?
-  await otherUserInfo.update({ matches : deleteMatch});
+  let otherDataRef = await admin.firestore().collection('users').doc(otherID).get();
+  if (otherDataRef.exists && otherDataRef.data()['matches'] !== null) {
+    let otherData = otherDataRef.data();
+    let otherMatches = otherData['matches'];
+    let deleteMatch = otherMatches.filter((id) => id != idToDelete);
+    // last line, no need to async?
+    await otherUserInfo.update({ matches : deleteMatch});
+  }
 });
 
 // Deleting data associated with the userID
 exports.deleteUserInfo = functions.auth.user().onDelete(async (user) => {
-  const batch = database.batch();
+  const batch = admin.firestore().batch();
   const gameInfo = admin.firestore().collection('games').doc(user.uid);
   const surveyInfo = admin.firestore().collection('surveys').doc(user.uid);
   const notifInfo = admin.firestore().collection('notifications').doc(user.uid);
@@ -75,10 +78,14 @@ exports.deleteUserInfo = functions.auth.user().onDelete(async (user) => {
   batch.delete(surveyInfo);
   batch.delete(notifInfo);
 
-  let userData = userInfo.data();
-  await userData['matches'].forEach(async (match) => {
-    await deleteMatch(user.uid, match);
-  });
+  let userDataRef = await userInfo.get();
+  if (userDataRef.exists && userDataRef.data()['matches'] !== null) {
+    let userData = userDataRef.data();
+    await userData['matches'].forEach(async (match) => {
+      await deleteMatch(user.uid, match);
+    });
+  }
+
 
   batch.delete(userInfo);
   await batch.commit();

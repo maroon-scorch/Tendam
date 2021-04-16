@@ -8,8 +8,14 @@ import FinalDecision from './FinalDecision';
 
 function Setting() {
     const { currentUser, emailAuth} = useAuth();
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const { close, open, setContent } = useModal();
+
+    function handleYes() {
+        setShow(false);
+        close();
+    }
+
     function displayDelete() {
         open();
         setContent(
@@ -18,7 +24,7 @@ function Setting() {
                 <Typography variant="h6">Your account wouldn't be recoverable after you have deleted it,
                 and making a new account with the same email won't restore your previous data.</Typography>
                 <Button variant="contained" color="primary" onClick={close}>No</Button>
-                <Button variant="contained" color="secondary" onClick={() => {setShow(true)}}>Yes</Button>
+                <Button variant="contained" color="secondary" onClick={handleYes}>Yes</Button>
             </div>
         );
     }

@@ -6,7 +6,7 @@ import Alert from '@material-ui/lab/Alert';
 
 function FinalDecision() {
     const { currentUser, makeCredentials} = useAuth();
-    const { history } = useHistory();
+    const history = useHistory();
     const [credValue, setCred] = useState({
         email: "",
         password: ""
@@ -36,7 +36,7 @@ function FinalDecision() {
                 currentUser.delete().then(function() {
                     history.push('/');
                 });
-                
+
               }).catch(function(error) {
                 // An error happened.
                 setError(error.message);
@@ -57,7 +57,7 @@ function FinalDecision() {
         <div>
         <TextField label="Confirm Email" name="email" value={credValue.email} onChange={handleChange}/>
         <br />
-        <TextField label="Confirm Password" name="password" value={credValue.password} onChange={handleChange}/>
+        <TextField label="Confirm Password" name="password" value={credValue.password} onChange={handleChange} type={"password"}/>
         </div>
         <br />
         <Link to="/profile">

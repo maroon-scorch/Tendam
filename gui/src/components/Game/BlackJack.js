@@ -297,26 +297,13 @@ function BlackJack() {
 
 
     // For debugging purposes
-    // async function handleScore(e) {
-    //     e.preventDefault();
-    //     let score = await getGameData(currentUser.uid, "blackjack-score");
-    //     console.log("score is: " + score);
+    // async function handleGet() {
+    //     let data = await getGameData(currentUser.uid, "BlackJack");
+    //     console.log(data);
     // }
 
-    // async function handleNumGamesPlayed(e) {
-    //     e.preventDefault();
-    //     let num = await getGameData(currentUser.uid, "blackjack-games-played")
-    //     console.log("num games played is: " + num);
-    // }
-
-    // async function resetScoreData(e) {
-    //     e.preventDefault();
-    //     await setGameData(currentUser.uid, "blackjack-score", -1);
-    // }
-
-    // async function resetNumberData(e) {
-    //     e.preventDefault();
-    //     await setGameData(currentUser.uid, "blackjack-games-played", 0);
+    // async function handleSet() {
+    //     setGameData(currentUser.uid, "BlackJack", "blackjack-games-played", 11);
     // }
 
     return (
@@ -341,11 +328,9 @@ function BlackJack() {
                 <GameMessage text={whoWon} hidden={!gameEnded} />
             </div>
             
-            {/* For debugging purposes
-            <Button variant="contained" color="primary" onClick={handleScore}>get score</Button>
-            <Button variant="contained" color="primary" onClick={handleNumGamesPlayed}>get games played</Button>
-            <Button variant="contained" color="primary" onClick={resetScoreData}>reset score data</Button>
-            <Button variant="contained" color="primary" onClick={resetNumberData}>reset number data</Button> */}
+            {/* // For debugging purposes */}
+            {/* <Button variant="contained" color="primary" onClick={handleGet}>get data</Button>
+            <Button variant="contained" color="primary" onClick={handleSet}>set data</Button> */}
         </div>
 
     )

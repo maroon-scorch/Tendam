@@ -46,7 +46,7 @@ export function DatabaseProvider({ children }) {
     }
 
     function getGameData(id, gameType) {
-        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
+        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0, 'id': id };
         let gameRef = gameDatabase.doc(id);
 
         return gameRef.get().then((doc) => {
@@ -61,7 +61,7 @@ export function DatabaseProvider({ children }) {
     }
 
     function setGameData(id, gameType, fieldname, newData) {
-        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
+        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0, 'id': id };
         let gameRef = gameDatabase.doc(id);
 
         gameRef.get().then((doc) => {
@@ -70,22 +70,15 @@ export function DatabaseProvider({ children }) {
 
             let updData = gameData.hasOwnProperty(gameType) ? gameData[gameType] : defaultData;
             updData[fieldname] = newData;
+            updData.id = id;
 
             let dataSent = {};
             dataSent[gameType] = updData; 
             console.log(dataSent);
 
-            return gameRef.update(gameData);
+            return gameRef.update(dataSent);
         }).catch((error) => {
             console.log("Error getting document:", error);
-            // let gameData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
-            // let updData = gameData;
-            // updData[fieldname] = newData;
-
-            // let dataSent = { fieldname : updData };
-            // console.log(dataSent);
-
-            // return gameRef.update(gameData);
         });
     }
 

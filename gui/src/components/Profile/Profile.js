@@ -29,7 +29,7 @@ function Profile({ history }) {
                     console.log(doc.data());
                     let profileData = doc.data();
                     if (profileData['matches'] === null) {
-                        profileData['matches'] = []
+                        profileData['matches'] = [];
                     }
                     setProfileInfo(profileData);
                 } else {

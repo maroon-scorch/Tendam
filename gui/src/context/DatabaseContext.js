@@ -36,7 +36,9 @@ export function DatabaseProvider({ children }) {
     function getEntryData(id) {
         let userRef = userDatabase.doc(id);
         return userRef.get().then((doc) => {
-            return doc.data();
+            const user = doc.data();
+            user.matches = user.matches || [];
+            return user;
         }).catch((error) => {});
     }
 

@@ -56,13 +56,14 @@ exports.createMatchNotification = functions.firestore.document('users/{userId}')
 });
 
 const deleteMatch = (async (idToDelete, otherID) => {
-  let otherDataRef = await admin.firestore().collection('users').doc(otherID).get();
+  let otherUserRef = admin.firestore().collection('users').doc(otherID);
+  let otherDataRef = await otherUserRef.get();
   if (otherDataRef.exists && otherDataRef.data()['matches'] !== null) {
     let otherData = otherDataRef.data();
     let otherMatches = otherData['matches'];
     let deleteMatch = otherMatches.filter((id) => id != idToDelete);
     // last line, no need to async?
-    await otherUserInfo.update({ matches : deleteMatch});
+    await otherUserRef.update({ matches : deleteMatch});
   }
 });
 

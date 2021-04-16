@@ -147,9 +147,11 @@ function Signup() {
             </form>
             <br />
             <div>
+            <h4>
                 By creating this account, you agree to our <Link to="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</Link> <br/>
                 here that includes specifications on our privacy policies <br />
                 and how we will collect and use data about you.
+            </h4>
             </div>
             {/* <Button onClick={(e) => {console.log(currentUser);}}>Test</Button> */}
             </div>

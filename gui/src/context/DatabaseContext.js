@@ -70,6 +70,25 @@ export function DatabaseProvider({ children }) {
         });
     }
 
+    function getGame(id, fieldname) {
+        let gameRef = gameDatabase.doc(id);
+        return gameRef.get().then((doc) => {
+            console.log(doc.data());
+            let fieldData = doc.data()[fieldname];
+            console.log(fieldData);
+            return fieldData;
+        }).catch((error) => {
+            console.log("Error getting document:", error);
+        });
+    }
+
+    function writeGame(id, fieldname, newData) {
+        let surveyRef = gameDatabase.doc(id);
+        let dataSent = {};
+        dataSent[fieldname] = newData;
+        return surveyRef.update(dataSent);
+    }
+
     function writeSurvey(id, fieldname, newData) {
         let surveyRef = surveyDatabase.doc(id);
         let dataSent = {};

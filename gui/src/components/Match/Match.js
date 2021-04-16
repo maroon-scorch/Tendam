@@ -53,20 +53,28 @@ function Match() {
         setNotification([...base]);
     }
 
+
+
     function showNotif() {
         console.log(notification);
     }
 
     async function visitProfile(userID) {
         console.log(userID);
-        let userData = await getEntryData(userID);
-        console.log(userData);
-        history.push({
+        try {
+            let userData = await getEntryData(userID);
+            console.log(userData);
+            history.push({
             pathname: `/profile/${userData['name']}`,
             state: {
                 data: userData
             }
-        });
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        
+
     }
 
     // useEffect(() => {

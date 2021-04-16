@@ -9,6 +9,7 @@ import { useModal } from "../../context/ModalContext";
 import { Link } from 'react-router-dom';
 import BlankProfile from './blank-profile.png';
 
+// The Toggle Button that displays the list of matches a user has.
 function MatchDisplay({ matches }) {
     const { currentUser } = useAuth();
     const { getFile, getEntryData } = useDatabase();

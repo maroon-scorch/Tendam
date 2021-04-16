@@ -10,6 +10,9 @@ import { Link } from 'react-router-dom';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 
+// OtherProfile are the profile page when the user visits other user's pages
+// whenever the user visits this page, the history contains the data of the visited user
+// that the current user is looking at, it will be passed down in useEffect to set up the profile.
 function OtherProfile({ history }) {
     const { getFile } = useDatabase();
     

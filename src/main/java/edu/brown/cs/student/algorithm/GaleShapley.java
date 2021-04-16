@@ -32,19 +32,19 @@ public final class GaleShapley {
    */
   public static <T extends HasRanking<T>> Map<T, T> galeShapleyAlgo(
           List<T> listOne, List<T> listTwo) throws CustomException.NoMatchException {
+    // freeOne is a queue of all free objects from first list
     Queue<T> freeOne = new ArrayDeque<>(listOne);
     Map<T, T> pairings = new HashMap<>();
     Map<T, T> reversePairings = new HashMap<>();
-    // boolean isError = false;
+
+    // While loop runs until freeOne is empty so that we create all matches
     while (!freeOne.isEmpty()) {
-      // TODO: Make sure to remove one from freeOne and sometimes add back onePrime to freeOne
       T one = freeOne.poll();
       boolean notMatched = true;
       for (String twoId : one.getRankings()) {
         if (!notMatched) {
           break;
         }
-        //two is one’s highest ranked such person in listTwo to whom they have not yet proposed
         T two = null;
 
         for (T obj : listTwo) {
@@ -57,21 +57,24 @@ public final class GaleShapley {
         if (two == null) {
           throw new CustomException.NoMatchException();
         } else {
+          // If two does not have a match then one matches with two
           if (reversePairings.get(two) == null) {
             pairings.put(one, two);
             reversePairings.put(two, one);
             notMatched = false;
-          } else {
+          }
+          // Otherwise, one matches with two only if two would rather match with one
+          // compared to their current match
+          else {
             T onePrime = reversePairings.get(two);
-            // two prefers one to onePrime
+            // If two prefers one, two's previous match becomes free and one matches with two
+            // Otherwise we loop one more to one's next preference
             if (two.getRanking(one.getID()) < two.getRanking(onePrime.getID())) {
-              // (one, two) become engaged
               pairings.put(one, two);
               reversePairings.put(two, one);
               pairings.remove(onePrime);
               freeOne.offer(onePrime);
               notMatched = false;
-              // onePrime becomes free
             }
           }
         }

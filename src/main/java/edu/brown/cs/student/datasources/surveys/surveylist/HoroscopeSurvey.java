@@ -8,12 +8,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Class for implementing the Horoscope survey methods.
+ */
 public class HoroscopeSurvey implements Surveys {
+
+  private static final double MAGIC100 = 100.0;
 
   private Map<String, Object> answers;
 
   /**
    * Public constructor.
+   *
    * @param answers answers provided for the survey
    */
   public HoroscopeSurvey(Map<String, Object> answers) {
@@ -48,10 +54,10 @@ public class HoroscopeSurvey implements Surveys {
     List<Object> values = new ArrayList<>(this.getAnswers().values());
     Surveys castedSurvey = (Surveys) otherSource;
     List<Object> otherValues = new ArrayList<>(castedSurvey.getAnswers().values());
-    double difference = 100;
+    double difference = MAGIC100;
     for (int i = 0; i < values.size(); i++) {
       if (values.get(i) == otherValues.get(i)) {
-        difference = difference - 100.0 / (values.size());
+        difference = difference - MAGIC100 / (values.size());
       }
     }
     return difference;

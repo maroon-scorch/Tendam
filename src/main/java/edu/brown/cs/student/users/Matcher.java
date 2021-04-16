@@ -89,7 +89,8 @@ public final class Matcher {
    * @throws CustomException.NoUsersException if there are no users in the database
    * @throws CustomException.NoMatchException if no matches could be made
    */
-  public static void run(List<User> users, String usersPath) throws CustomException.NoUsersException,
+  public static void run(List<User> users, String usersPath)
+          throws CustomException.NoUsersException,
           CustomException.NoMatchException {
     List<User> people = createAllPreferences(users);
     people.forEach(person -> System.out.println(person.getName() + ", " + person.getPreferences()));

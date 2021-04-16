@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Comparator;
 
 /**
- * Comparator for PairScores
+ * Comparator for PairScores.
  */
 public class PairScoreCompare implements Comparator<PairScore>, Serializable {
 
@@ -17,7 +17,7 @@ public class PairScoreCompare implements Comparator<PairScore>, Serializable {
   }
 
   /**
-   * Compares two PairScores
+   * Compares two PairScores.
    *
    * @param t1 The first PairScore
    * @param t2 The second PairScore

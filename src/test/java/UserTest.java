@@ -51,7 +51,6 @@ public class UserTest {
    */
   @Test
   public void testUpdateUserData() {
-    setUp();
     Map<String, Source> data1 = new HashMap<>();
     user1.updateUserData(data1);
     assertEquals(user1.getUserData(), data1);
@@ -64,7 +63,6 @@ public class UserTest {
     data2.put("survey2", survey2);
     user1.updateUserData(data2);
     assertEquals(user1.getUserData(), data2);
-    tearDown();
   }
 
   /**
@@ -72,11 +70,9 @@ public class UserTest {
    */
   @Test
   public void testGetMatches() {
-    setUp();
     assertEquals(Arrays.asList("2", "3"), user1.getMatches());
     assertEquals(Arrays.asList("1", "3"), user2.getMatches());
     assertEquals(new ArrayList<>(), user3.getMatches());
-    tearDown();
   }
 
   /**
@@ -84,12 +80,10 @@ public class UserTest {
    */
   @Test
   public void testSetMatches() {
-    setUp();
     user3.setMatches(Collections.singletonList("1"));
     assertEquals(Collections.singletonList("1"), user3.getMatches());
     user1.setMatches(new ArrayList<>());
     assertEquals(new ArrayList<>(), user1.getMatches());
-    tearDown();
   }
 
   /**
@@ -97,7 +91,6 @@ public class UserTest {
    */
   @Test
   public void testCalculateDistance() {
-    setUp();
     assertTrue(Math.abs(user1.calcDist(user3) - 0) < threshold);
     Source survey = new FoodSurvey();
     Map<String, Source> data2 = new HashMap<>();
@@ -106,7 +99,6 @@ public class UserTest {
     data2.put("survey2", survey2);
     user1.updateUserData(data2);
     assertTrue(Math.abs(user1.calcDist(user3) - 0) < threshold);
-    tearDown();
   }
 
   /**
@@ -114,11 +106,9 @@ public class UserTest {
    */
   @Test
   public void testGetName() {
-    setUp();
     assertEquals("name1", user1.getName());
     assertEquals("name2", user2.getName());
     assertEquals("name3", user3.getName());
-    tearDown();
   }
 
   /**
@@ -126,7 +116,6 @@ public class UserTest {
    */
   @Test
   public void testSetUserData() {
-    setUp();
     Source survey = new FoodSurvey();
     Map<String, Source> data2 = new HashMap<>();
     data2.put("survey", survey);
@@ -134,15 +123,12 @@ public class UserTest {
     data2.put("survey2", survey2);
     user1.setUserData(data2);
     assertEquals(data2, user1.getUserData());
-    tearDown();
   }
 
   @Test
   public void testSetPreferences() {
-    setUp();
     user1.setPreferences(Arrays.asList("2", "3"));
     assertEquals(Arrays.asList("2", "3"), user1.getPreferences());
-    tearDown();
   }
 
   @Test
@@ -157,9 +143,7 @@ public class UserTest {
    */
   @Test
   public void testEquals() {
-    setUp();
     assertEquals(user1, user1);
     assertNotEquals(user1, user2);
-    tearDown();
   }
 }

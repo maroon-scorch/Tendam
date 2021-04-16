@@ -39,16 +39,13 @@ public class BoundedPriorityQueueTest {
    */
   @Test
   public void testConstructor() {
-    setUp();
     BoundedPriorityQueue<Integer> queue = new BoundedPriorityQueue<>(1);
     assertEquals(1, queue.getBound());
     assertTrue(queue.getPq().isEmpty());
-    tearDown();
   }
 
   @Test
   public void testAdd() {
-    setUp();
     bpq1.add(1);
     assertEquals(1, (long) bpq1.peekLowestPriority());
     bpq1.add(6);
@@ -60,12 +57,10 @@ public class BoundedPriorityQueueTest {
     assertEquals(50, (long) bpq2.peekLowestPriority());
     bpq2.add(1);
     assertEquals(40, (long) bpq2.peekLowestPriority());
-    tearDown();
   }
 
   @Test
   public void testSize() {
-    setUp();
     assertEquals(0, bpq1.size());
     assertEquals(0, bpq2.size());
     bpq1.add(5);
@@ -76,12 +71,10 @@ public class BoundedPriorityQueueTest {
     bpq2.add(50);
     assertEquals(1, bpq1.size());
     assertEquals(2, bpq2.size());
-    tearDown();
   }
 
   @Test
   public void testToList() {
-    setUp();
     assertTrue(bpq1.toList().isEmpty());
     assertTrue(bpq2.toList().isEmpty());
     bpq1.add(5);

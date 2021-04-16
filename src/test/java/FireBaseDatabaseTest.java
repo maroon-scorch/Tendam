@@ -45,7 +45,6 @@ public class FireBaseDatabaseTest {
    */
   @Test
   public void testGetUsers() {
-    setUp();
     User newUser = new User("newUser1", "newUser1", null);
     List<User> userList = new ArrayList<>();
     userList.add(newUser);
@@ -56,7 +55,6 @@ public class FireBaseDatabaseTest {
       e.printStackTrace();
       fail();
     }
-    tearDown();
   }
 
 }

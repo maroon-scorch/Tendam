@@ -62,12 +62,10 @@ public class FoodSurveyTest {
    */
   @Test
   public void testGetAnswers() {
-    setUp();
     assertEquals(ans1, survey1.getAnswers());
     assertEquals(ans2, survey2.getAnswers());
     assertEquals(ans3, survey3.getAnswers());
     assertEquals(ans4, survey4.getAnswers());
-    tearDown();
   }
 
   /**
@@ -76,12 +74,10 @@ public class FoodSurveyTest {
    */
   @Test
   public void testDifference() {
-    setUp();
     assertTrue(Math.abs(survey1.difference(survey2) - 50) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey1) - 0) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey3) - 50) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey4) - 100) < 0.001);
-    tearDown();
   }
 }
 

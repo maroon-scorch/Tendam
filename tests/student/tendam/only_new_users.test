@@ -1,0 +1,5 @@
+INPUT
+j
+OUTPUT
+ERROR: The number of inputted arguments is invalid
+END

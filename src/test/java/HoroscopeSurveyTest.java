@@ -50,14 +50,12 @@ public class HoroscopeSurveyTest {
    */
   @Test
   public void testGetAnswers() {
-    setUp();
     Map<String, Object> q1 = new HashMap<>();
     q1.put("What is your horoscope?", "Cancer");
     assertEquals(q1, survey1.getAnswers());
     Map<String, Object> q2 = new HashMap<>();
     q2.put("What is your horoscope?", "Virgo");
     assertEquals(q2, survey2.getAnswers());
-    tearDown();
   }
 
   /**
@@ -65,9 +63,7 @@ public class HoroscopeSurveyTest {
    */
   @Test
   public void testDifference() {
-    setUp();
     assertTrue(Math.abs(survey1.difference(survey2) - 100) < 0.001);
     assertTrue(Math.abs(survey1.difference(survey1) - 0) < 0.001);
-    tearDown();
   }
 }

@@ -75,14 +75,14 @@ public final class Main {
     // and connects to the FireBase storage.
     try {
       database = new FireBaseDatabase();
-      System.out.println("DATABASE LOADED!");
+//      System.out.println("DATABASE LOADED!");
     } catch (CustomException e) {
       System.out.println(e.getResponse());
     }
 
-    for (int i = 0; i < 3; i++) {
-      System.out.println("--------------------------------");
-    }
+//    for (int i = 0; i < 3; i++) {
+//      System.out.println("--------------------------------");
+//    }
 
     // Activates the GUI
     if (options.has("gui")) {

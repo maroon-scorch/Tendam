@@ -68,10 +68,8 @@ public class MatcherTest {
    */
   @Test
   public void testNullUserList() {
-    setUp();
     assertThrows(CustomException.NoUsersException.class,
             () -> createAllPreferences(new ArrayList<>()));
-    tearDown();
   }
 
   /**
@@ -79,7 +77,6 @@ public class MatcherTest {
    */
   @Test
   public void testCreateAllPreferences() {
-    setUp();
     List<User> newUserList = new ArrayList<>();
     user1.setPreferences(Arrays.asList("3", "2"));
     user2.setPreferences(Arrays.asList("3", "1"));
@@ -88,11 +85,11 @@ public class MatcherTest {
     newUserList.add(user2);
     newUserList.add(user3);
     try {
+      List<User> results = Matcher.createAllPreferences(users);
       assertEquals(newUserList, Matcher.createAllPreferences(users));
     } catch (CustomException.NoUsersException e) {
       e.printStackTrace();
       fail();
     }
-    tearDown();
   }
 }

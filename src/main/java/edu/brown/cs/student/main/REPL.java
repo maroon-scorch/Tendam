@@ -36,15 +36,18 @@ public class REPL {
    * @throws Exception for other generic exceptions;
    */
   public void run(String input) throws Exception {
-    String[] command = input.split(" ", 2);
-    String commandName = command[0];
-    String parameters = command.length > 1 ? command[1] : "";
-    Command c = commands.get(commandName);
-    if (c != null) {
-      c.execute(parameters);
-    } else {
-      throw new CustomException.NaiveWrongArgsException();
+    try {
+      String[] command = input.split(" ", 2);
+      String commandName = command[0];
+      String parameters = command.length > 1 ? command[1] : "";
+      Command c = commands.get(commandName);
+      if (c != null) {
+        c.execute(parameters);
+      } else {
+        throw new CustomException.NaiveWrongArgsException();
+      }
+    } catch (CustomException e) {
+      System.out.println(e.getResponse());
     }
-
   }
 }

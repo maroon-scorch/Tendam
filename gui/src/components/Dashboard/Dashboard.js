@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from "react-router-dom";
 
-import circus from "./selection/circus-transparent.png";
-import book from "./selection/book-transparent.png";
-import wheel from "./selection/setting-transparent.png";
-import profile from "./selection/profile-transparent.png";
-import match from "./selection/match-transparent.png";
+import game from "./selection/game-contrast.png";
+import book from "./selection/book-contrast.png";
+import wheel from "./selection/setting-contrast.png";
+import profile from "./selection/profile-contrast.png";
+import match from "./selection/match-contrast.png";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Slider from "react-slick";
@@ -50,31 +50,31 @@ function Dashboard() {
 
     const sliderItems = [
         {
-            id: 'games-tag',
-            children: <Link to='/games'>
-                <img src={circus} width={'300px'} height={'300px'} className="unselected-item" />
-            </Link>
-        },
-        {
             id: 'quizzes-tag',
             children: <Link to='/quizzes'>
-                <img src={book} width={'300px'} height={'300px'} className="unselected-item" />
+                <img src={book} width={'200px'} height={'200px'} className="unselected-item" />
                 </Link>
         },
         {
             id: 'setting-tag',
             children: <Link to='/setting'>
-                <img src={wheel} width={'300px'} height={'300px'} className="unselected-item" /></Link>
+                <img src={wheel} width={'200px'} height={'200px'} className="unselected-item" /></Link>
         },
         {
             id: 'profile-tag',
             children: <Link to='/profile'>
-                <img src={profile} width={'300px'} height={'300px'} className="unselected-item"  /></Link>
+                <img src={profile} width={'200px'} height={'200px'} className="unselected-item"  /></Link>
         },
         {
             id: 'match-tag',
             children: <Link to='/match'>
-                <img src={match} width={'300px'} height={'300px'} className="unselected-item" /></Link>
+                <img src={match} width={'200px'} height={'200px'} className="unselected-item" /></Link>
+        },
+        {
+            id: 'cards-tag',
+            children: <Link to='/games'>
+                <img src={game} width={'300px'} height={'300px'} className="unselected-item" />
+            </Link>
         }
     ];
 

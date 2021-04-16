@@ -123,11 +123,10 @@ public final class Main {
       while ((input = br.readLine()) != null) {
         repl.run(input);
       }
-    } catch (CustomException e) {
-      System.out.println(e.getResponse());
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("ERROR: You ran into an error produced from a REPL command!");
+      System.out.println("ERROR: You ran into an unaccounted-for error "
+              + "produced from a REPL command!. System is forced to exit.");
     }
   }
 

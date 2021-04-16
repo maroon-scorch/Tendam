@@ -74,13 +74,14 @@ public class FireBaseDatabaseTest {
 //      e.printStackTrace();
 //      fail();
 //    }
-////    try {
-////      Map<String, Map<String, Object>> sourceData = fb2.retrieveSourceData("thisDoesntExist");
-////      assertEquals(new HashMap<>(), sourceData);
-////    } catch (CustomException.FutureBreakException e) {
-////      e.printStackTrace();
-////      fail();
-////    }
+//    try {
+//      Map<String, Map<String, Object>> sourceData = fb.retrieveSourceData("thisDoesntExist");
+//      assertEquals(new HashMap<>(), sourceData);
+//    } catch (CustomException.FutureBreakException e) {
+//      e.printStackTrace();
+//      fail();
+//    }
+//  }
 
 
 }

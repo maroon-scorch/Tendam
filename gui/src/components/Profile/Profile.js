@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Button, Typography, TextField, Tooltip } from '@material-ui/core';
+import { Button, IconButton, Typography, TextField, Tooltip } from '@material-ui/core';
+import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
+import { Link } from 'react-router-dom';
 
 import MatchDisplay from './MatchDisplay';
 import './Profile.css';
@@ -127,6 +131,18 @@ function Profile({ history }) {
                 <br />
                 <br />
                 <MatchDisplay matches={profileInfo.matches} />
+            </div>
+            <div className="profile-links">
+                <Link to='/match'>
+                    <IconButton aria-label="show notifications">
+                        <NotificationsActiveIcon style={{ fontSize: '4rem' }} />
+                    </IconButton>
+                </Link>
+                <Link to='/setting'>
+                    <IconButton aria-label="settings">
+                        <SettingsIcon style={{ fontSize: '4rem' }} />
+                    </IconButton>
+                </Link>
             </div>
             </div>
         </div>

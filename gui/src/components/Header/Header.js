@@ -101,7 +101,7 @@ function Header() {
                      }
                  </li>
                 </ul>
-                <Link to="/match">
+                <Link to="/profile">
                     <Tooltip title={<h1>View Notifications</h1>}>
                         <div className="header-avatar-container" onClick={displayNotification}
                         style={{display: currentUser ? 'inline' : 'none'}}>

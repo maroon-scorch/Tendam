@@ -40,7 +40,8 @@ export function ModalProvider({ children }) {
     const modalInfo = {
         close,
         open,
-        setContent
+        setContent,
+        Modal
     };
 
     return (

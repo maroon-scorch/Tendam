@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { auth } from '../firebase';
+import { auth, credentialAuth } from '../firebase';
 
 // Procedures and Code Learned from Web Dev Simplified's tutorial:
 // https://github.com/WebDevSimplified/React-Firebase-Auth
@@ -39,6 +39,11 @@ export function AuthProvider({ children }) {
         return currentUser.updatePassword(password);
     }
 
+    function makeCredentials(email, password) {
+        return credentialAuth.credential(email, password);
+    }
+
+
     useEffect(() => {
         let authState = auth.onAuthStateChanged(user => {
             setCurrentUser(user);
@@ -50,6 +55,7 @@ export function AuthProvider({ children }) {
 
     const authInfo = {
         currentUser,
+        makeCredentials,
         login,
         signup,
         logout,

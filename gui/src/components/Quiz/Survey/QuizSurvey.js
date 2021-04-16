@@ -79,8 +79,6 @@ function QuizSurvey({ match }) {
         }
     }
 
-    const [onSubmitForm, setSubmitFunction] = useState(submitForm);
-
     useEffect(() => {
         Aos.init({});
         let targetJSON = formDict[match.params.name];
@@ -89,12 +87,11 @@ function QuizSurvey({ match }) {
         if (typeof targetJSON !== 'undefined') {
             setFormValues(targetJSON['initialValue']);
             setFormItems(targetJSON['formItems']);
-            // setSubmitFunction(targetJSON['onSubmitForm']);
         }
 
-        console.log(formValues);
-        console.log(formItems);
-        console.log(onSubmitForm);
+        // console.log(formValues);
+        // console.log(formItems);
+        // console.log(onSubmitForm);
     }, []);
 
     return (

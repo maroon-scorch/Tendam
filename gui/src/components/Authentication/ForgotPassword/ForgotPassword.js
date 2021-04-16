@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import neon from './neon.png';
 
 import './ForgotPassword.css';
@@ -89,7 +89,7 @@ function ForgotPassword() {
             <br />
             </div>
             <div className="background-container">
-                <img src={neon} />
+                <img src={neon} alt={'Background of the App'} />
             </div>
         </div>
     )

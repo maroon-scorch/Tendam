@@ -1,5 +1,5 @@
-import {Avatar, Icon, List, ListItem, ListItemAvatar, makeStyles, Typography} from "@material-ui/core";
-import { useEffect, useRef, useState } from "react";
+import {Avatar, List, ListItem, ListItemAvatar, makeStyles, Typography} from "@material-ui/core";
+import { useEffect, useState } from "react";
 import { useChat } from "../../context/ChatContext";
 
 const useStyles = makeStyles(theme => ({

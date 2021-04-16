@@ -13,9 +13,9 @@ import './Profile.css';
 import Aos from 'aos';
 import "aos/dist/aos.css";
 
-function Profile({ history }) {
+function Profile() {
     const { currentUser } = useAuth();
-    const { getEntry, setEntry, uploadStorage, getFile, getEntryData } = useDatabase();
+    const { getEntry, setEntry, uploadStorage, getFile } = useDatabase();
     
     const [profileInfo, setProfileInfo] = useState({
         bio: "", name: "", age: "", id: "", matches: []});

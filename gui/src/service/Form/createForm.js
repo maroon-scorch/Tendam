@@ -1,7 +1,6 @@
 import React from 'react';
 import { TextField, Radio, RadioGroup,
     FormControl, FormLabel, FormControlLabel } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
 // formItems contains the key to the initialValues
 function formatForm(formItems, initialValues, setFormValue) {

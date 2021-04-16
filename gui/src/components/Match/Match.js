@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Typography } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 import Moment from 'react-moment';
@@ -24,10 +24,10 @@ function Match() {
             let notifData = item.doc.data();
             notifData['id'] = notifID;
             
-            if (item.type == 'added' && !idList.includes(notifID)) {
+            if (item.type === 'added' && !idList.includes(notifID)) {
                 base.unshift(notifData);
-            } else if (item.type == 'removed') {
-                base = base.filter(data => data.id != notifID);
+            } else if (item.type === 'removed') {
+                base = base.filter(data => data.id !== notifID);
             }
         });
         setNotification([...base]);
@@ -45,7 +45,7 @@ function Match() {
             let userData = await getEntryData(userID);
             console.log(userData);
             history.push({
-            pathname: userData['name'].length == 0 ? `/profile/${userData['id']}` : `/profile/${userData['name']}`,
+            pathname: userData['name'].length === 0 ? `/profile/${userData['id']}` : `/profile/${userData['name']}`,
             state: {
                 data: userData
             }

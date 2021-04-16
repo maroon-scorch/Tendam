@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, TextField, Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
 import neon from './neon.png';
 
 import { Link, useHistory } from 'react-router-dom';
@@ -13,8 +13,8 @@ import formatForm from '../../../service/Form/createForm.js';
 import Alert from '@material-ui/lab/Alert';
 
 import { useAuth } from "../../../context/AuthContext";
-import { useDatabase } from "../../../context/DatabaseContext";
 
+// The Form Items that would be mapped into a Form
 const formItems = [
     {
         type: 'text',
@@ -42,6 +42,7 @@ const formItems = [
     }
 ];
 
+// The use style for the signUp Page
 const useStyles = makeStyles((theme) => ({
     root: {
       '& .MuiTextField-root': {
@@ -52,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  // Represents the sign up page of the App
 function Signup() {
 
     const [loading, setLoading] = useState(false);
@@ -67,7 +69,7 @@ function Signup() {
     const [formValues, setFormValues] = useState(initialValue);
     const classes = useStyles();
 
-    const { currentUser, signup } = useAuth();
+    const { signup } = useAuth();
     const history = useHistory();
 
     useEffect(() => {
@@ -82,6 +84,7 @@ function Signup() {
         return re.test(String(email).toLowerCase());
     }
 
+    // Check if the entries are valid before procedding
     function entriesAreValid() {
         if (formValues.email === '') {
             setError('Email Shouldn\'t be Blank');
@@ -106,6 +109,7 @@ function Signup() {
         return true;
     }
 
+    // If the entries submitted are valid, creates an account with the email and password given.
     async function handleSubmit(e) {
         e.preventDefault();
         setError('');
@@ -117,18 +121,9 @@ function Signup() {
                 window.location.reload();
                 history.push('/dashboard');
             } catch (err) {
+                // If any error happens, its message will be displayed to the user.
                 setError(err.message);
             }
-
-            // signup(formValues.email, formValues.password, formValues.userName)
-            // .then(function(result) {
-            //     result.user.updateProfile({
-            //       displayName: formValues.userName
-            //     });
-            //     history.push('/dashboard');
-            //   }).catch(function(error) {
-            //     setError(error.message);
-            //   });
         }
 
         setLoading(false);
@@ -155,7 +150,7 @@ function Signup() {
             {/* <Button onClick={(e) => {console.log(currentUser);}}>Test</Button> */}
             </div>
             <div className="background-container">
-                <img src={neon} />
+                <img src={neon} alt={'Background of the App'} />
             </div>
         </div>
     )

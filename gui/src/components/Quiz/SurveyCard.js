@@ -1,8 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, CardActionArea, CardActions, CardContent,
-    CardMedia, Button, Typography } from '@material-ui/core';
-import { TimeToLeaveRounded } from '@material-ui/icons';
+import { Card, CardActionArea, CardContent, CardMedia, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {

@@ -1,22 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './App.css';
 
+// Routing Mechanics, using React Router
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import PrivateRoute from '../service/PrivateRoute.js';
 import PublicRoute from '../service/PublicRoute.js';
+
+// Style Related Components
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
+// Base Components Without Login
 import Header from '../components/Header/Header.js';
 import Home from '../components/Home/Home.js';
 
+// Authentication Related Components
 import { AuthProvider } from "../context/AuthContext.js";
-import { DatabaseProvider } from "../context/DatabaseContext.js";
 import Signup from '../components/Authentication/Signup/Signup.js';
 import Login from '../components/Authentication/Login/Login.js';
 import ForgotPassword from '../components/Authentication/ForgotPassword/ForgotPassword.js';
 import TermsOfService from '../components/Authentication/TermsOfService/TermsOfService.js';
 
+// Application Components Accessible After Authenticated
 import DashBoard from '../components/Dashboard/Dashboard.js';
 import Quiz from '../components/Quiz/Quiz.js';
 import QuizSurvey from '../components/Quiz/Survey/QuizSurvey.js';
@@ -26,15 +31,14 @@ import Match from '../components/Match/Match.js';
 import Profile from '../components/Profile/Profile.js';
 import OtherProfile from '../components/Profile/OtherProfile.js';
 import Chat from "../components/Chat/Chat";
-import ThemeToggle from '../components/ThemeToggle/ThemeToggle.js';
 
+// Context for access to Database and invokation to Modals
+import { DatabaseProvider } from "../context/DatabaseContext.js";
 import { ModalProvider } from '../context/ModalContext.js';
 
-
-// AKA - I am so totally screwed.
+// The Core App of the Page
 function App() {
-  const [isDark, setDark] = useState(true);
-
+  // The Theme of the Application
   const darkMode = createMuiTheme({
     palette: {
       type: "dark",
@@ -47,29 +51,10 @@ function App() {
     }
   });
 
-  const lightMode = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#b148d2'
-      },
-      secondary: {
-        main: '#e33371'
-      }
-    }
-  });
-
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1
-};
-
-
-
+  // The Header stays consistent during transition.
+  // The Body is surrounded by the Provider (useContext) for Authentication, Database, and Modal.
   return (
-    <ThemeProvider theme={isDark ? darkMode : lightMode}>
+    <ThemeProvider theme={darkMode}>
       <CssBaseline />
       <div className="App">
       <Router>
@@ -99,7 +84,6 @@ function App() {
           </AuthProvider>
         </ModalProvider>
       </Router>
-      {/* <ThemeToggle className="light-dark-toggle" checked={isDark} checkSetter={setDark}/> */}
       </div>
     </ThemeProvider>
   );

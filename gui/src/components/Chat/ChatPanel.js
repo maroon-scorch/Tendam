@@ -1,11 +1,10 @@
-import {Avatar, Button, List, ListItem, ListItemAvatar, ListItemText, makeStyles, TextField} from "@material-ui/core";
-import {useEffect, useRef, useState} from "react";
+import {Avatar, List, ListItem, ListItemAvatar, ListItemText, makeStyles} from "@material-ui/core";
+import {useEffect, useState} from "react";
 import {useAuth} from "../../context/AuthContext";
 import {useChat} from "../../context/ChatContext";
-import { useDatabase } from "../../context/DatabaseContext";
 import ChatBar from "./ChatBar";
 
-const MESSAGE_CHUNK_SIZE = 20;
+// const MESSAGE_CHUNK_SIZE = 20;
 
 const useStyles = makeStyles(theme => ({
     root: {

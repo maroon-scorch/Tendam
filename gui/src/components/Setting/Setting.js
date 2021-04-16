@@ -7,7 +7,7 @@ import { useModal } from "../../context/ModalContext";
 import FinalDecision from './FinalDecision';
 
 function Setting() {
-    const { currentUser, emailAuth} = useAuth();
+    const { currentUser} = useAuth();
     const [show, setShow] = useState(true);
     const { close, open, setContent } = useModal();
 
@@ -33,8 +33,7 @@ function Setting() {
         <div className="setting-container">
         <div className="setting">
             Setting
-            {
-                show ? <>
+            {show ? <>
             <div>
             <Button variant="contained" color="primary">Reset Email:</Button> 
             <TextField label="Email" value={currentUser.email} disabled={true} />

@@ -1,6 +1,5 @@
 import React from 'react'
 import neon from './neon.mp4';
-import light from './light.mp4';
 import './Home.css';
 import { Typography, Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';

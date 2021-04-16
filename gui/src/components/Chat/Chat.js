@@ -1,4 +1,4 @@
-import {makeStyles, Typography} from "@material-ui/core";
+import {makeStyles} from "@material-ui/core";
 import {useAuth} from "../../context/AuthContext";
 import UserList from "./UserList";
 import {useDatabase} from "../../context/DatabaseContext";

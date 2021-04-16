@@ -44,8 +44,10 @@ function BlackJack() {
         setGameEnded(false);
         // let currentScore = await getGameData(currentUser.uid, "blackjack-score");
         setHighestRiskScore(0);
-        let currentNumGamesPlayed = await getGameData(currentUser.uid, "blackjack-games-played");
-        setGameData(currentUser.uid, "blackjack-games-played", currentNumGamesPlayed + 1);
+        let currentGameData = await getGameData(currentUser.uid, "BlackJack");
+        console.log(currentGameData);
+        let currentNumGamesPlayed = currentGameData['blackjack-games-played'];
+        setGameData(currentUser.uid, "BlackJack", "blackjack-games-played", currentNumGamesPlayed + 1);
         // setNumGamesPlayed(currentNumGamesPlayed + 1);
     }
 
@@ -206,24 +208,25 @@ function BlackJack() {
     }
 
     async function setAverageRiskPropensityScore(riskScore) {
-        let currentScore = await getGameData(currentUser.uid, "blackjack-score");
-        let currentNumGamesPlayed = await getGameData(currentUser.uid, "blackjack-games-played");
+        let currentGameData = await getGameData(currentUser.uid, "BlackJack");
+        let currentScore = currentGameData["blackjack-score"];
+        let currentNumGamesPlayed = currentGameData["blackjack-games-played"];
         if (riskScore) {
             if (currentNumGamesPlayed !== 0) {
                 if (currentScore === -1) {
-                    setGameData(currentUser.uid, "blackjack-score", riskScore);
+                    setGameData(currentUser.uid, "BlackJack", "blackjack-score", riskScore);
                 } else {
                     let newScore = (currentScore * (currentNumGamesPlayed - 1) + riskScore) / (currentNumGamesPlayed);
-                    setGameData(currentUser.uid, "blackjack-score", newScore);
+                    setGameData(currentUser.uid, "BlackJack", "blackjack-score", newScore);
                 }
             }
         } else {
             if (currentNumGamesPlayed !== 0) {
                 if (currentScore === -1) {
-                    setGameData(currentUser.uid, "blackjack-score", highestRiskScore);
+                    setGameData(currentUser.uid, "BlackJack", "blackjack-score", highestRiskScore);
                 } else {
                     let newScore = (currentScore * (currentNumGamesPlayed - 1) + highestRiskScore) / (currentNumGamesPlayed);
-                    setGameData(currentUser.uid, "blackjack-score", newScore);
+                    setGameData(currentUser.uid, "BlackJack", "blackjack-score", newScore);
                 }
             }
         }

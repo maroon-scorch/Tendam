@@ -27,7 +27,11 @@ function Profile({ history }) {
             getEntry(currentUser.uid).then((doc) => {
                 if (doc.exists) {
                     console.log(doc.data());
-                    setProfileInfo(doc.data());
+                    let profileData = doc.data();
+                    if (profileData['matches'] === null) {
+                        profileData['matches'] = []
+                    }
+                    setProfileInfo(profileData);
                 } else {
                     // doc.data() will be undefined in this case
                     console.log("No such document!");

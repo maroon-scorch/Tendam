@@ -45,49 +45,68 @@ export function DatabaseProvider({ children }) {
         return userRef.set(data);
     }
 
-    function getGameData(id, fieldname) {
+    function getGameData(id, gameType) {
+        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
         let gameRef = gameDatabase.doc(id);
+
         return gameRef.get().then((doc) => {
-            console.log(doc.data());
-            let fieldData = doc.data()[fieldname];
+            let gameData = doc.data();
+            let fieldData = gameData.hasOwnProperty(gameType) ? gameData[gameType] : defaultData;
             console.log(fieldData);
             return fieldData;
         }).catch((error) => {
             console.log("Error getting document:", error);
+            return defaultData;
         });
     }
 
-    function setGameData(id, fieldname, newData) {
+    function setGameData(id, gameType, fieldname, newData) {
+        let defaultData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
         let gameRef = gameDatabase.doc(id);
+
         gameRef.get().then((doc) => {
             let gameData = doc.data();
             console.log(gameData);
-            gameData[fieldname] = newData;
-            console.log(gameData);
-            return gameRef.set(gameData);
+
+            let updData = gameData.hasOwnProperty(gameType) ? gameData[gameType] : defaultData;
+            updData[fieldname] = newData;
+
+            let dataSent = {};
+            dataSent[gameType] = updData; 
+            console.log(dataSent);
+
+            return gameRef.update(gameData);
         }).catch((error) => {
             console.log("Error getting document:", error);
+            // let gameData = { 'blackjack-score': -1, 'blackjack-games-played': 0 };
+            // let updData = gameData;
+            // updData[fieldname] = newData;
+
+            // let dataSent = { fieldname : updData };
+            // console.log(dataSent);
+
+            // return gameRef.update(gameData);
         });
     }
 
-    function getGame(id, fieldname) {
-        let gameRef = gameDatabase.doc(id);
-        return gameRef.get().then((doc) => {
-            console.log(doc.data());
-            let fieldData = doc.data()[fieldname];
-            console.log(fieldData);
-            return fieldData;
-        }).catch((error) => {
-            console.log("Error getting document:", error);
-        });
-    }
+    // function getGame(id, fieldname) {
+    //     let gameRef = gameDatabase.doc(id);
+    //     return gameRef.get().then((doc) => {
+    //         console.log(doc.data());
+    //         let fieldData = doc.data()[fieldname];
+    //         console.log(fieldData);
+    //         return fieldData;
+    //     }).catch((error) => {
+    //         console.log("Error getting document:", error);
+    //     });
+    // }
 
-    function writeGame(id, fieldname, newData) {
-        let surveyRef = gameDatabase.doc(id);
-        let dataSent = {};
-        dataSent[fieldname] = newData;
-        return surveyRef.update(dataSent);
-    }
+    // function writeGame(id, fieldname, newData) {
+    //     let surveyRef = gameDatabase.doc(id);
+    //     let dataSent = {};
+    //     dataSent[fieldname] = newData;
+    //     return surveyRef.update(dataSent);
+    // }
 
     function writeSurvey(id, fieldname, newData) {
         let surveyRef = surveyDatabase.doc(id);

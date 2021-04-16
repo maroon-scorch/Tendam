@@ -52,28 +52,28 @@ function Dashboard() {
         {
             id: 'quizzes-tag',
             children: <Link to='/quizzes'>
-                <img src={book} width={'200px'} height={'200px'} className="unselected-item" />
+                <img src={book} width={'60%'} height={'auto'} className="unselected-item" />
                 </Link>
         },
         {
             id: 'setting-tag',
             children: <Link to='/setting'>
-                <img src={wheel} width={'200px'} height={'200px'} className="unselected-item" /></Link>
+                <img src={wheel} width={'60%'} height={'auto'} className="unselected-item" /></Link>
         },
         {
             id: 'profile-tag',
             children: <Link to='/profile'>
-                <img src={profile} width={'200px'} height={'200px'} className="unselected-item"  /></Link>
+                <img src={profile} width={'60%'} height={'auto'} className="unselected-item"  /></Link>
         },
         {
             id: 'match-tag',
             children: <Link to='/match'>
-                <img src={match} width={'200px'} height={'200px'} className="unselected-item" /></Link>
+                <img src={match} width={'60%'} height={'auto'} className="unselected-item" /></Link>
         },
         {
             id: 'cards-tag',
             children: <Link to='/games'>
-                <img src={game} width={'300px'} height={'300px'} className="unselected-item" />
+                <img src={game} width={'60%'} height={'auto'} className="unselected-item" />
             </Link>
         }
     ];

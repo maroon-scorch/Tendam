@@ -17,6 +17,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 3rem;
 }
 
 .slick-arrow {
@@ -60,7 +61,7 @@
     display: block;
     margin-left: auto;
     margin-right: auto;
-    /* margin-top: 3rem; */
+    margin-top: 3rem;
 }
 
 .unselected-item {

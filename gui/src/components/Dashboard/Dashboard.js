@@ -10,6 +10,9 @@ import match from "./selection/match-contrast.png";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import Slider from "react-slick";
 
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
 import "./Dashboard.css";
 
 import { Typography } from '@material-ui/core';
@@ -50,6 +53,21 @@ function Dashboard() {
         initialSlide: currentIndex
     };
 
+    const responsive = {
+        desktop: {
+          breakpoint: { max: 4000, min: 1024 },
+          items: 3
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 2
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+      };
+
     // Items for the Slide
     const sliderItems = [
         {
@@ -86,7 +104,8 @@ function Dashboard() {
         <div className="dashboard-container">
             <br />
             <Typography variant="h1" className="signup-title">Dashboard</Typography>
-        <Slider {...settings}>
+        {/* <Slider {...settings}></Slider> */}
+        <Carousel infinite={true} responsive={responsive}>
             {sliderItems.map((item, index) => {
                 return(<div key={item.id}>
                     <div className={ index===currentIndex ? "selected-item" : "unselected-item"}>
@@ -94,7 +113,7 @@ function Dashboard() {
                     </div>
                 </div>);
             })}
-        </Slider>
+        </Carousel>
       </div>
     )
 }

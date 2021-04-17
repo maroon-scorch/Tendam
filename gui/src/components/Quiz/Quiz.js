@@ -16,6 +16,9 @@ import { Typography } from '@material-ui/core';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+
 import './Quiz.css';
 
 // Referenced and Learned from https://github.com/chrisdesilva/3d-slider
@@ -54,6 +57,21 @@ function Quiz() {
         initialSlide: currentIndex
     };
 
+    const responsive = {
+        desktop: {
+          breakpoint: { max: 4000, min: 1024 },
+          items: 3
+        },
+        tablet: {
+          breakpoint: { max: 1024, min: 464 },
+          items: 2
+        },
+        mobile: {
+          breakpoint: { max: 464, min: 0 },
+          items: 1
+        }
+      };
+
     const sliderItems = [
         {
             id: 'food',
@@ -91,7 +109,7 @@ function Quiz() {
         <div className="quiz-container">
             <br />   
             <Typography variant="h1" className="signup-title">Quizzes</Typography>
-        <Slider {...settings}>
+            <Carousel infinite={true} responsive={responsive}>
             {sliderItems.map((item, index) => {
                 return(<div key={item.id}>
                     <div className={ index===currentIndex ? "selected-item" : "unselected-item"}>
@@ -99,7 +117,7 @@ function Quiz() {
                     </div>
                 </div>);
             })}
-        </Slider>
+        </Carousel>
       </div>
     )
 }

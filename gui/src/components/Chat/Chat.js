@@ -1,4 +1,4 @@
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, Typography} from "@material-ui/core";
 import {useAuth} from "../../context/AuthContext";
 import UserList from "./UserList";
 import {useDatabase} from "../../context/DatabaseContext";
@@ -31,8 +31,26 @@ const useStyles = makeStyles(theme => ({
         flexGrow: 4,
         flexShrink: 4,
         flexBasis: 'auto',
-        overflowY: 'scroll',
-    }
+    },
+    noMessagingArea: {
+        flexGrow: 4,
+        flexShrink: 4,
+        flexBasis: 'auto',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    messagingAreaText: {
+        display: 'inline',
+        fontSize: '2rem',
+        boxSizing: 'border-box',
+        marginLeft: theme.spacing(3),
+        marginRight: theme.spacing(3),
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        verticalAlign: 'middle',
+        textAlign: 'center',
+    },
 }));
 
 function Chat() {
@@ -50,7 +68,7 @@ function Chat() {
 
         try {
             const id = history.location.hash.substring(1)
-            || (history.location.state && history.location.state.data.id);
+                || (history.location.state && history.location.state.data.id);
             if (self.matches.includes(id)) {
                 try {
                     const user = await getEntryData(id);
@@ -75,16 +93,22 @@ function Chat() {
     return (
         <div className={classes.outerRoot}>
             <div className={classes.root}>
-                <ChatProvider>
-                    {sender
-                    ? <UserList users={sender.matches} onOpenUser={openUser}
-                        selectedUser={recipientId}
-                        className={classes.userList}/>
-                    : <div className={classes.userList}/>}
-                    {recipientId
-                    ? <ChatPanel to={recipientId} className={classes.messagingArea} />
-                    : <div className={classes.messagingArea}></div>}
-                </ChatProvider>
+                {sender ?
+                    <ChatProvider>
+                        <UserList users={sender.matches} onOpenUser={openUser}
+                                  selectedUser={recipientId}
+                                  className={classes.userList}/>
+                        {recipientId
+                            ? <ChatPanel to={recipientId} className={classes.messagingArea}/>
+                            : <div className={classes.noMessagingArea}>
+                                <Typography className={classes.messagingAreaText}>
+                                    {(sender && sender.matches && sender.matches.length)
+                                        ? ''
+                                        : 'No matches yet. Fill out some surveys or play some games, then check back tomorrow!'}
+                                </Typography>
+                            </div>}
+                    </ChatProvider>
+                    : undefined}
             </div>
         </div>
     );

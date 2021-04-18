@@ -36,12 +36,12 @@ function MatchDisplay({ matches, disabled }) {
 
         console.log(matchItems);
 
-        let matchDisplay = matchItems.map((item, index) => {
+        let matchDisplay = matchItems.length ? matchItems.map((item, index) => {
             let isSelf = item.data.id === currentUser.uid;
-            return(<Link to={{  
+            return(<Link to={{
                 pathname: isSelf ? '/profile' : `/profile/${item.name}`,
                 state: {
-                    data: item["data"] 
+                    data: item["data"]
                     }}}>
                 <div key={index} className="modal-profile-matches" onClick={close}>
                 <div className="modal-matches-left">
@@ -53,8 +53,13 @@ function MatchDisplay({ matches, disabled }) {
                 <div className="modal-matches-right">
                     <HighlightOffIcon className="match-delete" color="secondary" fontSize="large" />
                 </div>
-                </div></Link>); 
-        });
+                </div></Link>);
+        })
+            : [<div style={{fontSize: '1.5rem', paddingTop: '1.5rem'}}>
+                No matches yet!
+                Fill in <Link to="/surveys">surveys</Link> or
+                play <Link to="/games">games</Link>, then come back tomorrow!
+            </div>];
 
         open();
         setContent(matchDisplay);

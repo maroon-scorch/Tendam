@@ -18,3 +18,13 @@ body {
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 }
+
+.game-help {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+}
+
+.game-help:hover {
+    color: red;
+}

@@ -2,3 +2,13 @@
     width: 100%;
     text-align: left;
 }
+
+.quiz-help {
+    position: absolute;
+    bottom: 3%;
+    right: 3%;
+}
+
+.quiz-help:hover {
+    color: red;
+}

@@ -64,7 +64,9 @@ function Match() {
             <div className='matching-template'>
             <Typography variant="h3" className="match-title">Matched!</Typography>
             <ul className="match-notification-list">
-                {notification.map((item, index) => {
+                {(notification === undefined || notification.length == 0) ? 
+                <Typography variant="h4" className="signup-title">No Matches</Typography> :
+                notification.map((item, index) => {
                     return (<li key={index} className="notification-item" onClick={() => visitProfile(item.user)}>
                         <div>
                            <span>
@@ -81,10 +83,10 @@ function Match() {
                     </li>);
                 })}
             </ul>
-            <Button onClick={showNotif}>Test</Button>
+            {/* <Button onClick={showNotif}>Test</Button> */}
             </div>
         </div>
     );
 }
 
-export default Match
+export default Match;

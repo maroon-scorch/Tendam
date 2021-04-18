@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Link } from "react-router-dom";
+import { useModal } from "../../context/ModalContext";
 
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import Slider from "react-slick";
 
 import SurveyCard from './SurveyCard.js';
 
@@ -11,7 +11,8 @@ import star from './QuizPhoto/star.jpg';
 import personality from './QuizPhoto/personality.jpg';
 import question from './QuizPhoto/question.jpg';
 
-import { Typography } from '@material-ui/core';
+import { Button, Typography } from '@material-ui/core';
+import HelpIcon from '@material-ui/icons/Help';
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -34,6 +35,7 @@ function Quiz() {
     }, []);
 
     const [currentIndex, setIndex] = useState(1);
+    const { close, open, setContent } = useModal();
 
     function handleChange(current) {
         console.log(current);
@@ -105,6 +107,19 @@ function Quiz() {
         }
     ];
 
+    function displayHelp() {
+        setContent(
+        <div>
+            <Typography variant="h4">Quizzes!</Typography>
+            <Typography variant="h6">The Cards you see on this page are surveys! By filling
+            out surveys, our database will collect your response and run them in comparison
+            against other people's response to find matches close to you!</Typography>
+            <Button variant="contained" color="primary" onClick={close}>Okay</Button>
+        </div>
+        );
+        open();
+    }
+
     return (
         <div className="quiz-container">
             <br />   
@@ -118,6 +133,9 @@ function Quiz() {
                 </div>);
             })}
         </Carousel>
+        <div className="quiz-help" onClick={displayHelp}>
+            <HelpIcon fontSize="large" />
+        </div>
       </div>
     )
 }

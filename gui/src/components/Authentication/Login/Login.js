@@ -97,13 +97,10 @@ function Login() {
             </form>
             <br />
             <div>
-            <Typography variant="h6">
-                <Link to="/forgot-password">I forgot my password.</Link></Typography>
+                <Link to="/forgot-password">I forgot my password.</Link>
             </div>
             <div>
-            <Typography variant="h6">
                 Haven't made an account yet? Sign up <Link to="/signup">here</Link>!
-            </Typography>
             </div>
             </div>
             <div className="background-container">

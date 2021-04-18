@@ -50,10 +50,26 @@
 }
 
 .slick-dots {
-    background: transparent
+    background: white
 }
 
 .selected-item {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+
+.unselected-item {
+
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3rem;
+}
+
+/* .selected-item {
     transform: scale(1.2);
     transition: transform 500ms;
     opacity: 1;
@@ -73,4 +89,4 @@
     margin-left: auto;
     margin-right: auto;
     margin-top: 3rem;
-}
+} */

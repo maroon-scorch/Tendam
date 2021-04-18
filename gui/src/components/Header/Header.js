@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import { Link, useHistory } from 'react-router-dom';
-// import headerItems from './HeaderItems.js';
 import { Typography } from '@material-ui/core';
 import { useAuth } from "../../context/AuthContext.js";
 import { useDatabase } from "../../context/DatabaseContext";
@@ -25,6 +24,7 @@ function Header() {
         }
     }, []);
 
+    // The headeritems are mapped to the header here
     const headerItems = [
         {
             title: <Button variant="outlined" size="large">DASHBOARD</Button>,

@@ -4,7 +4,8 @@ import "firebase/firestore";
 import 'firebase/storage';
 
 // console.log(process.env);
-
+// The Environment File that Firebase is set up
+// Accesses the relevant environment variables
 const app = firebase.initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,

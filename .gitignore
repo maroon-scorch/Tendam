@@ -10,4 +10,6 @@
 target/
 .mvn-classpath
 
+node_modules/
+
 .idea/

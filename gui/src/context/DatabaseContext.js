@@ -95,11 +95,17 @@ export function DatabaseProvider({ children }) {
     }
 
     // Writes the survey entry to the database.
-    function writeSurvey(id, fieldname, newData) {
+    async function writeSurvey(id, fieldname, newData) {
         let surveyRef = surveyDatabase.doc(id);
+        console.log(surveyRef);
         let dataSent = {};
         dataSent[fieldname] = newData;
-        return surveyRef.update(dataSent);
+        let data = await surveyRef.get();
+        if (data.exists) {
+            return surveyRef.update(dataSent);
+        } else {
+            return surveyRef.set(dataSent);
+        }
     }
 
     // Upload the image to storage

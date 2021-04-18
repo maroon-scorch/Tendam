@@ -1,6 +1,8 @@
 import React from 'react';
-import { TextField, Radio, RadioGroup,
-    FormControl, FormLabel, FormControlLabel } from '@material-ui/core';
+import {
+    TextField, Radio, RadioGroup,
+    FormControl, FormLabel, FormControlLabel, Switch, Typography
+} from '@material-ui/core';
 
 // formItems contains the key to the initialValues
 function formatForm(formItems, initialValues, setFormValue) {
@@ -13,6 +15,14 @@ function formatForm(formItems, initialValues, setFormValue) {
         });
     }
 
+    const handleSwitch = (e) => {
+        const { name, checked } = e.target;
+        setFormValue({
+            ...initialValues,
+            [name]: checked
+        });
+    }
+
     function toTextBox(props, index) {
         return (
             <div>
@@ -21,7 +31,7 @@ function formatForm(formItems, initialValues, setFormValue) {
                 className={props.className}
                 name={props.key}
                 label={props.label}
-                value={initialValues[props.key]}
+                defaultValue={initialValues[props.key]}
                 onChange={handleChange}
                 key={index}
             />
@@ -38,7 +48,7 @@ function formatForm(formItems, initialValues, setFormValue) {
                 className={props.className}
                 name={props.key}
                 label={props.label}
-                value={initialValues[props.key]}
+                defaultValue={initialValues[props.key]}
                 onChange={handleChange}
                 key={index}
             />
@@ -74,10 +84,43 @@ function formatForm(formItems, initialValues, setFormValue) {
         );
     };
 
+    function toSwitch(props, index) {
+        return (
+            <div>
+                <FormLabel>
+                    {props.label}
+                </FormLabel>
+                <Switch
+                    variant="outlined"
+                    className={props.className}
+                    name={props.key}
+                    checked={initialValues[props.key]}
+                    onChange={handleSwitch}
+                    key={index}
+                />
+            </div>
+        );
+    };
+
+    function toText(props, index) {
+        return (
+            <div>
+                <Typography
+                    className={props.className}
+                    variant={props.textType}
+                    key={index}>
+                    {props.label}
+                </Typography>
+            </div>
+        );
+    };
+
     const convertDict = {
         'text': toTextBox,
         'password': toEncryptedBox,
-        'radio': toRadioSelection
+        'radio': toRadioSelection,
+        'switch': toSwitch,
+        'label': toText,
     };
 
     return (

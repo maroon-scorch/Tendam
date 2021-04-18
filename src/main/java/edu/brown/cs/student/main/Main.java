@@ -2,12 +2,14 @@ package edu.brown.cs.student.main;
 
 import edu.brown.cs.student.databases.FireBaseDatabase;
 import edu.brown.cs.student.main.commands.ClearField;
+import edu.brown.cs.student.main.commands.DryMatch;
 import edu.brown.cs.student.main.commands.UpdateMatches;
 import edu.brown.cs.student.miscenllaneous.CustomException;
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Calendar;
@@ -51,11 +53,13 @@ public final class Main {
     // Parse command line arguments
     OptionParser parser = new OptionParser();
     parser.accepts("gui");
+    parser.accepts("no-timer");
     OptionSet options = parser.parse(args);
 
     REPL repl = new REPL();
     repl.registerCommand("clear", new ClearField());
     repl.registerCommand("update", new UpdateMatches());
+    repl.registerCommand("dry-update", new DryMatch());
 
     // Sets up the FireBaseDatabase class
     // and connects to the FireBase storage.
@@ -70,29 +74,31 @@ public final class Main {
       System.out.println("--------------------------------");
     }
 
-    // Sets up and runs the interval code on a schedule
-    Calendar today = Calendar.getInstance();
-    today.set(Calendar.HOUR_OF_DAY, 06);
-    today.set(Calendar.MINUTE, 0);
-    today.set(Calendar.SECOND, 0);
+    if (!options.has("no-timer")) {
+      // Sets up and runs the interval code on a schedule
+      Calendar today = Calendar.getInstance();
+      today.set(Calendar.HOUR_OF_DAY, 06);
+      today.set(Calendar.MINUTE, 0);
+      today.set(Calendar.SECOND, 0);
 
-    Timer timer = new Timer();
-    TimerTask intervalTask = new TimerTask() {
-      @Override
-      public void run() {
-        try {
-          new UpdateMatches().execute("users");
-        } catch (CustomException e) {
-          System.out.println(e.getResponse());
-        } catch (Exception e) {
-          e.printStackTrace();
+      Timer timer = new Timer();
+      TimerTask intervalTask = new TimerTask() {
+        @Override
+        public void run() {
+          try {
+            new UpdateMatches().execute("users");
+          } catch (CustomException e) {
+            System.out.println(e.getResponse());
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
         }
-      }
-    };
+      };
 
-    timer.schedule(intervalTask, today.getTime(),
-            TimeUnit.MILLISECONDS.convert(1,
-                    TimeUnit.DAYS));
+      timer.schedule(intervalTask, today.getTime(),
+          TimeUnit.MILLISECONDS.convert(1,
+              TimeUnit.DAYS));
+    }
 
     // Reads the data into the console and runs it in the REPL.
     // Not currently used, but there for backup testing
@@ -100,12 +106,16 @@ public final class Main {
             new InputStreamReader(System.in, StandardCharsets.UTF_8))) {
       String input;
       while ((input = br.readLine()) != null) {
-        repl.run(input);
+        try {
+          repl.run(input);
+        } catch (Exception e) {
+          e.printStackTrace();
+          System.out.println("ERROR: You ran into an unaccounted-for error "
+              + "produced from a REPL command!");
+        }
       }
-    } catch (Exception e) {
+    } catch (IOException e) {
       e.printStackTrace();
-      System.out.println("ERROR: You ran into an unaccounted-for error "
-              + "produced from a REPL command!. System is forced to exit.");
     }
   }
 

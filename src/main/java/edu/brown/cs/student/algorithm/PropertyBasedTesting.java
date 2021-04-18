@@ -37,18 +37,13 @@ public class PropertyBasedTesting {
    * @param kMax Maximum number of persons in list
    * @return True if all n tests pass and false otherwise
    */
-  public boolean nTrials(int n, int kMax) {
+  public boolean nTrials(int n, int kMax) throws Exception {
     for (int i = 0; i < n; i++) {
       int k = rd.nextInt(kMax) + 1;
 
       boolean once;
 
-      try {
-        once = oneTrial(k);
-      } catch (Exception e) {
-        System.err.println(e.getMessage());
-        return false;
-      }
+      once = oneTrial(k);
       if (!once) {
         return false;
       }

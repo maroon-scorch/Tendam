@@ -2,6 +2,8 @@ package edu.brown.cs.student.users;
 
 import edu.brown.cs.student.algorithm.HasRanking;
 import edu.brown.cs.student.datasources.Source;
+import edu.brown.cs.student.miscenllaneous.FieldAccessor;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +21,7 @@ public class User implements HasRanking<User> {
   private Map<String, Source> userData;
   private List<String> matches;
   private List<String> preferences;
+  private Map<String, Object> settings;
 
   /**
    * Public constructor for users.
@@ -33,6 +36,7 @@ public class User implements HasRanking<User> {
     this.userData = null;
     this.matches = matches;
     this.preferences = null;
+    this.settings = null;
   }
 
   /**
@@ -177,6 +181,30 @@ public class User implements HasRanking<User> {
    */
   public int getRanking(String userID) {
     return preferences.indexOf(userID);
+  }
+
+  /**
+   * Returns this user's settings.
+   *
+   * @return a FieldAccessor with settings
+   */
+  public FieldAccessor getSettings() {
+    if (settings == null) {
+      return new FieldAccessor(new HashMap<>());
+    } else {
+      System.out.println(settings.getClass().getName());
+      return new FieldAccessor(settings);
+    }
+  }
+
+  /**
+   * Sets this User's settings.
+   *
+   * @param settings a map of settings
+   */
+  public void setSettings(Map<String, Object> settings) {
+    System.out.println(settings);
+    this.settings = settings;
   }
 
   /**

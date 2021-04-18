@@ -1,5 +1,7 @@
 package edu.brown.cs.student.main.commands;
 
+import com.google.gson.Gson;
+import edu.brown.cs.student.algorithm.GaleShapley;
 import edu.brown.cs.student.databases.FireBaseDatabase;
 import edu.brown.cs.student.main.Main;
 import edu.brown.cs.student.miscenllaneous.CustomException;
@@ -12,15 +14,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 /**
  * Updates matches in the FireBase server.
  */
-public class UpdateMatches implements Command {
+public class DryMatch implements Command {
+  private static final Gson GSON = new Gson();
 
   /**
-   * The code to run on a set interval. Updates matches in the firebase.
+   * Creates and prints matches, but does not update the database.
    *
    * @param userPath the path to the user data you want to access
    * @throws CustomException.FutureBreakException  If the requested future doesn't work
@@ -34,29 +38,31 @@ public class UpdateMatches implements Command {
    * @throws CustomException.NoActivitiesException if none of the users have taken anything yet
    */
   public void execute(String userPath) throws CustomException.FutureBreakException,
-          ClassNotFoundException, NoSuchMethodException,
-          InvocationTargetException, InstantiationException,
-          IllegalAccessException, CustomException.NoUsersException,
-          CustomException.NoMatchException, CustomException.NoActivitiesException {
+      ClassNotFoundException, NoSuchMethodException,
+      InvocationTargetException, InstantiationException,
+      IllegalAccessException, CustomException.NoUsersException,
+      CustomException.NoMatchException, CustomException.NoActivitiesException {
 
     FireBaseDatabase database = Main.getDatabase();
 
+    List<User> users = database.retrieveUsers(userPath);
+
     // Merges retrieved survey data into the list of users
     List<User> addedSurveys = Objects.requireNonNull(
-            database).merge(database.retrieveUsers(userPath),
-            database.retrieveSourceData("surveys"), "Survey");
+        database).merge(users,
+        database.retrieveSourceData("surveys"), "Survey");
 
     // Takes the list of users with merged survey
     // data and merges game data into it as well
     List<User> addedGames = database.merge(addedSurveys,
-            database.retrieveSourceData("games"), "");
+        database.retrieveSourceData("games"), "");
 
     // Filters the list for users who have not done any surveys / played any games
     //  or if they haven't 
     List<User> filteredNew = new ArrayList<>();
     addedGames.forEach(user -> {
       if (!user.getUserData().isEmpty()
-          || user.getSettings().get("matching.hidden", Boolean.class).orElse(false)) {
+            && !user.getSettings().get("matching.hidden", Boolean.class).orElse(false)) {
         filteredNew.add(user);
       }
     });
@@ -71,17 +77,27 @@ public class UpdateMatches implements Command {
       System.out.println("+++++++++++++++++++++++++++++++");
     }
     filteredNew.forEach(user -> System.out.println("User Name: "
-            + user.getName() + " userData: " + user.getUserData()));
+        + user.getName() + " userData: " + user.getUserData()));
 
     // Runs the matching pipeline on the list of
     // users and sends the results back to FireBase
-    Matcher.run(filteredNew, userPath);
+    List<User> usersWithPreferences = Matcher.createAllPreferences(filteredNew);
 
+    for (User user : users) {
+      System.out.printf("User: %s, %s\n", user.getID(), GSON.toJson(user.getSettings()));
+    }
+
+    Map<User, User> matches
+        = GaleShapley.galeShapleyAlgo(usersWithPreferences, usersWithPreferences);
+    System.out.println("Matches");
+    for (Map.Entry<User, User> match : matches.entrySet()) {
+      System.out.printf("%s : %s\n", match.getKey().getID(), match.getValue().getID());
+    }
 
     // Prints out date and time in REPL to verify that it is running at the correct time
     SimpleDateFormat formatter = new SimpleDateFormat("EEE, MMM d, 'at' HH:mm:ss z");
     Date date = new Date(System.currentTimeMillis());
     String printDate = formatter.format(date);
-    System.out.println("Updated matches at: " + printDate);
+    System.out.println("Dry-updated matches at: " + printDate);
   }
 }

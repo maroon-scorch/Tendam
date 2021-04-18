@@ -81,6 +81,56 @@ public final class Matcher {
   }
 
   /**
+   * Builds a set of preferences for each user and matches them.
+   *
+   * @param users the input list of users
+   * @param usersPath the path to update user data in
+   * @throws CustomException.NoUsersException if there are no users in the database
+   * @throws CustomException.NoMatchException if no matches could be made
+   */
+  public static void dryRun(List<User> users, String usersPath)
+      throws CustomException.NoUsersException,
+      CustomException.NoMatchException {
+    List<User> people = createAllPreferences(users);
+    people.forEach(person -> System.out.println(person.getName() + ", " + person.getPreferences()));
+
+    // the database instance
+    Firestore db = FirestoreClient.getFirestore();
+
+    // Creates a reference to the users collection
+    CollectionReference docRef = db.collection(usersPath);
+
+    // The results of running the Gale Shapley algorithm on the inputs
+    Map<User, User> results = GaleShapley.galeShapleyAlgo(people, people);
+
+    for (int i = 0; i < 3; i++) {
+      System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+    }
+    people.forEach(person -> System.out.println("User Name: "
+        + person.getName() + ", Preferences: " + person.getRankings()));
+    for (int i = 0; i < 3; i++) {
+      System.out.println("...............................");
+    }
+
+    ProgressBar bar = new ProgressBar("Writing New Matches to FireBase", results.size());
+    // Loops through the entries in the map of gale shapley results
+    // and stores them in FireBase.
+    for (Map.Entry<User, User> keyPair : results.entrySet()) {
+      DocumentReference userRef = docRef.document(keyPair.getKey().getID());
+      ApiFuture<WriteResult> future = userRef.update("matches",
+          FieldValue.arrayUnion(keyPair.getValue().getID()));
+      try {
+        WriteResult result = future.get();
+        System.out.println("Wrote result: " + result.toString());
+      } catch (InterruptedException | ExecutionException e) {
+        future.cancel(true);
+        e.printStackTrace();
+      }
+      bar.update();
+    }
+  }
+
+  /**
    * Runs the entire pipeline - building a set of preferences
    * for each user and then producing a single match each for them.
    *

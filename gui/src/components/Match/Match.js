@@ -57,11 +57,6 @@ function Match() {
 
     }
 
-    // useEffect(() => {
-    //     // const unsubscribe = listenNotification(currentUser.uid, handleSnapshot);
-    //     // return () => unsubscribe();
-    // }, []);
-
     listenNotification(currentUser.uid, handleSnapshot);
 
     return (
@@ -87,7 +82,6 @@ function Match() {
                 })}
             </ul>
             <Button onClick={showNotif}>Test</Button>
-            {/* {JSON.stringify(notification)} */}
             </div>
         </div>
     );

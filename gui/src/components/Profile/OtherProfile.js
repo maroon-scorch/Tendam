@@ -56,7 +56,7 @@ function OtherProfile({ history }) {
             name="age" value={profileInfo.age} disabled={true}/></Typography>
             <br />
             <div className="profile-control">
-                <MatchDisplay matches={profileInfo.matches} />
+                {/* <MatchDisplay disabled={true} matches={profileInfo.matches} /> */}
                 <Link to={{  
                     pathname: `/message#${profileInfo.id}`,
                     state: {

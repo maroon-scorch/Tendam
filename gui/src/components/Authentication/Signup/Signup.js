@@ -146,7 +146,6 @@ function Signup() {
                  Submit
             </Button>
             </div>
-            {/* <Button onClick={(e) => {console.log(currentUser);}}>Test</Button> */}
             </div>
             <div className="background-container">
                 <img src={neon} alt={'Background of the App'} />

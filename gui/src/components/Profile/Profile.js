@@ -130,7 +130,7 @@ function Profile() {
                 <Button variant="contained" color="secondary" disabled={!isEditing} onClick={handleSave}>SAVE</Button>
                 <br />
                 <br />
-                <MatchDisplay matches={profileInfo.matches} />
+                <MatchDisplay matches={profileInfo.matches} disabled={false} />
             </div>
             <div className="profile-links">
                 <Link to='/match'>

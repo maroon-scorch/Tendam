@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom';
 import BlankProfile from './blank-profile.png';
 
 // The Toggle Button that displays the list of matches a user has.
-function MatchDisplay({ matches }) {
+function MatchDisplay({ matches, disabled }) {
     const { currentUser } = useAuth();
     const { getFile, getEntryData } = useDatabase();
     const { close, open, setContent } = useModal();

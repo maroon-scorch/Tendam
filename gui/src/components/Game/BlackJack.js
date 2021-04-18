@@ -5,6 +5,10 @@ import './BlackJack.css';
 import Hand from "./Hand.js";
 import { useAuth } from "../../context/AuthContext";
 import { useDatabase } from "../../context/DatabaseContext";
+import { useModal } from "../../context/ModalContext";
+import { Button as Btn, Typography } from '@material-ui/core';
+
+import HelpIcon from '@material-ui/icons/Help';
 
 let cardsOfDealer = [];
 let cardValuesOfDealer = [];
@@ -13,6 +17,7 @@ let dealerHand = [-1, -1];
 function BlackJack() {
     const { currentUser } = useAuth();
     const { getGameData, setGameData } = useDatabase();
+    const { close, open, setContent } = useModal();
 
     // Sum of all values in a deck of card 4(1 + 2 + ... + 13).
     const sumOfValues = 364;
@@ -284,6 +289,20 @@ function BlackJack() {
         }
     }
 
+    // display help instructions for Black Jack
+    function displayHelp() {
+        setContent(
+            <div>
+                <Typography variant="h4">How to Play BlackJack:</Typography>
+                <Typography variant="h6">1. Your goal is to hit as close to 21 without busting.</Typography>
+                <Typography variant="h6">2. You can choose to either hit or stand a card to reach to 21.</Typography>
+                <Typography variant="h6">3. If the dealer busts, you also win.</Typography>
+                <Btn variant="contained" color="primary" onClick={close}>Okay</Btn>
+            </div>
+            );
+        open();
+    }
+
     // Styling of buttons.
     const Button = styled.button`
   background-color: GoldenRod;
@@ -315,6 +334,9 @@ function BlackJack() {
                 <Button onClick={stand} hidden={gameEnded}>Stand</Button>
                 <br />
                 <GameMessage text={whoWon} hidden={!gameEnded} />
+            </div>
+            <div className="game-help" onClick={displayHelp}>
+            <HelpIcon fontSize="large" />
             </div>
         </div>
 

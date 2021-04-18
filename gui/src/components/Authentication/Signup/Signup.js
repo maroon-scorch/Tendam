@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, FormControlLabel, Checkbox } from '@material-ui/core';
 import neon from './neon.png';
 
 import { Link, useHistory } from 'react-router-dom';
@@ -58,6 +58,7 @@ function Signup() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [isChecked, setChecked] = useState(false);
 
     const initialValue = {
         email: '',
@@ -106,6 +107,11 @@ function Signup() {
             return false;
         }
 
+        if (!isChecked) {
+            setError('Please check the requirement!');
+            return false;
+        }
+
         return true;
     }
 
@@ -137,6 +143,13 @@ function Signup() {
             <form className={classes.root} autoComplete="off">
                 {formatForm(formItems, formValues, setFormValues)}
             </form>
+            <FormControlLabel
+                control={<Checkbox 
+                    checked={isChecked}
+                    onChange={()=>{setChecked(!isChecked)}}
+                    name="checkedA" />}
+                label="I confirm that I am of the Age of 18 or above."
+            />
             <div>
                 By creating this account, you agree to our <Link to="/terms-of-service" target="_blank" rel="noopener noreferrer">terms of service</Link> <br/>
                 here that includes specifications on our privacy policies <br />

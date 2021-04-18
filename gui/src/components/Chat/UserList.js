@@ -26,7 +26,7 @@ function UserList({users, onOpenUser, selectedUser, className}) {
                 <ListItem button onClick={() => openUser(profile)}
                 selected={profile.id === selectedUser} >
                     <ListItemAvatar><Avatar src={profile.profilePicture}/></ListItemAvatar>
-                    <Typography>{profile.name}</Typography>
+                    <Typography>{profile.name || 'Tendam User'}</Typography>
                 </ListItem>
             ))}
         </List>

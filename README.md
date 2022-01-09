@@ -1,4 +1,4 @@
-# cs0320 Term Project 2021
+<!-- # cs0320 Term Project 2021
 
  _Fill this in with three unique ideas! (Due by March 1)_
 # Project Idea(s):
@@ -117,4 +117,4 @@ _On your first meeting with your mentor TA, you should plan dates for at least t
 **Adversary Checkpoint:** _(Schedule for on or before April 12 once you are assigned an adversary TA)_
 
 ## How to Build and Run
-_A necessary part of any README!_
+_A necessary part of any README!_ -->
